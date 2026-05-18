@@ -411,10 +411,28 @@ document.getElementById('chat-input-field')?.addEventListener('keydown', e => {
   if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendChatMessage(); }
 });
 
+// ===== NOTIFICATIONS =====
+function clearNotifs() {
+  const list = document.getElementById('notif-list');
+  const dot = document.getElementById('notif-dot');
+  if (list) {
+    list.querySelectorAll('.notif-item.unread').forEach(el => el.classList.remove('unread'));
+  }
+  if (dot) dot.style.display = 'none';
+  document.getElementById('notif-dropdown')?.classList.add('hidden');
+}
+
+// ===== HOVER FLOAT EFFECT =====
+document.querySelectorAll('.hover-float').forEach(el => {
+  el.addEventListener('mouseenter', () => el.style.transform = 'translateY(-8px)');
+  el.addEventListener('mouseleave', () => el.style.transform = '');
+});
+
 // ===== INIT =====
+console.log('%c🚀 WashBuddy Elite App Initialized!', 'color:#00E5FF; font-size:18px; font-weight:bold;');
 updateSummary();
 loadActiveOrder();
-setInterval(loadActiveOrder, 5000);
+setInterval(loadActiveOrder, 8000);
 
 // 3D Tilt cards
 document.querySelectorAll('.srv-card-img').forEach(card => {
