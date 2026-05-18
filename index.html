@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <title>WashBuddy | Solusi Laundry Masa Depan</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link rel="stylesheet" href="./style.css">
+  </head>
+  <body>
+    <!-- Custom Cyber Elements -->
+    <div class="cyber-grid"></div>
+    
+    
+
+    <!-- Background Animated Gradients -->
+    <div class="bg-mesh">
+      <div class="blob blob-1"></div>
+      <div class="blob blob-2"></div>
+      <div class="blob blob-3"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+      <div class="nav-container">
+        <a href="#" class="brand">
+          <div class="logo-mark advanced-logo">
+             <div class="ring ring1"></div>
+             <div class="ring ring2"></div>
+             <i class="ph-fill ph-drop drop-icon"></i>
+          </div>
+          <span>WashBuddy.</span>
+        </a>
+        <div class="nav-links">
+          <a href="#home" class="active">Beranda</a>
+          <a href="#services">Layanan</a>
+          <a href="#tracking">Lacak</a>
+          <a href="#services">Harga & Layanan</a>
+        </div>
+        <div class="nav-actions">
+          <button class="btn-text auth-trigger">Masuk</button>
+          <button class="btn-primary auth-trigger">Mulai Sekarang <i class="ph-bold ph-arrow-right"></i></button>
+        </div>
+      </div>
+    </nav>
+
+    <main>
+      <!-- Hero Section -->
+      <section id="home" class="hero">
+        <div class="container hero-grid">
+          <div class="hero-content reveal-left">
+            <div class="pill-badge">
+              <span class="pulse"></span> Sistem Laundry Berbasis AI
+            </div>
+            <h1 class="hero-title">Laundry Cerdas<br>Untuk Hidup<br><span class="text-gradient">Lebih Berkualitas</span></h1>
+            <p class="hero-subtitle">Kami mengubah cara Anda mencuci. Jadwalkan penjemputan dalam hitungan detik, lacak proses secara real-time, dan nikmati pakaian bersih yang diurus oleh profesional.</p>
+            
+            <div class="hero-cta">
+              <button class="btn-primary btn-large auth-trigger">
+                Jadwalkan Penjemputan
+              </button>
+              <button class="btn-secondary btn-large auth-trigger">
+                <i class="ph-fill ph-play-circle"></i> Cara Kerja
+              </button>
+            </div>
+
+            <div class="hero-stats">
+              <div class="stat-item">
+                <h3 class="counter" data-target="15000">0</h3><span>+</span>
+                <p>Pelanggan Aktif</p>
+              </div>
+              <div class="stat-divider"></div>
+              <div class="stat-item">
+                <h3 class="counter" data-target="99">0</h3><span>%</span>
+                <p>Kepuasan</p>
+              </div>
+              <div class="stat-divider"></div>
+              <div class="stat-item">
+                <h3><i class="ph-fill ph-star"></i> 4.9</h3>
+                <p>Rating Aplikasi</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="hero-visual reveal-right">
+            <div class="visual-wrapper">
+              <img src="https://images.unsplash.com/photo-1517677208171-0bc6725a3e60?q=80&w=1200&auto=format&fit=crop" alt="WashBuddy App Illustration" class="main-illustration" style="border-radius:20px; box-shadow: 0 0 50px rgba(0,212,255,0.3); border: 1px solid rgba(255,255,255,0.1);" />
+              <!-- Floating UI Elements -->
+              <div class="float-card order-status">
+                <div class="icon-box"><i class="ph-fill ph-package"></i></div>
+                <div class="card-info">
+                  <h4>Pesanan #WB-992</h4>
+                  <p class="status-text success">Sedang Diantar</p>
+                </div>
+              </div>
+              
+              <div class="float-card eco-badge">
+                <i class="ph-fill ph-leaf"></i> 100% Eco-Friendly
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="trusted-by reveal-up" style="margin-top: 4rem; padding: 2rem 0; border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(0,0,0,0.2);">
+        <p style="color: var(--text-muted); letter-spacing: 2px; font-size: 0.85rem; margin-bottom: 2rem; text-align: center;">DIPERCAYA OLEH KARYAWAN DARI PERUSAHAAN TERKEMUKA</p>
+        <div class="marquee-container" style="display: flex; overflow: hidden; position: relative;">
+          <div class="marquee-content" style="display: flex; gap: 4rem; align-items: center; white-space: nowrap; animation: scroll-left 20s linear infinite; font-size: 2rem; color: rgba(255,255,255,0.6); font-weight: bold;">
+            <div style="display: flex; align-items: center; gap: 0.5rem;"><i class="ph-fill ph-google-logo"></i> Google</div>
+            <div style="display: flex; align-items: center; gap: 0.5rem;"><i class="ph-fill ph-amazon-logo"></i> Amazon</div>
+            <div style="display: flex; align-items: center; gap: 0.5rem;"><i class="ph-fill ph-apple-logo"></i> Apple</div>
+            <div style="display: flex; align-items: center; gap: 0.5rem;"><i class="ph-fill ph-slack-logo"></i> Slack</div>
+            <div style="display: flex; align-items: center; gap: 0.5rem;"><i class="ph-fill ph-figma-logo"></i> Figma</div>
+            <!-- Duplicates -->
+            <div style="display: flex; align-items: center; gap: 0.5rem;"><i class="ph-fill ph-google-logo"></i> Google</div>
+            <div style="display: flex; align-items: center; gap: 0.5rem;"><i class="ph-fill ph-amazon-logo"></i> Amazon</div>
+            <div style="display: flex; align-items: center; gap: 0.5rem;"><i class="ph-fill ph-apple-logo"></i> Apple</div>
+            <div style="display: flex; align-items: center; gap: 0.5rem;"><i class="ph-fill ph-slack-logo"></i> Slack</div>
+            <div style="display: flex; align-items: center; gap: 0.5rem;"><i class="ph-fill ph-figma-logo"></i> Figma</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Services Section -->
+      <section id="services" class="services section-pad">
+        <div class="container">
+          <div class="section-header reveal-up">
+            <h2>Layanan <span class="text-gradient">Premium</span> Kami</h2>
+            <p>Berbagai pilihan perawatan pakaian yang disesuaikan dengan kebutuhan Anda, menggunakan teknologi mutakhir.</p>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+            <!-- Service 1 -->
+            <div class="glass-card reveal-up" style="height: 250px; background-image: linear-gradient(rgba(10,14,23,0.7), rgba(10,14,23,0.9)), url('https://images.unsplash.com/photo-1545173168-9f1947eebb7f?q=80&w=600'); background-size: cover; display: flex; flex-direction: column; justify-content: flex-end; padding: 2rem;">
+              <i class="ph-fill ph-washing-machine" style="font-size: 2.5rem; color: var(--primary); margin-bottom: auto;"></i>
+              <h3>Wash Regular</h3>
+              <p>Cuci, kering, dan lipat harian. Bersih dan wangi dalam 2 hari.</p>
+            </div>
+            <!-- Service 2 -->
+            <div class="glass-card reveal-up" style="height: 250px; background-image: linear-gradient(rgba(10,14,23,0.7), rgba(10,14,23,0.9)), url('https://images.unsplash.com/photo-1582735689369-4fe89db7114c?q=80&w=600'); background-size: cover; display: flex; flex-direction: column; justify-content: flex-end; padding: 2rem;">
+              <i class="ph-fill ph-rocket" style="font-size: 2.5rem; color: #00E5FF; margin-bottom: auto;"></i>
+              <h3>Wash Kilat (6 Jam)</h3>
+              <p>Layanan ekstra cepat untuk pakaian prioritas. Selesai di hari yang sama.</p>
+            </div>
+            <!-- Service 3 -->
+            <div class="glass-card reveal-up" style="height: 250px; background-image: linear-gradient(rgba(10,14,23,0.7), rgba(10,14,23,0.9)), url('https://images.unsplash.com/photo-1583845112239-99ef134fa368?q=80&w=600'); background-size: cover; display: flex; flex-direction: column; justify-content: flex-end; padding: 2rem;">
+              <i class="ph-fill ph-coat-hanger" style="font-size: 2.5rem; color: #B154F0; margin-bottom: auto;"></i>
+              <h3>Dry Cleaning</h3>
+              <p>Perawatan khusus menggunakan pelarut murni untuk jas dan gaun sutra.</p>
+            </div>
+            <!-- Service 4 -->
+            <div class="glass-card reveal-up" style="height: 250px; background-image: linear-gradient(rgba(10,14,23,0.7), rgba(10,14,23,0.9)), url('https://images.unsplash.com/photo-1608231387042-66d1773070a5?q=80&w=600'); background-size: cover; display: flex; flex-direction: column; justify-content: flex-end; padding: 2rem;">
+              <i class="ph-fill ph-sneaker" style="font-size: 2.5rem; color: var(--primary); margin-bottom: auto;"></i>
+              <h3>Shoe/Bag Spa</h3>
+              <p>Restorasi dan deep-cleaning untuk barang kulit kesayangan Anda.</p>
+            </div>
+            <!-- Service 5 -->
+            <div class="glass-card reveal-up" style="height: 250px; background-image: linear-gradient(rgba(10,14,23,0.7), rgba(10,14,23,0.9)), url('https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?q=80&w=600'); background-size: cover; display: flex; flex-direction: column; justify-content: flex-end; padding: 2rem;">
+              <i class="ph-fill ph-rug" style="font-size: 2.5rem; color: #00E5FF; margin-bottom: auto;"></i>
+              <h3>Cuci Karpet</h3>
+              <p>Pembersihan debu tungau dan noda membandel pada karpet ruangan.</p>
+            </div>
+            <!-- Service 6 -->
+            <div class="glass-card reveal-up" style="height: 250px; background-image: linear-gradient(rgba(10,14,23,0.7), rgba(10,14,23,0.9)), url('https://images.unsplash.com/photo-1555041469-a586c61ea9bc?q=80&w=600'); background-size: cover; display: flex; flex-direction: column; justify-content: flex-end; padding: 2rem;">
+              <i class="ph-fill ph-armchair" style="font-size: 2.5rem; color: #B154F0; margin-bottom: auto;"></i>
+              <h3>Cuci Sofa</h3>
+              <p>Layanan home-cleaning untuk vakum basah dan kering sofa Anda.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- App Tracking Preview -->
+      <section id="tracking" class="tracking-section section-pad">
+         <div class="container tracking-grid">
+            <div class="tracking-visual reveal-left">
+               <div class="glass-panel app-mockup">
+                  <div class="mockup-header">
+                     <i class="ph-bold ph-list"></i>
+                     <span>Lacak Pesanan</span>
+                     <i class="ph-fill ph-user-circle"></i>
+                  </div>
+                  <div class="tracker-steps">
+                     <div class="step completed">
+                        <div class="step-icon"><i class="ph-bold ph-check"></i></div>
+                        <div class="step-text">
+                           <h4>Kurir Menjemput</h4>
+                           <p>10:00 AM - Selesai</p>
+                        </div>
+                     </div>
+                     <div class="step active">
+                        <div class="step-icon"><i class="ph-bold ph-spinner-gap spinner"></i></div>
+                        <div class="step-text">
+                           <h4>Proses Pencucian</h4>
+                           <p>Sedang dicuci & dikeringkan</p>
+                        </div>
+                     </div>
+                     <div class="step pending">
+                        <div class="step-icon"><i class="ph-bold ph-truck"></i></div>
+                        <div class="step-text">
+                           <h4>Dalam Perjalanan</h4>
+                           <p>Estimasi: 14:00 PM</p>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="tracking-content reveal-right">
+               <h2>Lacak Semuanya Secara <span class="text-gradient">Real-Time</span></h2>
+               <p>Sistem kami terhubung langsung ke Dasbor Pelanggan. Anda tidak perlu lagi menebak-nebak kapan cucian Anda selesai. Kami akan memberikan notifikasi instan ke perangkat Anda.</p>
+               <ul class="feature-list">
+                  <li><i class="ph-fill ph-check-circle text-primary"></i> Update status setiap tahap pengerjaan</li>
+                  <li><i class="ph-fill ph-check-circle text-primary"></i> Lacak posisi kurir penjemput/pengantar</li>
+                  <li><i class="ph-fill ph-check-circle text-primary"></i> Transparansi harga tanpa biaya tersembunyi</li>
+               </ul>
+            </div>
+         </div>
+      </section>
+
+      <!-- Testimonials Section -->
+      <section id="testimonials" class="testimonials section-pad" style="position: relative;">
+        <div class="container">
+          <div class="section-header reveal-up text-center">
+            <h2>Apa Kata <span class="text-gradient">Mereka?</span></h2>
+            <p>Ribuan profesional telah menghemat waktu berharganya dengan WashBuddy.</p>
+          </div>
+          
+          <div class="marquee-container" style="display: flex; overflow: hidden; position: relative; margin-top: 3rem;">
+            <div class="marquee-content" style="display: flex; gap: 2rem; align-items: stretch; white-space: normal; animation: scroll-left 30s linear infinite;">
+              <!-- Review 1 -->
+              <div class="glass-card" style="padding: 2rem; min-width: 350px;">
+                <div style="color: #FFD700; margin-bottom: 1rem;"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i></div>
+                <p style="font-style: italic; margin-bottom: 1.5rem;">"Live trackernya sangat akurat seperti aplikasi ojek online, dan bajuku wangi banget!"</p>
+                <div style="display: flex; align-items: center; gap: 1rem;"><img src="https://randomuser.me/api/portraits/women/44.jpg" style="width: 50px; height: 50px; border-radius: 50%;"> <div><h4 style="margin: 0; font-size: 1rem;">Amanda R.</h4><p style="margin: 0; font-size: 0.8rem; color: var(--text-muted);">Karyawan</p></div></div>
+              </div>
+              <!-- Review 2 -->
+              <div class="glass-card" style="padding: 2rem; min-width: 350px;">
+                <div style="color: #FFD700; margin-bottom: 1rem;"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i></div>
+                <p style="font-style: italic; margin-bottom: 1.5rem;">"Fitur Wash Kilat 6 Jam beneran jadi penyelamat pas butuh jas buru-buru buat meeting!"</p>
+                <div style="display: flex; align-items: center; gap: 1rem;"><img src="https://randomuser.me/api/portraits/men/32.jpg" style="width: 50px; height: 50px; border-radius: 50%;"> <div><h4 style="margin: 0; font-size: 1rem;">Reza Rahardian</h4><p style="margin: 0; font-size: 0.8rem; color: var(--text-muted);">Entrepreneur</p></div></div>
+              </div>
+              <!-- Review 3 -->
+              <div class="glass-card" style="padding: 2rem; min-width: 350px;">
+                <div style="color: #FFD700; margin-bottom: 1rem;"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star-half"></i></div>
+                <p style="font-style: italic; margin-bottom: 1.5rem;">"Gak perlu repot siapin cash karena bayar udah bisa QRIS di app. Keren banget!"</p>
+                <div style="display: flex; align-items: center; gap: 1rem;"><img src="https://randomuser.me/api/portraits/women/68.jpg" style="width: 50px; height: 50px; border-radius: 50%;"> <div><h4 style="margin: 0; font-size: 1rem;">Sisca Kohl</h4><p style="margin: 0; font-size: 0.8rem; color: var(--text-muted);">Content Creator</p></div></div>
+              </div>
+              <!-- Review 4 -->
+              <div class="glass-card" style="padding: 2rem; min-width: 350px;">
+                <div style="color: #FFD700; margin-bottom: 1rem;"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i></div>
+                <p style="font-style: italic; margin-bottom: 1.5rem;">"Cuci Karpet di WashBuddy hasilnya luar biasa. Noda kopi hilang bersih total!"</p>
+                <div style="display: flex; align-items: center; gap: 1rem;"><img src="https://randomuser.me/api/portraits/men/11.jpg" style="width: 50px; height: 50px; border-radius: 50%;"> <div><h4 style="margin: 0; font-size: 1rem;">Bambang P.</h4><p style="margin: 0; font-size: 0.8rem; color: var(--text-muted);">Manajer Resto</p></div></div>
+              </div>
+              <!-- Review 5 -->
+              <div class="glass-card" style="padding: 2rem; min-width: 350px;">
+                <div style="color: #FFD700; margin-bottom: 1rem;"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i></div>
+                <p style="font-style: italic; margin-bottom: 1.5rem;">"AI Scanner-nya benar-benar pintar mendeteksi noda dan menyarankan harga. Super futuristik!"</p>
+                <div style="display: flex; align-items: center; gap: 1rem;"><img src="https://randomuser.me/api/portraits/women/24.jpg" style="width: 50px; height: 50px; border-radius: 50%;"> <div><h4 style="margin: 0; font-size: 1rem;">Natasha W.</h4><p style="margin: 0; font-size: 0.8rem; color: var(--text-muted);">Mahasiswi</p></div></div>
+              </div>
+              
+              <!-- Duplicates for seamless looping -->
+              <div class="glass-card" style="padding: 2rem; min-width: 350px;">
+                <div style="color: #FFD700; margin-bottom: 1rem;"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i></div>
+                <p style="font-style: italic; margin-bottom: 1.5rem;">"Live trackernya sangat akurat seperti aplikasi ojek online, dan bajuku wangi banget!"</p>
+                <div style="display: flex; align-items: center; gap: 1rem;"><img src="https://randomuser.me/api/portraits/women/44.jpg" style="width: 50px; height: 50px; border-radius: 50%;"> <div><h4 style="margin: 0; font-size: 1rem;">Amanda R.</h4><p style="margin: 0; font-size: 0.8rem; color: var(--text-muted);">Karyawan</p></div></div>
+              </div>
+              <div class="glass-card" style="padding: 2rem; min-width: 350px;">
+                <div style="color: #FFD700; margin-bottom: 1rem;"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i></div>
+                <p style="font-style: italic; margin-bottom: 1.5rem;">"Fitur Wash Kilat 6 Jam beneran jadi penyelamat pas butuh jas buru-buru buat meeting!"</p>
+                <div style="display: flex; align-items: center; gap: 1rem;"><img src="https://randomuser.me/api/portraits/men/32.jpg" style="width: 50px; height: 50px; border-radius: 50%;"> <div><h4 style="margin: 0; font-size: 1rem;">Reza Rahardian</h4><p style="margin: 0; font-size: 0.8rem; color: var(--text-muted);">Entrepreneur</p></div></div>
+              </div>
+              <div class="glass-card" style="padding: 2rem; min-width: 350px;">
+                <div style="color: #FFD700; margin-bottom: 1rem;"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star-half"></i></div>
+                <p style="font-style: italic; margin-bottom: 1.5rem;">"Gak perlu repot siapin cash karena bayar udah bisa QRIS di app. Keren banget!"</p>
+                <div style="display: flex; align-items: center; gap: 1rem;"><img src="https://randomuser.me/api/portraits/women/68.jpg" style="width: 50px; height: 50px; border-radius: 50%;"> <div><h4 style="margin: 0; font-size: 1rem;">Sisca Kohl</h4><p style="margin: 0; font-size: 0.8rem; color: var(--text-muted);">Content Creator</p></div></div>
+              </div>
+              <div class="glass-card" style="padding: 2rem; min-width: 350px;">
+                <div style="color: #FFD700; margin-bottom: 1rem;"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i></div>
+                <p style="font-style: italic; margin-bottom: 1.5rem;">"Cuci Karpet di WashBuddy hasilnya luar biasa. Noda kopi hilang bersih total!"</p>
+                <div style="display: flex; align-items: center; gap: 1rem;"><img src="https://randomuser.me/api/portraits/men/11.jpg" style="width: 50px; height: 50px; border-radius: 50%;"> <div><h4 style="margin: 0; font-size: 1rem;">Bambang P.</h4><p style="margin: 0; font-size: 0.8rem; color: var(--text-muted);">Manajer Resto</p></div></div>
+              </div>
+              <div class="glass-card" style="padding: 2rem; min-width: 350px;">
+                <div style="color: #FFD700; margin-bottom: 1rem;"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i></div>
+                <p style="font-style: italic; margin-bottom: 1.5rem;">"AI Scanner-nya benar-benar pintar mendeteksi noda dan menyarankan harga. Super futuristik!"</p>
+                <div style="display: flex; align-items: center; gap: 1rem;"><img src="https://randomuser.me/api/portraits/women/24.jpg" style="width: 50px; height: 50px; border-radius: 50%;"> <div><h4 style="margin: 0; font-size: 1rem;">Natasha W.</h4><p style="margin: 0; font-size: 0.8rem; color: var(--text-muted);">Mahasiswi</p></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section class="cta-section container reveal-up">
+        <div class="cta-box glass-panel">
+           <h2>Siap Untuk Merasakan Perbedaannya?</h2>
+           <p>Bergabunglah dengan ribuan pelanggan yang telah mempercayakan pakaiannya kepada WashBuddy.</p>
+           <button class="btn-primary btn-large glow auth-trigger">Mulai Pesan Sekarang</button>
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+         <div class="footer-top">
+            <div class="footer-brand">
+               <div class="logo-mark advanced-logo">
+                   <div class="ring ring1"></div>
+                   <div class="ring ring2"></div>
+                   <i class="ph-fill ph-drop drop-icon"></i>
+               </div>
+               <span class="brand">WashBuddy.</span>
+               <p class="mt-4">Platform Laundry Premium #1 di Indonesia.</p>
+            </div>
+            <div class="footer-links">
+               <div class="link-col">
+                  <h4>Layanan</h4>
+                  <a href="#">Cuci Kiloan</a>
+                  <a href="#">Dry Clean</a>
+                  <a href="#">Sepatu & Tas</a>
+               </div>
+               <div class="link-col">
+                  <h4>Perusahaan</h4>
+                  <a href="#">Tentang Kami</a>
+                  <a href="#">Karir</a>
+                  <a href="#">Blog</a>
+               </div>
+               <div class="link-col">
+                  <h4>Kontak</h4>
+                  <a href="#">Bantuan</a>
+                  <a href="#">WhatsApp</a>
+               </div>
+            </div>
+         </div>
+         <div class="footer-bottom">
+            <p>&copy; 2026 WashBuddy. All rights reserved.</p>
+         </div>
+      </div>
+    </footer>
+
+    <!-- Auth Gateway Modal -->
+    <div class="modal-overlay hidden" id="auth-modal">
+        <div class="auth-box glass-panel">
+            <button class="close-modal" id="close-auth"><i class="ph-bold ph-x"></i></button>
+            <div class="auth-header">
+                <div class="logo-mark mx-auto"><i class="ph-fill ph-drop"></i></div>
+                <h2>Masuk ke Ekosistem</h2>
+                <p>Pilih rute akses Anda untuk melanjutkan.</p>
+            </div>
+            <div class="auth-options">
+                <a href="/app/" class="auth-card customer">
+                    <div class="icon-wrap-auth customer-bg"><i class="ph-fill ph-user-circle"></i></div>
+                    <div class="auth-text">
+                        <h4>Portal Pelanggan</h4>
+                        <p>Pesan layanan, lacak pesanan, kelola poin.</p>
+                    </div>
+                    <i class="ph-bold ph-arrow-right auth-arrow"></i>
+                </a>
+                <a href="/admin/" class="auth-card admin">
+                    <div class="icon-wrap-auth admin-bg"><i class="ph-fill ph-shield-check"></i></div>
+                    <div class="auth-text">
+                        <h4>Admin Commander</h4>
+                        <p>Kelola operasional, armada, dan finansial.</p>
+                    </div>
+                    <i class="ph-bold ph-arrow-right auth-arrow"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>
