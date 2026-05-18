@@ -3,6 +3,20 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="WashBuddy - Platform laundry premium #1 Indonesia. Cuci, jemput, antar. Berbasis AI, 24/7.">
+    <meta name="keywords" content="laundry, cuci baju, laundry kilat, laundry premium, washbuddy, cuci karpet, cuci sofa">
+    <meta name="author" content="WashBuddy Indonesia">
+    <!-- Open Graph / WhatsApp / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://washbuddy.vercel.app/">
+    <meta property="og:title" content="WashBuddy | Laundry Cerdas Berbasis AI">
+    <meta property="og:description" content="Jadwalkan penjemputan, lacak real-time, bayar mudah. Laundry premium di ujung jari Anda!">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1517677208171-0bc6725a3e60?w=1200&h=630&fit=crop">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="WashBuddy | Laundry Cerdas Berbasis AI">
+    <meta name="twitter:description" content="Jadwalkan penjemputan, lacak real-time, bayar mudah.">
+    <meta name="twitter:image" content="https://images.unsplash.com/photo-1517677208171-0bc6725a3e60?w=1200&h=630&fit=crop">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <title>WashBuddy | Solusi Laundry Masa Depan</title>
     <!-- Fonts -->
@@ -48,6 +62,15 @@
         <div class="nav-actions">
           <button class="btn-text auth-trigger">Masuk</button>
           <button class="btn-primary auth-trigger">Mulai Sekarang <i class="ph-bold ph-arrow-right"></i></button>
+          <button class="hamburger-btn" id="hamburger" onclick="toggleMobileMenu()" aria-label="Menu"><i class="ph-bold ph-list"></i></button>
+        </div>
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobile-menu">
+          <a href="#home" onclick="toggleMobileMenu()">Beranda</a>
+          <a href="#services" onclick="toggleMobileMenu()">Layanan</a>
+          <a href="#tracking" onclick="toggleMobileMenu()">Lacak</a>
+          <a href="#testimonials" onclick="toggleMobileMenu()">Testimoni</a>
+          <button class="btn-primary auth-trigger" style="width:100%; justify-content:center; margin-top:1rem;" onclick="toggleMobileMenu()">Mulai Sekarang</button>
         </div>
       </div>
     </nav>

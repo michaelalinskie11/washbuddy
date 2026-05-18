@@ -1,150 +1,251 @@
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
+import fs from 'fs';
+import crypto from 'crypto';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 3000;
+const DB_PATH = path.join(__dirname, 'db.json');
+const ADMIN_PASS = process.env.ADMIN_PASSWORD || 'washbuddy2026';
+const JWT_SECRET = process.env.JWT_SECRET || 'washbuddy-secret-key-2026';
 
-app.use(cors());
-app.use(express.json());
+// ===== DATABASE HELPERS =====
+function readDB() {
+  try { return JSON.parse(fs.readFileSync(DB_PATH, 'utf8')); }
+  catch { return { orders: [], orderCounter: 5 }; }
+}
+function writeDB(data) {
+  try { fs.writeFileSync(DB_PATH, JSON.stringify(data, null, 2)); }
+  catch (e) { console.error('DB write error:', e.message); }
+}
+
+// ===== SIMPLE TOKEN AUTH =====
+function generateToken() {
+  return crypto.randomBytes(32).toString('hex');
+}
+const activeSessions = new Set();
+
+function requireAuth(req, res, next) {
+  const token = req.headers['x-admin-token'];
+  if (!token || !activeSessions.has(token)) {
+    return res.status(401).json({ status: 'error', message: 'Tidak terotorisasi. Silakan login.' });
+  }
+  next();
+}
+
+function validateOrder(body) {
+  const errors = [];
+  if (!body.customer || body.customer.trim().length < 2) errors.push('Nama pelanggan minimal 2 karakter');
+  if (!body.service) errors.push('Layanan harus dipilih');
+  const qty = parseInt(body.items);
+  if (isNaN(qty) || qty < 1 || qty > 100) errors.push('Jumlah item harus antara 1-100');
+  return errors;
+}
+
+// ===== MIDDLEWARE =====
+const ALLOWED_ORIGINS = ['http://localhost:5173', 'http://localhost:3000', 'https://washbuddy.vercel.app'];
+app.use(cors({
+  origin: (origin, cb) => {
+    if (!origin || ALLOWED_ORIGINS.some(o => origin.startsWith(o.split('//')[1] || o)) || process.env.NODE_ENV !== 'production') cb(null, true);
+    else cb(null, true); // allow all for now, tighten in prod
+  },
+  credentials: true
+}));
+app.use(express.json({ limit: '1mb' }));
 app.use(express.static(path.join(__dirname, '../dist')));
+app.use(express.static(path.join(__dirname, '..')));
 
 const PRICING = {
-  'Wash Regular': 8000,
-  'Wash Kilat': 15000,
-  'Dry Cleaning': 25000,
-  'Premium Spa': 50000,
-  'Cuci Karpet': 30000,
-  'Cuci Sofa': 100000,
+  'Wash Regular': 8000, 'Wash Kilat': 15000, 'Dry Cleaning': 25000,
+  'Premium Spa': 50000, 'Cuci Karpet': 30000, 'Cuci Sofa': 100000,
 };
+const VALID_STATUSES = ['Menunggu Penjemputan', 'Dijemput Kurir', 'Proses Cuci', 'Proses Setrika', 'Sedang Diantar', 'Selesai', 'Dibatalkan'];
 
-let orders = [
-  { id: 'WB-001', customer: 'Budi Hartono', service: 'Wash Regular', items: 5, total: 40000, status: 'Selesai', createdAt: new Date(Date.now() - 86400000).toISOString() },
-  { id: 'WB-002', customer: 'Siti Rahayu', service: 'Dry Cleaning', items: 3, total: 75000, status: 'Sedang Diantar', createdAt: new Date(Date.now() - 3600000).toISOString() },
-  { id: 'WB-003', customer: 'Ahmad Fauzi', service: 'Wash Kilat', items: 4, total: 60000, status: 'Proses Cuci', createdAt: new Date(Date.now() - 1800000).toISOString() },
-  { id: 'WB-004', customer: 'Dewi Lestari', service: 'Premium Spa', items: 2, total: 100000, status: 'Menunggu Penjemputan', createdAt: new Date().toISOString() },
-];
+// ===== HEALTH =====
+app.get('/api/health', (req, res) => {
+  const db = readDB();
+  res.json({ status: 'ok', uptime: process.uptime(), orders: db.orders.length, timestamp: new Date().toISOString() });
+});
 
-let orderCounter = 5;
+// ===== AUTH =====
+app.post('/api/auth/login', (req, res) => {
+  const { password } = req.body;
+  if (!password) return res.status(400).json({ status: 'error', message: 'Password diperlukan' });
+  if (password !== ADMIN_PASS) {
+    return res.status(401).json({ status: 'error', message: 'Password salah. Coba lagi.' });
+  }
+  const token = generateToken();
+  activeSessions.add(token);
+  setTimeout(() => activeSessions.delete(token), 24 * 60 * 60 * 1000); // 24 jam
+  res.json({ status: 'success', token, message: 'Login berhasil!' });
+});
 
-// ===== HEALTH CHECK =====
-app.get('/api/health', (req, res) => res.json({ status: 'ok', uptime: process.uptime(), orders: orders.length }));
+app.post('/api/auth/logout', (req, res) => {
+  const token = req.headers['x-admin-token'];
+  if (token) activeSessions.delete(token);
+  res.json({ status: 'success', message: 'Logout berhasil' });
+});
 
-// ===== ORDERS =====
-app.get('/api/orders', (req, res) => res.json({ status: 'success', data: orders, count: orders.length }));
+app.get('/api/auth/verify', requireAuth, (req, res) => {
+  res.json({ status: 'success', authenticated: true });
+});
+
+// ===== PUBLIC ORDERS (for customer) =====
+app.get('/api/orders', (req, res) => {
+  const db = readDB();
+  const { id } = req.query;
+  if (id) {
+    const order = db.orders.find(o => o.id === id);
+    return order
+      ? res.json({ status: 'success', data: order })
+      : res.status(404).json({ status: 'error', message: 'Pesanan tidak ditemukan' });
+  }
+  res.json({ status: 'success', data: db.orders, count: db.orders.length });
+});
 
 app.post('/api/orders', (req, res) => {
-  const { customer, service, items, total } = req.body;
-  const qty = Math.max(1, parseInt(items) || 1);
+  const errors = validateOrder(req.body);
+  if (errors.length) return res.status(400).json({ status: 'error', message: errors.join(', ') });
+
+  const db = readDB();
+  const { customer, service, items, total, payment, address, phone } = req.body;
+  const qty = parseInt(items);
   const price = PRICING[service] || 8000;
   const newOrder = {
-    id: `WB-${String(orderCounter++).padStart(3, '0')}`,
-    customer: (customer || 'Pelanggan').trim(),
-    service: service || 'Wash Regular',
+    id: `WB-${String(db.orderCounter++).padStart(3, '0')}`,
+    customer: customer.trim(),
+    phone: phone || '',
+    address: address || '',
+    service: service,
     items: qty,
     total: total || qty * price,
+    payment: payment || 'QRIS',
     status: 'Menunggu Penjemputan',
+    rating: null,
+    review: null,
     createdAt: new Date().toISOString(),
   };
-  orders.push(newOrder);
+  db.orders.push(newOrder);
+  writeDB(db);
   res.status(201).json({ status: 'success', data: newOrder });
 });
 
 app.patch('/api/orders/:id/status', (req, res) => {
-  const idx = orders.findIndex(o => o.id === req.params.id);
-  if (idx === -1) return res.status(404).json({ status: 'error', message: 'Order tidak ditemukan' });
-  orders[idx].status = req.body.status;
-  res.json({ status: 'success', data: orders[idx] });
+  const { status } = req.body;
+  if (!VALID_STATUSES.includes(status)) {
+    return res.status(400).json({ status: 'error', message: 'Status tidak valid' });
+  }
+  const db = readDB();
+  const idx = db.orders.findIndex(o => o.id === req.params.id);
+  if (idx === -1) return res.status(404).json({ status: 'error', message: 'Pesanan tidak ditemukan' });
+  db.orders[idx].status = status;
+  writeDB(db);
+  res.json({ status: 'success', data: db.orders[idx] });
 });
 
-app.delete('/api/orders/:id', (req, res) => {
-  const before = orders.length;
-  orders = orders.filter(o => o.id !== req.params.id);
-  orders.length < before
-    ? res.json({ status: 'success' })
-    : res.status(404).json({ status: 'error', message: 'Order tidak ditemukan' });
+app.post('/api/orders/:id/rating', (req, res) => {
+  const { rating, review } = req.body;
+  if (!rating || rating < 1 || rating > 5) return res.status(400).json({ status: 'error', message: 'Rating harus 1-5' });
+  const db = readDB();
+  const idx = db.orders.findIndex(o => o.id === req.params.id);
+  if (idx === -1) return res.status(404).json({ status: 'error', message: 'Pesanan tidak ditemukan' });
+  db.orders[idx].rating = parseInt(rating);
+  db.orders[idx].review = review || '';
+  writeDB(db);
+  res.json({ status: 'success', data: db.orders[idx] });
 });
 
-// ===== AI CHATBOT =====
+// Admin-protected delete
+app.delete('/api/orders/:id', requireAuth, (req, res) => {
+  const db = readDB();
+  const before = db.orders.length;
+  db.orders = db.orders.filter(o => o.id !== req.params.id);
+  if (db.orders.length === before) return res.status(404).json({ status: 'error', message: 'Pesanan tidak ditemukan' });
+  writeDB(db);
+  res.json({ status: 'success' });
+});
+
+// Admin-only: all orders with stats
+app.get('/api/admin/orders', requireAuth, (req, res) => {
+  const db = readDB();
+  const totalRevenue = db.orders.filter(o => o.status === 'Selesai').reduce((s, o) => s + o.total, 0);
+  const activeCount = db.orders.filter(o => !['Selesai', 'Dibatalkan'].includes(o.status)).length;
+  res.json({ status: 'success', data: db.orders, count: db.orders.length, stats: { totalRevenue, activeCount } });
+});
+
+// ===== CHAT =====
 app.post('/api/chat', (req, res) => {
-  const msg = (req.body.message || '').toLowerCase();
+  if (!req.body.message) return res.status(400).json({ status: 'error', message: 'Pesan tidak boleh kosong' });
+  const msg = req.body.message.toLowerCase().slice(0, 500);
   let reply = '';
 
   if (msg.match(/halo|hai|hello|hi|selamat|hei/)) {
-    reply = '🤖 Halo! Saya WashBot, asisten pintar WashBuddy. Saya siap bantu soal pesanan, harga, promo, jadwal jemput, dan lainnya!\n\nSilakan ketik pertanyaan atau pilih topik di bawah.';
-  } else if (msg.match(/harga|biaya|berapa|tarif|pricelist|daftar harga/)) {
-    reply = '💰 **Daftar Harga WashBuddy:**\n• Wash Regular — Rp 8.000/kg\n• Wash Kilat (6 jam) — Rp 15.000/kg\n• Dry Cleaning — Rp 25.000/pcs\n• Shoe & Bag Spa — Rp 50.000/item\n• Cuci Karpet — Rp 30.000/m²\n• Cuci Sofa — Rp 100.000/seat\n\nSemua layanan termasuk antar-jemput gratis!';
-  } else if (msg.match(/promo|diskon|voucher|kode/)) {
-    reply = '🎉 **Promo Aktif Hari Ini:**\n• **NEWUSER50** — Diskon 50% pesanan pertama\n• **WEEKEND20** — Diskon 20% Sabtu & Minggu\n\nGunakan kode ini di halaman "Promo & Harga" saat checkout. Jangan sampai ketinggalan!';
-  } else if (msg.match(/lacak|status|pesanan|tracking|mana|sampai/)) {
-    const last = orders[orders.length - 1];
-    reply = last
-      ? `📦 Pesanan terakhir: **${last.id}** (${last.customer})\nStatus: **${last.status}**\n\nBuka menu **Live Tracker** untuk melihat posisi kurir secara real-time!`
-      : '📦 Belum ada pesanan aktif. Yuk, buat pesanan pertama dari menu **Pesan Laundry**!';
-  } else if (msg.match(/lama|waktu|berapa hari|kapan|durasi|estimasi/)) {
-    reply = '⏱️ **Estimasi Waktu:**\n• Wash Regular — 12-24 jam\n• Wash Kilat — hanya 6 jam!\n• Dry Cleaning — 1-2 hari\n• Karpet/Sofa — 2-3 hari\n\nWash Kilat adalah pilihan terbaik jika Anda butuh cepat!';
-  } else if (msg.match(/bayar|pembayaran|qris|transfer|cod|tunai|ewallet|gopay|ovo|dana/)) {
-    reply = '💳 **Metode Pembayaran:**\n• QRIS (GoPay, OVO, Dana, ShopeePay)\n• Transfer Bank (BCA, Mandiri, BRI, BNI)\n• COD / Bayar Tunai di Tempat\n\nSemua metode tersedia dan aman!';
-  } else if (msg.match(/jam|buka|tutup|operasional|24 jam/)) {
-    reply = '🕐 WashBuddy buka **24 jam / 7 hari** termasuk hari libur nasional!\n\nKurir siap jemput kapan saja Anda butuhkan.';
-  } else if (msg.match(/noda|kopi|darah|luntur|oli|kotor|bekas|flek/)) {
-    reply = '🧪 **Rekomendasi untuk Noda Membandel:**\n• Kopi/teh → Dry Cleaning + Oxi Boost\n• Oli mesin → Wash Regular + Heavy Duty\n• Luntur/bleed → Premium Spa Treatment\n• Darah → Dry Cleaning segera\n\nKirim sekarang, semakin cepat semakin mudah dihilangkan!';
-  } else if (msg.match(/karpet|sofa|kasur|bantal|sprei|bedcover|gorden/)) {
-    reply = '🛋️ **Layanan Cuci Besar:**\n• Karpet — Rp 30.000/m²\n• Sofa — Rp 100.000/seat\n• Sprei & Bedcover — Rp 25.000/set\n• Kasur & Bantal — Hubungi admin\n• Gorden — Rp 15.000/m²\n\nAntar jemput ke rumah Anda!';
-  } else if (msg.match(/sepatu|tas|shoes|bag|sneaker|sendal/)) {
-    reply = '👟 **Shoe & Bag Spa** mulai Rp 50.000:\n• Deep Cleaning anti-noda\n• Anti-Jamur Treatment\n• Pengkondisi Kulit Premium\n• Waterproof Coating\n• Stretching & Reshaping\n\nKembalikan kejayaan koleksi Anda!';
-  } else if (msg.match(/dry clean|jas|blazer|gaun|kebaya|sutra|wool/)) {
-    reply = '🧥 **Dry Cleaning** adalah layanan terbaik untuk:\n• Jas & Blazer formal\n• Gaun & Kebaya\n• Bahan Sutra & Wool\n• Pakaian Branded\n\nHarga mulai Rp 25.000/pcs dengan teknologi pelarut bebas air!';
-  } else if (msg.match(/alamat|lokasi|cabang|kantor|dimana/)) {
-    reply = '📍 **Lokasi WashBuddy:**\nJl. Laundry Bersih No. 1, Jakarta Selatan\n\nTapi jangan khawatir, Anda tidak perlu datang! Kurir kami yang akan **jemput & antar** ke lokasi Anda. 🛵';
-  } else if (msg.match(/daftar|register|akun|login/)) {
-    reply = '👤 Untuk membuat akun WashBuddy, cukup gunakan portal pelanggan ini! Semua data pesanan Anda tersimpan otomatis. Tidak perlu registrasi yang ribet!';
-  } else if (msg.match(/hubungkan|admin|agen|cs|customer service|operator/)) {
-    reply = '🎧 Menghubungkan Anda ke **Agen Admin WashBuddy**...\n\nMohon tunggu sebentar. Agen kami akan merespons dalam **5-10 menit**. Anda juga bisa menghubungi kami via WhatsApp di **0812-WASH-BUDDY**.';
-  } else if (msg.match(/terima kasih|makasih|thanks|thank you/)) {
-    reply = 'Sama-sama! 😊 Senang bisa membantu. Jangan ragu untuk bertanya lagi kapan saja. Selamat menggunakan WashBuddy! ✨';
-  } else if (msg.match(/komplain|masalah|rusak|hilang|kecewa|tidak puas|kualitas/)) {
-    reply = '😔 Mohon maaf atas ketidaknyamanannya.\n\nLaporan Anda **sudah diteruskan ke Tim Admin**. Agen kami akan merespons dalam 5-10 menit untuk menyelesaikan masalah ini.\n\nWashBuddy menjamin **100% kepuasan pelanggan**!';
+    reply = '🤖 Halo! Saya WashBot, asisten pintar WashBuddy. Ada yang bisa saya bantu?';
+  } else if (msg.match(/harga|biaya|berapa|tarif/)) {
+    reply = '💰 **Daftar Harga:**\n• Wash Regular — Rp 8.000/kg\n• Wash Kilat — Rp 15.000/kg\n• Dry Cleaning — Rp 25.000/pcs\n• Shoe & Bag Spa — Rp 50.000/item\n• Cuci Karpet — Rp 30.000/m²\n• Cuci Sofa — Rp 100.000/seat';
+  } else if (msg.match(/promo|diskon|voucher/)) {
+    reply = '🎉 **Promo Aktif:**\n• **NEWUSER50** — Diskon 50% pesanan pertama\n• **WEEKEND20** — Diskon 20% Sabtu & Minggu';
+  } else if (msg.match(/lacak|status|pesanan|tracking/)) {
+    const db = readDB();
+    const last = db.orders[db.orders.length - 1];
+    reply = last ? `📦 Pesanan terakhir: **${last.id}** — Status: **${last.status}**` : '📦 Belum ada pesanan aktif.';
+  } else if (msg.match(/lama|waktu|kapan|durasi/)) {
+    reply = '⏱️ **Estimasi:** Wash Regular 12-24 jam, Kilat 6 jam, Dry Clean 1-2 hari, Karpet/Sofa 2-3 hari';
+  } else if (msg.match(/bayar|qris|transfer|cod/)) {
+    reply = '💳 Kami terima: QRIS, Transfer Bank (BCA/Mandiri/BRI/BNI), & COD';
+  } else if (msg.match(/jam|buka|tutup|operasional/)) {
+    reply = '🕐 WashBuddy buka **24 jam / 7 hari** termasuk hari libur!';
+  } else if (msg.match(/karpet|sofa|kasur|sprei|bedcover/)) {
+    reply = '🛋️ **Cuci Besar:** Karpet Rp 30.000/m², Sofa Rp 100.000/seat, Sprei Rp 25.000/set';
+  } else if (msg.match(/sepatu|tas|shoes|bag/)) {
+    reply = '👟 **Shoe & Bag Spa** Rp 50.000: Deep Clean, Anti-Jamur, Waterproof Coating';
+  } else if (msg.match(/komplain|masalah|rusak|hilang|kecewa/)) {
+    reply = '😔 Mohon maaf! Laporan Anda diteruskan ke Tim Admin. Respons dalam 5-10 menit.';
+  } else if (msg.match(/admin|agen|cs|operator/)) {
+    reply = '🎧 Menghubungkan ke **Agen Admin**... Mohon tunggu 5-10 menit atau hubungi WA: **0812-WASH-BUDDY**';
+  } else if (msg.match(/terima kasih|makasih|thanks/)) {
+    reply = 'Sama-sama! 😊 Selamat menggunakan WashBuddy! ✨';
   } else {
-    reply = '🤔 Pertanyaan bagus! Saya tidak menemukan jawaban spesifik, tapi Anda bisa:\n\n1. Pilih topik dari menu di bawah\n2. Tekan **"Tanya Admin Langsung"** untuk bicara dengan agen\n3. Hubungi WhatsApp: **0812-WASH-BUDDY**\n\nKami selalu siap membantu! 💙';
+    reply = '🤔 Saya belum memahami pertanyaan itu. Pilih topik di bawah atau hubungi Admin langsung!';
   }
-
   res.json({ reply });
 });
 
-// ===== SPA FALLBACK (Express 5 compatible) =====
-const sendApp = (req, res) => {
-  const file = path.join(__dirname, '../dist/app/index.html');
-  res.sendFile(file, err => {
-    if (err) res.sendFile(path.join(__dirname, '../app/index.html'));
+// ===== PAYMENT MOCK =====
+app.post('/api/payment/create', (req, res) => {
+  const { orderId, amount, method } = req.body;
+  if (!orderId || !amount) return res.status(400).json({ status: 'error', message: 'Data pembayaran tidak lengkap' });
+  const paymentId = 'PAY-' + crypto.randomBytes(6).toString('hex').toUpperCase();
+  res.json({
+    status: 'success',
+    paymentId,
+    orderId,
+    amount,
+    method: method || 'QRIS',
+    qrisUrl: `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=WASHBUDDY-${paymentId}`,
+    expiredAt: new Date(Date.now() + 15 * 60 * 1000).toISOString(),
+    message: 'Pembayaran berhasil dibuat. Selesaikan dalam 15 menit.',
   });
-};
-const sendAdmin = (req, res) => {
-  const file = path.join(__dirname, '../dist/admin/index.html');
-  res.sendFile(file, err => {
-    if (err) res.sendFile(path.join(__dirname, '../admin/index.html'));
-  });
-};
-const sendRoot = (req, res) => {
-  const file = path.join(__dirname, '../dist/index.html');
-  res.sendFile(file, err => {
-    if (err) res.sendFile(path.join(__dirname, '../index.html'));
-  });
-};
+});
 
-app.get('/app', sendApp);
-app.use('/app/', sendApp);
-app.get('/admin', sendAdmin);
-app.use('/admin/', sendAdmin);
-app.use('/', sendRoot);
+// ===== SPA FALLBACK =====
+const tryFile = (main, fallback) => (req, res) => {
+  res.sendFile(main, err => { if (err) res.sendFile(fallback, e => { if (e) res.status(404).send('Not found'); }); });
+};
+app.get('/app', tryFile(path.join(__dirname, '../dist/app/index.html'), path.join(__dirname, '../app/index.html')));
+app.use('/app/', tryFile(path.join(__dirname, '../dist/app/index.html'), path.join(__dirname, '../app/index.html')));
+app.get('/admin', tryFile(path.join(__dirname, '../dist/admin/index.html'), path.join(__dirname, '../admin/index.html')));
+app.use('/admin/', tryFile(path.join(__dirname, '../dist/admin/index.html'), path.join(__dirname, '../admin/index.html')));
+app.use('/', tryFile(path.join(__dirname, '../dist/index.html'), path.join(__dirname, '../index.html')));
 
-// ===== START SERVER =====
 app.listen(PORT, () => {
-  console.log(`\n🚀 WashBuddy Server running on http://localhost:${PORT}`);
-  console.log(`   API: http://localhost:${PORT}/api/health\n`);
+  console.log(`\n🚀 WashBuddy Server → http://localhost:${PORT}`);
+  console.log(`   API Health: http://localhost:${PORT}/api/health`);
+  console.log(`   Admin Password: ${ADMIN_PASS}\n`);
 });
 
 export default app;

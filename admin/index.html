@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="WashBuddy Admin Commander - Dashboard manajemen pesanan laundry.">
+  <meta name="robots" content="noindex, nofollow">
   <title>WashBuddy | Admin Commander</title>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -11,160 +12,229 @@
   <link rel="stylesheet" href="./admin.css">
 </head>
 <body>
-  <div class="admin-layout">
-    <!-- Sidebar -->
-    <aside class="sidebar glass-panel">
-      <div class="brand">
-        <div class="logo-wrap advanced-logo">
-             <div class="ring ring1"></div>
-             <div class="ring ring2"></div>
-             <i class="ph-fill ph-shield-check drop-icon"></i>
-        </div>
-        <span>Commander</span>
-      </div>
-      
-      <nav class="nav-menu">
-        <a href="#dashboard" class="active"><i class="ph-fill ph-chart-pie-slice"></i> Dasbor Utama</a>
-        <a href="#orders"><i class="ph-fill ph-list-dashes"></i> Manajemen Pesanan <span class="badge-count">3</span></a>
-        <a href="#fleet"><i class="ph-fill ph-motorcycle"></i> Armada Kurir</a>
-        <a href="#customers"><i class="ph-fill ph-users"></i> Data Pelanggan</a>
-        <div class="nav-divider"></div>
-        <a href="#settings"><i class="ph-fill ph-cpu"></i> Konfigurasi AI</a>
-        <a href="../index.html" class="logout"><i class="ph-bold ph-sign-out"></i> Keluar</a>
-      </nav>
-      
-      <div class="server-status">
-         <div class="status-dot blink"></div> Server Induk: Online
-      </div>
-    </aside>
 
-    <!-- Main Content -->
-    <main class="main-content">
-      <header class="top-header glass-panel">
+<!-- ===== LOGIN SCREEN ===== -->
+<div class="login-overlay" id="login-overlay">
+  <div class="cyber-grid"></div>
+  <div class="bg-orbs">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+  </div>
+  <div class="login-card">
+    <div class="login-logo">
+      <div class="advanced-logo">
+        <div class="ring ring1"></div>
+        <div class="ring ring2"></div>
+        <i class="ph-fill ph-drop drop-icon"></i>
+      </div>
+      <span>WashBuddy</span>
+    </div>
+    <div class="login-header">
+      <div class="shield-icon"><i class="ph-fill ph-shield-check"></i></div>
+      <h2>Admin Commander</h2>
+      <p>Masukkan password untuk mengakses panel kontrol</p>
+    </div>
+    <div class="login-form">
+      <div class="input-group" id="pass-group">
+        <i class="ph-bold ph-lock-key"></i>
+        <input type="password" id="admin-password" placeholder="Masukkan password admin..." autocomplete="current-password">
+        <button type="button" onclick="togglePassVis()" id="eye-btn"><i class="ph-bold ph-eye" id="eye-icon"></i></button>
+      </div>
+      <div id="login-error" class="login-error hidden"></div>
+      <button class="btn-login" id="login-btn" onclick="doLogin()">
+        <i class="ph-bold ph-sign-in"></i>
+        <span>Masuk ke Dashboard</span>
+      </button>
+      <p class="login-hint"><i class="ph-fill ph-info"></i> Default password: <code>washbuddy2026</code></p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MAIN DASHBOARD (hidden until logged in) ===== -->
+<div class="admin-layout hidden" id="admin-app">
+
+  <!-- Sidebar Nav -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="advanced-logo">
+        <div class="ring ring1"></div>
+        <div class="ring ring2"></div>
+        <i class="ph-fill ph-drop drop-icon"></i>
+      </div>
+      <span>WashBuddy</span>
+    </div>
+    <nav class="nav-menu">
+      <a href="#" class="active" onclick="return false;"><i class="ph-fill ph-squares-four"></i> Dashboard</a>
+      <a href="#" onclick="alert('Manajemen armada kurir akan tersedia di versi Pro!'); return false;"><i class="ph-fill ph-motorcycle"></i> Armada Kurir</a>
+      <a href="#" onclick="alert('Manajemen pelanggan akan tersedia di versi Pro!'); return false;"><i class="ph-fill ph-users"></i> Pelanggan</a>
+      <a href="#" onclick="alert('Laporan keuangan akan tersedia di versi Pro!'); return false;"><i class="ph-fill ph-chart-line-up"></i> Laporan</a>
+      <a href="#" onclick="alert('Pengaturan akan tersedia di versi Pro!'); return false;"><i class="ph-fill ph-gear"></i> Pengaturan</a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="admin-profile">
+        <img src="https://ui-avatars.com/api/?name=Admin&background=00E5FF&color=0a0f1e&bold=true" alt="Admin">
+        <div>
+          <h4>Admin</h4>
+          <p>Commander</p>
+        </div>
+      </div>
+      <button class="btn-logout" onclick="doLogout()"><i class="ph-bold ph-sign-out"></i></button>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-panel">
+    <!-- Header -->
+    <header class="admin-header">
+      <div>
+        <h2>Dashboard <span id="live-badge" class="live-badge"><span class="dot-live"></span> LIVE</span></h2>
+        <p id="header-time" class="header-time"></p>
+      </div>
+      <div class="header-actions">
         <div class="search-bar">
-           <i class="ph-bold ph-magnifying-glass"></i>
-           <input type="text" placeholder="Pencarian Global: ID Pesanan, Pelanggan, atau Kurir...">
+          <i class="ph-bold ph-magnifying-glass"></i>
+          <input type="text" placeholder="Cari pesanan, pelanggan...">
         </div>
-        <div class="header-actions">
-           <button class="icon-btn"><i class="ph-fill ph-bell"></i><span class="dot"></span></button>
-           <div class="user-profile">
-              <img src="https://ui-avatars.com/api/?name=Admin&background=B154F0&color=fff&bold=true" alt="Admin">
-              <div class="profile-text">
-                 <h4>Admin Alpha</h4>
-                 <p>Superuser</p>
-              </div>
-           </div>
-        </div>
-      </header>
-
-      <div class="dashboard-grid">
-         <!-- Stats Row -->
-         <div class="stat-card glass-panel">
-            <div class="stat-icon revenue-bg"><i class="ph-fill ph-currency-circle-dollar"></i></div>
-            <div class="stat-info">
-               <p>Pendapatan (Hari Ini)</p>
-               <h3>Rp 4.250.000</h3>
-               <span class="trend up"><i class="ph-bold ph-trend-up"></i> +12.5% vs Kemarin</span>
-            </div>
-         </div>
-         <div class="stat-card glass-panel">
-            <div class="stat-icon orders-bg"><i class="ph-fill ph-package"></i></div>
-            <div class="stat-info">
-               <p>Pesanan Aktif</p>
-               <h3>24 Transaksi</h3>
-               <span class="trend"><i class="ph-bold ph-minus"></i> Volume Stabil</span>
-            </div>
-         </div>
-         <div class="stat-card glass-panel">
-            <div class="stat-icon fleet-bg"><i class="ph-fill ph-motorcycle"></i></div>
-            <div class="stat-info">
-               <p>Kurir Beroperasi</p>
-               <h3>8 Personil</h3>
-               <span class="trend up"><i class="ph-bold ph-map-pin"></i> Sistem GPS Aktif</span>
-            </div>
-         </div>
-
-         <!-- Data Table Panel -->
-         <div class="data-panel glass-panel">
-            <div class="panel-header">
-               <h3><i class="ph-fill ph-list-numbers text-primary"></i> Pemantauan Pesanan Live</h3>
-               <button class="btn-primary-small" onclick="openManualOrder()"><i class="ph-bold ph-plus"></i> Pesanan Manual</button>
-            </div>
-            <div class="table-responsive">
-               <table class="data-table">
-                  <thead>
-                     <tr>
-                        <th>ID TRX</th>
-                        <th>Pelanggan</th>
-                        <th>Layanan</th>
-                        <th>Status</th>
-                        <th>Tagihan</th>
-                        <th>Tindakan</th>
-                     </tr>
-                  </thead>
-                  <tbody id="orders-tbody">
-                     <!-- Populated by JS -->
-                  </tbody>
-               </table>
-            </div>
-         </div>
-
-         <!-- AI Analysis Panel -->
-         <div class="ai-panel glass-panel">
-            <div class="panel-header">
-               <h3><i class="ph-fill ph-cpu text-secondary"></i> WashBot AI Core</h3>
-            </div>
-            <div class="ai-content">
-               <div class="alert-box">
-                  <div class="alert-icon"><i class="ph-fill ph-warning-circle"></i></div>
-                  <div>
-                     <h4>Prediksi Lonjakan (AI)</h4>
-                     <p>Peluang kenaikan 40% pesanan sore ini berdasarkan data cuaca mendung.</p>
-                  </div>
-               </div>
-               
-               <div class="fleet-map">
-                  <!-- Simulated Map UI -->
-                  <div class="map-grid-bg">
-                     <div class="dot-pulse" style="top:30%; left:40%;"></div>
-                     <div class="dot-pulse active-courier" style="top:60%; left:70%;"></div>
-                     <div class="dot-pulse" style="top:80%; left:20%;"></div>
-                  </div>
-                  <p class="text-center mt-2 text-muted" style="font-size:0.85rem">Visualisasi Radar Kurir Aktif</p>
-               </div>
-            </div>
-         </div>
+        <button class="btn-primary-small" onclick="openManualOrder()">
+          <i class="ph-bold ph-plus"></i> Pesanan Manual
+        </button>
       </div>
-    </main>
-  </div>
-  <!-- Chat Support Panel -->
-  <div class="chat-panel glass-panel" style="position: fixed; bottom: 2rem; right: 2rem; width: 350px; z-index: 1000; padding: 1.5rem;">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 1rem;">
-      <h3 style="font-size: 1.1rem;"><i class="ph-fill ph-chats" style="color: var(--primary);"></i> Live Support Agent</h3>
-    </div>
-    <div id="admin-chat-box" style="height: 200px; overflow-y: auto; display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1rem;">
-      <div style="background: rgba(255,255,255,0.05); padding: 0.8rem; border-radius: 8px; font-size: 0.9rem;"><span style="color: var(--secondary); font-weight: bold;">Sultan (Pelanggan):</span><br>Tolong bantu saya hilangkan noda cat minyak di jaket parasut saya.</div>
-    </div>
-    <div style="display: flex; gap: 0.5rem;">
-      <input type="text" id="admin-chat-input" placeholder="Balas pesan..." style="flex: 1; padding: 0.8rem; border-radius: 8px; border: none; background: rgba(0,0,0,0.2); color: white;">
-      <button class="btn-primary-small" onclick="replyChat()"><i class="ph-bold ph-paper-plane-right"></i></button>
-    </div>
-  </div>
-  <script>
-    function replyChat() {
-      const input = document.getElementById('admin-chat-input');
-      const box = document.getElementById('admin-chat-box');
-      if(input.value.trim() !== '') {
-        box.innerHTML += '<div style="background: rgba(0,229,255,0.1); padding: 0.8rem; border-radius: 8px; font-size: 0.9rem; text-align: right;"><span style="color: var(--primary); font-weight: bold;">Anda (Admin):</span><br>' + input.value + '</div>';
-        input.value = '';
-        box.scrollTop = box.scrollHeight;
-        alert('Pesan terkirim ke Pelanggan!');
-      }
-    }
-  </script>
+    </header>
 
-  <script src="./admin.js"></script>
+    <div class="dashboard-grid">
+      <!-- Stats Row -->
+      <div class="stat-card glass-panel" id="stat-revenue">
+        <div class="stat-icon revenue-bg"><i class="ph-fill ph-currency-circle-dollar"></i></div>
+        <div class="stat-info">
+          <p>Pendapatan (Total)</p>
+          <h3 id="stat-total-revenue">Rp 0</h3>
+          <span class="trend up"><i class="ph-bold ph-trend-up"></i> Live Data</span>
+        </div>
+      </div>
+      <div class="stat-card glass-panel">
+        <div class="stat-icon orders-bg"><i class="ph-fill ph-package"></i></div>
+        <div class="stat-info">
+          <p>Total Pesanan</p>
+          <h3 id="stat-total-orders">0</h3>
+          <span class="trend"><i class="ph-bold ph-minus"></i> <span id="stat-active">0</span> aktif</span>
+        </div>
+      </div>
+      <div class="stat-card glass-panel">
+        <div class="stat-icon fleet-bg"><i class="ph-fill ph-check-circle"></i></div>
+        <div class="stat-info">
+          <p>Pesanan Selesai</p>
+          <h3 id="stat-done">0</h3>
+          <span class="trend up"><i class="ph-bold ph-star"></i> Rating rata-rata: <span id="stat-rating">-</span></span>
+        </div>
+      </div>
+
+      <!-- Data Table -->
+      <div class="data-panel glass-panel">
+        <div class="panel-header">
+          <h3><i class="ph-fill ph-list-numbers text-primary"></i> Pemantauan Pesanan Live</h3>
+          <div style="display:flex; gap:1rem; align-items:center;">
+            <span id="last-updated" style="font-size:0.85rem; color:var(--text-muted);"></span>
+            <button class="btn-primary-small" onclick="loadOrders()"><i class="ph-bold ph-arrows-clockwise"></i> Refresh</button>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Pelanggan</th>
+                <th>Layanan</th>
+                <th>Total</th>
+                <th>Status</th>
+                <th>Tindakan</th>
+              </tr>
+            </thead>
+            <tbody id="orders-tbody">
+              <tr><td colspan="6" style="text-align:center; padding:3rem; color:var(--text-muted);">Memuat data...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- AI Analysis Panel -->
+      <div class="ai-panel glass-panel">
+        <div class="panel-header">
+          <h3><i class="ph-fill ph-cpu text-secondary"></i> WashBot AI Core</h3>
+        </div>
+        <div class="ai-content">
+          <div class="alert-box">
+            <div class="alert-icon"><i class="ph-fill ph-warning-circle"></i></div>
+            <div>
+              <h4>Prediksi Lonjakan (AI)</h4>
+              <p>Peluang kenaikan 40% pesanan sore ini berdasarkan pola historis.</p>
+            </div>
+          </div>
+          <div class="fleet-map">
+            <div class="map-grid-bg">
+              <div class="dot-pulse" style="top:30%; left:40%;"></div>
+              <div class="dot-pulse active-courier" style="top:60%; left:70%;"></div>
+              <div class="dot-pulse" style="top:80%; left:20%;"></div>
+            </div>
+            <p class="text-center mt-2 text-muted" style="font-size:0.85rem">Visualisasi Radar Kurir Aktif</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Manual Order Modal -->
+<div class="modal-overlay hidden" id="manual-order-modal">
+  <div class="modal-box glass-panel">
+    <button class="close-modal" onclick="document.getElementById('manual-order-modal').classList.add('hidden')"><i class="ph-bold ph-x"></i></button>
+    <h3><i class="ph-fill ph-plus-circle text-primary"></i> Buat Pesanan Manual</h3>
+    <p style="color:var(--text-muted); margin-bottom:2rem;">Catat pesanan yang diterima via telepon atau langsung</p>
+    <div class="modal-form">
+      <input type="text" id="m-customer" placeholder="Nama Pelanggan *" required>
+      <input type="tel" id="m-phone" placeholder="No. HP Pelanggan">
+      <input type="text" id="m-address" placeholder="Alamat Pengambilan">
+      <select id="m-service">
+        <option value="Wash Regular">Wash Regular - Rp 8.000/kg</option>
+        <option value="Wash Kilat">Wash Kilat - Rp 15.000/kg</option>
+        <option value="Dry Cleaning">Dry Cleaning - Rp 25.000/pcs</option>
+        <option value="Premium Spa">Shoe/Bag Spa - Rp 50.000/item</option>
+        <option value="Cuci Karpet">Cuci Karpet - Rp 30.000/m²</option>
+        <option value="Cuci Sofa">Cuci Sofa - Rp 100.000/seat</option>
+      </select>
+      <input type="number" id="m-qty" placeholder="Jumlah (kg/pcs/item)" value="1" min="1" max="100">
+      <select id="m-payment">
+        <option value="COD">COD / Bayar di Tempat</option>
+        <option value="QRIS">QRIS</option>
+        <option value="Transfer">Transfer Bank</option>
+      </select>
+    </div>
+    <div id="m-total-preview" style="background:rgba(0,229,255,0.05); border:1px solid rgba(0,229,255,0.2); border-radius:12px; padding:1.5rem; margin-bottom:1.5rem; text-align:center;">
+      <p style="color:var(--text-muted); margin-bottom:0.5rem;">Estimasi Total</p>
+      <h2 id="m-total-display" class="gradient-text">Rp 8.000</h2>
+    </div>
+    <button class="btn-primary" style="width:100%" onclick="submitManualOrder()">
+      <i class="ph-bold ph-check-circle"></i> Buat Pesanan
+    </button>
+  </div>
+</div>
+
+<!-- Live Support Panel -->
+<div class="chat-panel glass-panel" style="position:fixed; bottom:2rem; right:2rem; width:350px; z-index:1000; padding:1.5rem; display:none;" id="support-panel">
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:1rem;">
+    <h3 style="font-size:1.1rem;"><i class="ph-fill ph-chats" style="color:var(--primary);"></i> Live Support</h3>
+    <button class="close-btn" onclick="document.getElementById('support-panel').style.display='none'"><i class="ph-bold ph-x"></i></button>
+  </div>
+  <div id="admin-chat-box" style="height:200px; overflow-y:auto; display:flex; flex-direction:column; gap:0.5rem; margin-bottom:1rem;"></div>
+  <div style="display:flex; gap:0.5rem;">
+    <input type="text" id="admin-chat-input" placeholder="Balas pesan pelanggan..." style="flex:1; padding:0.8rem; border-radius:8px; border:1px solid var(--border-glass); background:rgba(0,0,0,0.3); color:white; outline:none;">
+    <button class="btn-primary-small" onclick="sendAdminReply()"><i class="ph-bold ph-paper-plane-right"></i></button>
+  </div>
+</div>
+
+<button class="chatbot-fab" onclick="document.getElementById('support-panel').style.display='flex'; document.getElementById('support-panel').style.flexDirection='column';" style="display:none;" id="support-fab">
+  <i class="ph-fill ph-chats"></i>
+</button>
+
+<script src="./admin.js"></script>
 </body>
 </html>
-
-

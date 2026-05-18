@@ -170,3 +170,24 @@ document.querySelectorAll('.glass-panel, .bento-item').forEach(card => {
         card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
     });
 });
+
+// ===== HAMBURGER MOBILE MENU =====
+window.toggleMobileMenu = function() {
+  const menu = document.getElementById('mobile-menu');
+  const btn = document.getElementById('hamburger');
+  if (!menu) return;
+  const isOpen = menu.classList.contains('open');
+  menu.classList.toggle('open', !isOpen);
+  if (btn) btn.innerHTML = isOpen ? '<i class="ph-bold ph-list"></i>' : '<i class="ph-bold ph-x"></i>';
+};
+
+// Close mobile menu on outside click
+document.addEventListener('click', (e) => {
+  const menu = document.getElementById('mobile-menu');
+  const btn = document.getElementById('hamburger');
+  if (menu && menu.classList.contains('open') && !menu.contains(e.target) && !btn?.contains(e.target)) {
+    menu.classList.remove('open');
+    if (btn) btn.innerHTML = '<i class="ph-bold ph-list"></i>';
+  }
+});
+
