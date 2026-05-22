@@ -190,7 +190,7 @@
                      </div>
                   </div>
                   <!-- Service 3 -->
-                  <div class="srv-card-img" onclick="selectService(this, 'Dry Cleaning')" style="background-image: url('https://images.unsplash.com/photo-1583845112239-99ef134fa368?q=80&w=600&auto=format&fit=crop');">
+                  <div class="srv-card-img" onclick="selectService(this, 'Dry Cleaning')" style="background-image: url('https://images.unsplash.com/photo-1520637102912-2df6bb2aec6d?q=80&w=600&auto=format&fit=crop');">
                      <div class="overlay">
                          <div class="icon-wrap"><i class="ph-fill ph-coat-hanger"></i></div>
                          <h4>Dry Cleaning</h4>
@@ -293,159 +293,165 @@
                </div>
             </div>
          </div>
-      </section>
+       </section>
 
-      <!-- VIEW: PRICING -->
-      <section id="view-pricing" class="page-view hidden">
-         <div class="view-header text-center">
-            <h2 class="gradient-text">Harga Transparan. Hasil Cemerlang.</h2>
-            <p>Tidak ada biaya tersembunyi. Semua harga sesuai kualitas.</p>
-         </div>
-         <div class="pricing-grid">
-            <div class="promo-banner-large glass-card" style="background-image: url('https://images.unsplash.com/photo-1545173168-9f1947eebb7f?q=80&w=800&auto=format&fit=crop');">
-               <div class="promo-overlay">
-                   <h3 class="gradient-text" style="font-size: 2.5rem;">Diskon 50% Khusus Anda!</h3>
-                   <p>Klaim potongan harga 50% untuk pesanan pertama tanpa minimum order.</p>
-                   <div class="promo-code-box">
-                      <span id="promo-text">NEWUSER50</span>
-                      <button class="btn-primary" onclick="copyPromo()"><i class="ph-bold ph-copy"></i> Salin</button>
-                   </div>
-               </div>
-            </div>
-            
-            <div class="price-list glass-card">
-               <h3><i class="ph-fill ph-list-dashes text-primary"></i> Daftar Layanan Utama</h3>
-               <ul>
-                  <li><span><i class="ph-bold ph-check text-success"></i> Wash & Fold Reguler</span> <strong>Rp 8.000 / kg</strong></li>
-                  <li><span><i class="ph-bold ph-check text-success"></i> Wash & Iron Kilat</span> <strong>Rp 12.000 / kg</strong></li>
-                  <li><span><i class="ph-bold ph-check text-success"></i> Dry Cleaning Jas/Gaun</span> <strong>Rp 25.000 / pcs</strong></li>
-                  <li><span><i class="ph-bold ph-check text-success"></i> Premium Shoe Spa</span> <strong>Rp 50.000 / psg</strong></li>
-                  <li><span><i class="ph-bold ph-check text-success"></i> Karpet & Bedcover</span> <strong>Mulai Rp 40.000</strong></li>
-               </ul>
-            </div>
-         </div>
-      </section>
-
-      <!-- VIEW 3: AI SCANNER -->
-      <section id="view-scanner" class="page-view hidden">
-         <div class="view-header text-center">
-            <h2 class="gradient-text">WashBot Vision AI</h2>
-            <p>Upload atau arahkan kamera ke noda, biarkan AI kami menganalisis jenis kain dan nodanya.</p>
-         </div>
-         <div class="scanner-wrapper">
-            <div class="scanner-box glass-card">
-               <div class="scan-area" id="scan-area">
-                  <div class="pulse-ring">
-                     <div class="camera-icon-wrap"><i class="ph-fill ph-camera"></i></div>
-                  </div>
-                  <h3 style="margin-top: 1rem;">Aktifkan Lensa</h3>
-                  <p style="color:var(--text-muted); margin-bottom: 2rem;">Arahkan ke pakaian kotor.</p>
-                  <button class="btn-primary massive-btn" onclick="startScan()"><i class="ph-bold ph-scan"></i> Pindai Noda</button>
-               </div>
-               <div class="scan-animation hidden" id="scan-animation">
-                  <div class="scan-line"></div>
-                  <img id="scan-image" src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=600&auto=format&fit=crop" alt="Shirt" style="border-radius:12px; width:100%; height: 250px; object-fit: cover;">
-                  <div class="analyzing-backdrop"></div>
-                  <div class="analyzing-text"><i class="ph-bold ph-spinner-gap spin"></i> Memproses Jaringan Saraf Tiruan...</div>
-               </div>
-            </div>
-
-            <div class="scan-result hidden" id="scan-result">
-               <div class="glass-card result-card">
-                   <h3 style="margin-bottom: 1.5rem;"><i class="ph-fill ph-check-circle text-success" style="font-size: 2rem;"></i> Analisis Selesai</h3>
-                   <div class="result-stats">
-                       <div class="stat-box">
-                           <i class="ph-fill ph-yarn text-primary"></i>
-                           <p>Kain</p>
-                           <h4 id="scan-fabric">Menganalisis...</h4>
-                       </div>
-                       <div class="stat-box">
-                           <i class="ph-fill ph-drop text-secondary"></i>
-                           <p>Noda</p>
-                           <h4 id="scan-stain">Menganalisis...</h4>
-                       </div>
-                   </div>
-                   <div class="recommendation-box">
-                      <h4><i class="ph-fill ph-lightbulb text-primary"></i> Solusi WashBot:</h4>
-                      <p id="scan-rec">Menunggu hasil analisis AI...</p>
-                   </div>
-                   <button class="btn-primary full-width massive-btn" onclick="navigate('view-order')"><i class="ph-bold ph-shopping-cart"></i> Pesan Rekomendasi Ini</button>
-               </div>
-            </div>
-         </div>
-      </section>
-
-      <!-- VIEW 4: LIVE TRACKING -->
-      <section id="view-tracking" class="page-view hidden">
-         <div class="view-header flex-header">
-            <div>
-               <h2 class="gradient-text">Lacak Pengiriman</h2>
-               <p>Pantau posisi mitra kurir WashBuddy menuju lokasi Anda secara live.</p>
-            </div>
-                  <!-- Reload button -->
-                  <button class="btn-secondary" onclick="if(isTracking){clearInterval(countdownInterval);isTracking=false;} startLiveTracking();"><i class="ph-fill ph-arrows-clockwise"></i> Mulai Ulang</button>
-         </div>
-         
-         <div class="tracker-layout">
-             <div class="map-simulation glass-card" style="padding: 0;">
-                <div class="map-bg-modern">
-                   <svg class="route-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
-                      <path id="courier-path-bg" d="M 10 85 C 40 85, 30 20, 90 20" stroke="rgba(255,255,255,0.1)" stroke-width="2" stroke-dasharray="2,2" fill="none"/>
-                      <path id="courier-path" d="M 10 85 C 40 85, 30 20, 90 20" stroke="var(--primary)" stroke-width="2.5" fill="none" class="animated-path" style="filter: drop-shadow(0 0 5px var(--primary));"/>
-                   </svg>
-                   <div class="map-pin courier" id="moving-courier">
-                      <div class="pin-glow"></div>
-                      <i class="ph-fill ph-motorcycle"></i>
-                   </div>
-                   <div class="map-pin store" style="top: 85%; left: 10%;"><i class="ph-fill ph-storefront"></i><span class="pin-label">Toko Pusat</span></div>
-                   <div class="map-pin home" style="top: 20%; left: 90%;"><i class="ph-fill ph-house"></i><span class="pin-label">Rumah Anda</span></div>
+       <!-- VIEW: PRICING -->
+       <section id="view-pricing" class="page-view hidden">
+          <div class="view-header text-center">
+             <h2 class="gradient-text">Harga Transparan. Hasil Cemerlang.</h2>
+             <p>Tidak ada biaya tersembunyi. Semua harga sesuai kualitas.</p>
+          </div>
+          <div class="pricing-grid">
+             <div class="promo-banner-large glass-card" style="background-image: url('https://images.unsplash.com/photo-1545173168-9f1947eebb7f?q=80&w=800&auto=format&fit=crop');">
+                <div class="promo-overlay">
+                    <h3 class="gradient-text" style="font-size: 2.5rem;">Diskon 50% Khusus Anda!</h3>
+                    <p>Klaim potongan harga 50% untuk pesanan pertama tanpa minimum order.</p>
+                    <div class="promo-code-box">
+                       <span id="promo-text">NEWUSER50</span>
+                       <button class="btn-primary" onclick="copyPromo()"><i class="ph-bold ph-copy"></i> Salin</button>
+                    </div>
                 </div>
              </div>
              
-             <div class="glass-card courier-info-panel">
-                 <h3 style="margin-bottom: 1.5rem; font-size: 1.2rem;">Status Kurir</h3>
-                  <div class="courier-profile">
-                      <img id="courier-img" src="https://ui-avatars.com/api/?name=Kurir&background=00E5FF&color=0a0f1e&bold=true" alt="Kurir">
-                      <div>
-                          <h4 id="courier-name">Memilih Kurir...</h4>
-                          <p id="courier-rating"><i class="ph-fill ph-star text-primary"></i> -- (Mitra Elite)</p>
-                      </div>
-                  </div>
-                  
-                  <div class="delivery-stats-grid">
-                      <div class="d-stat-box">
-                          <i class="ph-fill ph-clock text-secondary"></i>
-                          <p>Estimasi</p>
-                          <h2 id="live-time" class="gradient-text">02:00</h2>
-                      </div>
-                      <div class="d-stat-box">
-                          <i class="ph-fill ph-map-pin text-primary"></i>
-                          <p>Sisa Jarak</p>
-                          <h2 id="live-distance">5.0 km</h2>
-                      </div>
-                  </div>
-                  
-                  <div class="progress-bar-modern">
-                      <div class="progress-fill" id="courier-progress" style="width:0%"></div>
-                  </div>
-                  
-                  <div class="courier-actions">
-                      <button class="btn-primary" id="chat-courier-btn" style="flex: 2;"><i class="ph-fill ph-chat-circle-dots"></i> Chat Kurir</button>
-                      <button class="btn-secondary" style="flex: 1;"><i class="ph-fill ph-phone"></i></button>
-                  </div>
+             <div class="price-list glass-card">
+                <h3><i class="ph-fill ph-list-dashes text-primary"></i> Daftar Layanan Utama</h3>
+                <ul>
+                   <li><span><i class="ph-bold ph-check text-success"></i> Wash & Fold Reguler</span> <strong>Rp 8.000 / kg</strong></li>
+                   <li><span><i class="ph-bold ph-check text-success"></i> Wash & Iron Kilat</span> <strong>Rp 12.000 / kg</strong></li>
+                   <li><span><i class="ph-bold ph-check text-success"></i> Dry Cleaning Jas/Gaun</span> <strong>Rp 25.000 / pcs</strong></li>
+                   <li><span><i class="ph-bold ph-check text-success"></i> Premium Shoe Spa</span> <strong>Rp 50.000 / psg</strong></li>
+                   <li><span><i class="ph-bold ph-check text-success"></i> Karpet & Bedcover</span> <strong>Mulai Rp 40.000</strong></li>
+                </ul>
              </div>
-         </div>
-      </section>
-  </main>
+          </div>
+       </section>
 
-  <!-- Payment Modal -->
-  <div class="payment-modal hidden" id="payment-modal">
-      <div class="payment-box glass-card">
-          <button class="close-btn" onclick="closePayment()"><i class="ph-bold ph-x"></i></button>
+       <!-- VIEW 3: AI SCANNER -->
+       <section id="view-scanner" class="page-view hidden">
+          <div class="view-header text-center">
+             <h2 class="gradient-text">WashBot Vision AI</h2>
+             <p>Upload atau arahkan kamera ke noda, biarkan AI kami menganalisis jenis kain dan nodanya.</p>
+          </div>
+          <div class="scanner-wrapper">
+             <div class="scanner-box glass-card">
+                <div class="scan-area" id="scan-area">
+                   <div class="pulse-ring">
+                      <div class="camera-icon-wrap"><i class="ph-fill ph-camera"></i></div>
+                   </div>
+                   <h3 style="margin-top: 1rem;">Aktifkan Lensa</h3>
+                   <p style="color:var(--text-muted); margin-bottom: 2rem;">Arahkan ke pakaian kotor.</p>
+                   <button class="btn-primary massive-btn" onclick="startScan()"><i class="ph-bold ph-scan"></i> Pindai Noda</button>
+                </div>
+                <div class="scan-animation hidden" id="scan-animation">
+                   <div class="scan-line"></div>
+                   <div class="scanner-grid"></div>
+                   <div class="scanner-target"><i class="ph-bold ph-crosshair"></i></div>
+                   <img id="scan-image" src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=600&auto=format&fit=crop" alt="Shirt" style="border-radius:12px; width:100%; height: 250px; object-fit: cover;">
+                   <div class="analyzing-backdrop"></div>
+                   <div class="analyzing-text"><i class="ph-bold ph-spinner-gap spin"></i> <span id="scan-status-text">Memproses Jaringan Saraf Tiruan...</span></div>
+                </div>
+             </div>
+
+             <div class="scan-result hidden" id="scan-result">
+                <div class="glass-card result-card">
+                    <h3 style="margin-bottom: 1.5rem;"><i class="ph-fill ph-check-circle text-success" style="font-size: 2rem;"></i> Analisis Selesai</h3>
+                    <div class="result-stats">
+                        <div class="stat-box">
+                            <i class="ph-fill ph-yarn text-primary"></i>
+                            <p>Kain</p>
+                            <h4 id="scan-fabric">Menganalisis...</h4>
+                        </div>
+                        <div class="stat-box">
+                            <i class="ph-fill ph-drop text-secondary"></i>
+                            <p>Noda</p>
+                            <h4 id="scan-stain">Menganalisis...</h4>
+                        </div>
+                    </div>
+                    <div class="recommendation-box">
+                       <h4><i class="ph-fill ph-lightbulb text-primary"></i> Solusi WashBot:</h4>
+                       <p id="scan-rec">Menunggu hasil analisis AI...</p>
+                    </div>
+                    <button class="btn-primary full-width massive-btn" onclick="navigate('view-order')"><i class="ph-bold ph-shopping-cart"></i> Pesan Rekomendasi Ini</button>
+                </div>
+             </div>
+          </div>
+       </section>
+
+       <!-- VIEW 4: LIVE TRACKING -->
+       <section id="view-tracking" class="page-view hidden">
+          <div class="view-header flex-header">
+             <div>
+                <h2 class="gradient-text">Lacak Pengiriman</h2>
+                <p>Pantau posisi mitra kurir WashBuddy menuju lokasi Anda secara live.</p>
+             </div>
+                  <!-- Reload button -->
+                  <button class="btn-secondary" onclick="if(isTracking){clearInterval(countdownInterval);isTracking=false;} startLiveTracking();"><i class="ph-fill ph-arrows-clockwise"></i> Mulai Ulang</button>
+          </div>
           
-          <div id="payment-content-qris" class="hidden text-center">
-              <img src="/assets/logo.png" style="width: 50px; margin-bottom: 1rem; border-radius: 8px;">
-              <h3>Pembayaran QRIS</h3>
+          <div class="tracker-layout">
+              <div class="map-simulation glass-card" style="padding: 0;">
+                 <div class="map-bg-modern">
+                    <svg class="route-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+                       <path id="courier-path-bg" d="M 10 85 C 40 85, 30 20, 90 20" stroke="rgba(255,255,255,0.1)" stroke-width="2" stroke-dasharray="2,2" fill="none"/>
+                       <path id="courier-path" d="M 10 85 C 40 85, 30 20, 90 20" stroke="var(--primary)" stroke-width="2.5" fill="none" class="animated-path" style="filter: drop-shadow(0 0 5px var(--primary));"/>
+                    </svg>
+                    <div class="map-pin courier" id="moving-courier">
+                       <div class="pin-glow"></div>
+                       <i class="ph-fill ph-motorcycle"></i>
+                    </div>
+                    <div class="map-pin store" style="top: 85%; left: 10%;"><i class="ph-fill ph-storefront"></i><span class="pin-label">Toko Pusat</span></div>
+                    <div class="map-pin home" style="top: 20%; left: 90%;"><i class="ph-fill ph-house"></i><span class="pin-label">Rumah Anda</span></div>
+                 </div>
+              </div>
+              
+              <div class="glass-card courier-info-panel">
+                  <h3 style="margin-bottom: 1.5rem; font-size: 1.2rem;">Status Kurir</h3>
+                   <div class="courier-profile">
+                       <img id="courier-img" src="https://ui-avatars.com/api/?name=Kurir&background=00E5FF&color=0a0f1e&bold=true" alt="Kurir">
+                       <div>
+                           <h4 id="courier-name">Memilih Kurir...</h4>
+                           <p id="courier-rating"><i class="ph-fill ph-star text-primary"></i> -- (Mitra Elite)</p>
+                       </div>
+                   </div>
+                   
+                   <div class="delivery-stats-grid">
+                       <div class="d-stat-box">
+                           <i class="ph-fill ph-clock text-secondary"></i>
+                           <p>Estimasi</p>
+                           <h2 id="live-time" class="gradient-text">02:00</h2>
+                       </div>
+                       <div class="d-stat-box">
+                           <i class="ph-fill ph-map-pin text-primary"></i>
+                           <p>Sisa Jarak</p>
+                           <h2 id="live-distance">5.0 km</h2>
+                       </div>
+                   </div>
+                   
+                   <div class="progress-bar-modern">
+                       <div class="progress-fill" id="courier-progress" style="width:0%"></div>
+                   </div>
+                   
+                   <div class="courier-actions">
+                       <button class="btn-primary" id="chat-courier-btn" style="flex: 2;"><i class="ph-fill ph-chat-circle-dots"></i> Chat Kurir</button>
+                       <button class="btn-secondary" style="flex: 1;"><i class="ph-fill ph-phone"></i></button>
+                   </div>
+              </div>
+          </div>
+       </section>
+   </main>
+
+   <!-- Payment Modal -->
+   <div class="payment-modal hidden" id="payment-modal">
+       <div class="payment-box glass-card">
+           <button class="close-btn" onclick="closePayment()"><i class="ph-bold ph-x"></i></button>
+           
+           <div id="payment-content-qris" class="hidden text-center">
+               <div class="advanced-logo" style="margin: 0 auto 1.5rem; width: 55px; height: 55px;">
+                   <div class="ring ring1"></div>
+                   <div class="ring ring2"></div>
+                   <i class="ph-fill ph-drop drop-icon" style="font-size: 1.8rem;"></i>
+               </div>
+               <h3>Pembayaran QRIS</h3>
               <p class="text-muted" style="margin-bottom: 1.5rem;">Scan kode QR ini menggunakan aplikasi E-Wallet atau M-Banking Anda.</p>
               
               <div style="background: white; padding: 1.5rem; border-radius: 12px; display: inline-block; margin-bottom: 1.5rem;">
