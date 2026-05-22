@@ -1,193 +1,177 @@
 import './style.css'
 
-console.log("WashBuddy Elite App Initialized!");
+console.log("WashBuddy v2.0 initialized");
 
-// Navbar scroll effect
+// ---- Navbar scroll effect ----
 const navbar = document.getElementById('navbar');
 window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
-        navbar.classList.add('scrolled');
-    } else {
-        navbar.classList.remove('scrolled');
-    }
-});
+    navbar.classList.toggle('scrolled', window.scrollY > 40);
+}, { passive: true });
 
-// Smooth scrolling for anchor links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if(target) {
-            target.scrollIntoView({
-                behavior: 'smooth'
+// ---- Active nav link on scroll ----
+const sections = document.querySelectorAll('section[id], div[id="home"]');
+const navLinks = document.querySelectorAll('.nav-links a');
+
+const observerOptions = { rootMargin: '-40% 0px -55% 0px' };
+const sectionObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            navLinks.forEach(link => {
+                link.classList.toggle('active', link.getAttribute('href') === `#${entry.target.id}`);
             });
+        }
+    });
+}, observerOptions);
+
+document.querySelectorAll('section[id]').forEach(s => sectionObserver.observe(s));
+
+// ---- Smooth scroll for anchor links ----
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        if (href === '#') return;
+        const target = document.querySelector(href);
+        if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth' });
         }
     });
 });
 
-// GSAP ScrollTrigger Animations
+// ---- GSAP Animations ----
 if (window.gsap && window.ScrollTrigger) {
     gsap.registerPlugin(ScrollTrigger);
 
-    // Advanced Text Splitting Animation for Hero Title
-    const title = document.querySelector('.hero-title');
-    if(title) {
-        // Save the gradient span if any, but since it's hard to split HTML, let's do a simple word/char wrap for text nodes only.
-        // Actually, the easiest modern reveal is a line mask reveal:
-        gsap.fromTo('.hero-title', 
-            { y: 100, opacity: 0, clipPath: 'polygon(0 0, 100% 0, 100% 0, 0 0)' }, 
-            { y: 0, opacity: 1, clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)', duration: 1.5, ease: 'power4.out', delay: 0.2 }
-        );
-        
-        // Let's add a glowing pulse effect to the gradient text specifically
-        gsap.to('.hero-title .text-gradient', {
-            textShadow: "0 0 20px rgba(0,229,255,0.8)",
-            duration: 1.5,
-            repeat: -1,
-            yoyo: true,
-            ease: "sine.inOut"
-        });
-    }
-    gsap.fromTo('.hero-subtitle', 
-        { y: 50, opacity: 0 }, 
-        { y: 0, opacity: 1, duration: 1, ease: 'power3.out', delay: 0.5 }
-    );
-    gsap.fromTo('.hero-cta button', 
-        { y: 30, opacity: 0 }, 
-        { y: 0, opacity: 1, duration: 0.8, stagger: 0.2, ease: 'back.out(1.5)', delay: 0.7 }
-    );
-    
-    // Animate stats counter
-    const counters = document.querySelectorAll('.counter');
-    counters.forEach(counter => {
+    // Hero entrance animations
+    const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+    heroTl
+        .from('.pill-badge',     { y: 20, opacity: 0, duration: 0.6 })
+        .from('.hero-title',     { y: 40, opacity: 0, duration: 0.8 }, '-=0.3')
+        .from('.hero-subtitle',  { y: 30, opacity: 0, duration: 0.7 }, '-=0.4')
+        .from('.hero-cta > *',   { y: 20, opacity: 0, duration: 0.5, stagger: 0.15 }, '-=0.4')
+        .from('.hero-stats',     { y: 20, opacity: 0, duration: 0.5 }, '-=0.3')
+        .from('.app-card-hero',  { x: 40, opacity: 0, duration: 0.9, ease: 'back.out(1.2)' }, '-=0.7')
+        .from('.float-card',     { scale: 0.8, opacity: 0, duration: 0.5, stagger: 0.2 }, '-=0.5');
+
+    // Counter animation
+    document.querySelectorAll('.counter').forEach(counter => {
         const target = +counter.getAttribute('data-target');
+        const suffix = counter.querySelector('span') ? counter.querySelector('span').outerHTML : '';
         ScrollTrigger.create({
             trigger: counter,
-            start: "top 85%",
+            start: 'top 85%',
             once: true,
             onEnter: () => {
                 let obj = { val: 0 };
                 gsap.to(obj, {
                     val: target,
                     duration: 2,
-                    ease: "power2.out",
+                    ease: 'power2.out',
                     onUpdate: () => {
-                        counter.innerText = Math.ceil(obj.val);
+                        counter.innerHTML = Math.ceil(obj.val).toLocaleString('id-ID') + suffix;
                     }
                 });
             }
         });
     });
 
-    // Bento Grid Reveal
-    gsap.utils.toArray('.bento-item').forEach((item, i) => {
-        gsap.fromTo(item, 
-            { y: 100, opacity: 0, scale: 0.9 },
-            { 
-                y: 0, opacity: 1, scale: 1, 
-                duration: 0.8, 
-                ease: 'power3.out',
-                scrollTrigger: {
-                    trigger: item,
-                    start: 'top 85%',
-                    toggleActions: 'play none none reverse'
-                }
-            }
-        );
+    // Generic scroll reveals
+    gsap.utils.toArray('.reveal-up').forEach(el => {
+        gsap.from(el, {
+            y: 40, opacity: 0, duration: 0.75, ease: 'power2.out',
+            scrollTrigger: { trigger: el, start: 'top 85%', once: true }
+        });
+    });
+    gsap.utils.toArray('.reveal-left').forEach(el => {
+        gsap.from(el, {
+            x: -40, opacity: 0, duration: 0.8, ease: 'power2.out',
+            scrollTrigger: { trigger: el, start: 'top 85%', once: true }
+        });
+    });
+    gsap.utils.toArray('.reveal-right').forEach(el => {
+        gsap.from(el, {
+            x: 40, opacity: 0, duration: 0.8, ease: 'power2.out',
+            scrollTrigger: { trigger: el, start: 'top 85%', once: true }
+        });
     });
 
-    // Marquee / Running Text Parallax
-    gsap.to('.marquee-content', {
-        xPercent: -20,
-        ease: 'none',
-        scrollTrigger: {
-            trigger: '.trusted-by',
-            start: 'top bottom',
-            end: 'bottom top',
-            scrub: 1
-        }
+    // Step cards stagger
+    gsap.from('.step-card', {
+        y: 50, opacity: 0, duration: 0.7, stagger: 0.15, ease: 'back.out(1.2)',
+        scrollTrigger: { trigger: '.steps-grid', start: 'top 80%', once: true }
     });
 
-    // Glass Panel scale up
-    gsap.utils.toArray('.glass-panel').forEach(panel => {
-        gsap.fromTo(panel,
-            { opacity: 0, y: 50, rotateX: 10 },
-            { 
-                opacity: 1, y: 0, rotateX: 0, 
-                duration: 1, 
-                ease: 'power3.out',
-                scrollTrigger: {
-                    trigger: panel,
-                    start: 'top 80%'
-                }
-            }
-        );
+    // Service cards stagger
+    gsap.from('.service-card', {
+        y: 40, opacity: 0, duration: 0.6, stagger: 0.1, ease: 'power2.out',
+        scrollTrigger: { trigger: '.services-grid', start: 'top 80%', once: true }
     });
 }
 
-// Mouse tracking for Bento Grid glow effect
-document.querySelectorAll('.bento-item').forEach(item => {
-    item.addEventListener('mousemove', e => {
-        const rect = item.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        
-        item.style.setProperty('--mouse-x', `${x}px`);
-        item.style.setProperty('--mouse-y', `${y}px`);
-    });
-});
-
-// Auth Modal Logic
-const authTriggers = document.querySelectorAll('.auth-trigger');
+// ---- Auth Modal ----
 const authModal = document.getElementById('auth-modal');
 const closeAuth = document.getElementById('close-auth');
-authTriggers.forEach(btn => {
-    btn.addEventListener('click', (e) => {
+
+document.querySelectorAll('.auth-trigger').forEach(btn => {
+    btn.addEventListener('click', e => {
         e.preventDefault();
         authModal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
     });
 });
-closeAuth.addEventListener('click', () => {
+
+function closeModal() {
     authModal.classList.add('hidden');
+    document.body.style.overflow = '';
+}
+
+if (closeAuth) closeAuth.addEventListener('click', closeModal);
+authModal.addEventListener('click', e => {
+    if (e.target === authModal) closeModal();
 });
-authModal.addEventListener('click', (e) => {
-    if(e.target === authModal) authModal.classList.add('hidden');
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && !authModal.classList.contains('hidden')) closeModal();
 });
 
-// 3D Tilt Effect for Glass Cards
-document.querySelectorAll('.glass-panel, .bento-item').forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        const rotateX = ((y - centerY) / centerY) * -10;
-        const rotateY = ((x - centerX) / centerX) * 10;
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-    });
-    card.addEventListener('mouseleave', () => {
-        card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
-    });
-});
-
-// ===== HAMBURGER MOBILE MENU =====
+// ---- Mobile Menu ----
 window.toggleMobileMenu = function() {
-  const menu = document.getElementById('mobile-menu');
-  const btn = document.getElementById('hamburger');
-  if (!menu) return;
-  const isOpen = menu.classList.contains('open');
-  menu.classList.toggle('open', !isOpen);
-  if (btn) btn.innerHTML = isOpen ? '<i class="ph-bold ph-list"></i>' : '<i class="ph-bold ph-x"></i>';
+    const menu = document.getElementById('mobile-menu');
+    const btn = document.getElementById('hamburger');
+    if (!menu) return;
+    const isOpen = menu.classList.contains('open');
+    menu.classList.toggle('open', !isOpen);
+    if (btn) {
+        btn.innerHTML = isOpen
+            ? '<i class="ph-bold ph-list"></i>'
+            : '<i class="ph-bold ph-x"></i>';
+    }
 };
 
 // Close mobile menu on outside click
-document.addEventListener('click', (e) => {
-  const menu = document.getElementById('mobile-menu');
-  const btn = document.getElementById('hamburger');
-  if (menu && menu.classList.contains('open') && !menu.contains(e.target) && !btn?.contains(e.target)) {
-    menu.classList.remove('open');
-    if (btn) btn.innerHTML = '<i class="ph-bold ph-list"></i>';
-  }
+document.addEventListener('click', e => {
+    const menu = document.getElementById('mobile-menu');
+    const btn = document.getElementById('hamburger');
+    if (menu && menu.classList.contains('open') && !menu.contains(e.target) && !btn?.contains(e.target)) {
+        menu.classList.remove('open');
+        if (btn) btn.innerHTML = '<i class="ph-bold ph-list"></i>';
+    }
 });
 
+// ---- Subtle card hover tilt (only on desktop) ----
+if (window.matchMedia('(hover: hover)').matches) {
+    document.querySelectorAll('.service-card, .step-card, .track-panel').forEach(card => {
+        card.addEventListener('mousemove', e => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const cx = rect.width / 2;
+            const cy = rect.height / 2;
+            const rx = ((y - cy) / cy) * -4;
+            const ry = ((x - cx) / cx) * 4;
+            card.style.transform = `perspective(800px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-4px)`;
+        });
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = '';
+        });
+    });
+}
