@@ -127,63 +127,181 @@
             </div>
           </div>
 
-          <!-- Right: Visual / App Mockup -->
+          <!-- Right: Visual / Smartphone Mockup Simulator -->
           <div class="hero-visual reveal-right">
             <div class="visual-wrapper">
-              <!-- App Card -->
-              <div class="app-card-hero" style="position:relative;z-index:2;">
-                <div class="app-bar">
-                  <h5>Pesanan Saya</h5>
-                  <span id="hero-date">Kamis, 22 Mei 2026</span>
-                </div>
-
-                <div class="order-hero-card">
-                  <div class="order-icon">
-                    <i class="ph-fill ph-washing-machine"></i>
+              
+              <!-- Smartphone Frame Mockup -->
+              <div class="phone-mockup">
+                <div class="phone-notch"></div>
+                
+                <!-- Status Bar -->
+                <div class="phone-status-bar">
+                  <span id="phone-time">14:35</span>
+                  <div class="phone-status-icons">
+                    <i class="ph-bold ph-wifi-high"></i>
+                    <i class="ph-bold ph-battery-charging-vertical"></i>
                   </div>
-                  <div>
-                    <h4>Wash Regular · 3,5 kg</h4>
-                    <p>Pesanan #WB-2204</p>
-                    <div class="status-badge">
-                      <span class="status-dot"></span>
-                      Sedang Dicuci
+                </div>
+                
+                <!-- Screen Content -->
+                <div class="phone-screen">
+                  
+                  <!-- Toast Notification Simulator -->
+                  <div class="phone-toast" id="phone-toast">Kupon berhasil disalin!</div>
+                  
+                  <div class="phone-app-content">
+                    
+                    <!-- PANE 1: Lacak (Active by default) -->
+                    <div class="phone-pane active" id="pane-lacak">
+                      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.25rem;">
+                        <h5 style="font-size:0.95rem; font-weight:800; color:#fff;">Pesanan Saya</h5>
+                        <span id="hero-date" style="font-size:0.7rem; color:var(--text-muted);">Kamis, 22 Mei 2026</span>
+                      </div>
+                      
+                      <div class="order-hero-card" style="margin-bottom:1.25rem;">
+                        <div class="order-icon">
+                          <i class="ph-fill ph-washing-machine"></i>
+                        </div>
+                        <div style="text-align:left;">
+                          <h4 id="phone-track-service">Wash Regular · 3.5 kg</h4>
+                          <p id="phone-track-id">Pesanan #WB-2204</p>
+                          <div class="status-badge" style="background:rgba(34,197,94,0.1); border-color:rgba(34,197,94,0.2);">
+                            <span class="status-dot"></span>
+                            <span id="phone-track-status-text">Sedang Dicuci</span>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <!-- Live Progress Steps in Mockup -->
+                      <div style="background:var(--bg-glass); border:1px solid var(--border); border-radius:16px; padding:1rem; margin-bottom:1.25rem; text-align:left;">
+                        <h6 style="font-size:0.75rem; font-weight:700; color:var(--text-2); margin-bottom:0.75rem; display:flex; align-items:center; gap:5px;">
+                          <i class="ph-bold ph-activity" style="color:var(--cyan)"></i> Real-Time Progress
+                        </h6>
+                        <div style="display:flex; flex-direction:column; gap:12px;">
+                          <div style="display:flex; gap:10px; align-items:center;">
+                            <i class="ph-fill ph-check-circle" style="color:var(--green); font-size:1.1rem;"></i>
+                            <span style="font-size:0.72rem; color:var(--text-muted);">Penjemputan Sukses</span>
+                          </div>
+                          <div style="display:flex; gap:10px; align-items:center;">
+                            <i class="ph-fill ph-check-circle" style="color:var(--green); font-size:1.1rem;"></i>
+                            <span style="font-size:0.72rem; color:var(--text-muted);">Pakaian Diterima</span>
+                          </div>
+                          <div style="display:flex; gap:10px; align-items:center;">
+                            <i class="ph-bold ph-spinner-gap spinner" style="color:var(--blue-bright); font-size:1.1rem;"></i>
+                            <span id="phone-track-step-curr" style="font-size:0.72rem; color:#fff; font-weight:700;">Sedang Proses Cuci...</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="mini-stats">
+                        <div class="mini-stat">
+                          <span class="num">3</span>
+                          <span class="lbl">Aktif</span>
+                        </div>
+                        <div class="mini-stat">
+                          <span class="num">28</span>
+                          <span class="lbl">Selesai</span>
+                        </div>
+                        <div class="mini-stat">
+                          <span class="num">4.9 <i class="ph-fill ph-star" style="font-size:0.65rem; color:var(--yellow)"></i></span>
+                          <span class="lbl">Rating</span>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <!-- PANE 2: Layanan -->
+                    <div class="phone-pane" id="pane-layanan">
+                      <h5 style="font-size:0.95rem; font-weight:800; color:#fff; margin-bottom:1rem; text-align:left;">Daftar Layanan</h5>
+                      
+                      <div style="display:flex; flex-direction:column; gap:8px;">
+                        <div style="background:var(--bg-glass); border:1px solid var(--border); border-radius:12px; padding:0.75rem; display:flex; align-items:center; justify-content:space-between;">
+                          <div style="display:flex; align-items:center; gap:8px;">
+                            <i class="ph-fill ph-washing-machine" style="color:var(--blue-bright); font-size:1.25rem;"></i>
+                            <div style="text-align:left;">
+                              <h6 style="font-size:0.75rem; font-weight:700; color:#fff;">Wash Regular</h6>
+                              <p style="font-size:0.6rem; color:var(--text-muted);">Selesai 24 jam</p>
+                            </div>
+                          </div>
+                          <span style="font-size:0.75rem; font-weight:800; color:var(--teal);">Rp 8.000<span style="font-size:0.55rem; color:var(--text-muted);">/kg</span></span>
+                        </div>
+                        
+                        <div style="background:var(--bg-glass); border:1px solid var(--border); border-radius:12px; padding:0.75rem; display:flex; align-items:center; justify-content:space-between;">
+                          <div style="display:flex; align-items:center; gap:8px;">
+                            <i class="ph-fill ph-lightning" style="color:var(--orange); font-size:1.25rem;"></i>
+                            <div style="text-align:left;">
+                              <h6 style="font-size:0.75rem; font-weight:700; color:#fff;">Wash Kilat</h6>
+                              <p style="font-size:0.6rem; color:var(--text-muted);">Selesai 6 jam</p>
+                            </div>
+                          </div>
+                          <span style="font-size:0.75rem; font-weight:800; color:var(--teal);">Rp 15.000<span style="font-size:0.55rem; color:var(--text-muted);">/kg</span></span>
+                        </div>
+                        
+                        <div style="background:var(--bg-glass); border:1px solid var(--border); border-radius:12px; padding:0.75rem; display:flex; align-items:center; justify-content:space-between;">
+                          <div style="display:flex; align-items:center; gap:8px;">
+                            <i class="ph-fill ph-coat-hanger" style="color:var(--violet); font-size:1.25rem;"></i>
+                            <div style="text-align:left;">
+                              <h6 style="font-size:0.75rem; font-weight:700; color:#fff;">Dry Cleaning</h6>
+                              <p style="font-size:0.6rem; color:var(--text-muted);">Selesai 48 jam</p>
+                            </div>
+                          </div>
+                          <span style="font-size:0.75rem; font-weight:800; color:var(--teal);">Rp 25.000<span style="font-size:0.55rem; color:var(--text-muted);">/pcs</span></span>
+                        </div>
+                        
+                        <div style="background:var(--bg-glass); border:1px solid var(--border); border-radius:12px; padding:0.75rem; display:flex; align-items:center; justify-content:space-between;">
+                          <div style="display:flex; align-items:center; gap:8px;">
+                            <i class="ph-fill ph-sneaker" style="color:var(--blue-bright); font-size:1.25rem;"></i>
+                            <div style="text-align:left;">
+                              <h6 style="font-size:0.75rem; font-weight:700; color:#fff;">Shoe Spa</h6>
+                              <p style="font-size:0.6rem; color:var(--text-muted);">Deep clean &amp; wangi</p>
+                            </div>
+                          </div>
+                          <span style="font-size:0.75rem; font-weight:800; color:var(--teal);">Rp 50.000<span style="font-size:0.55rem; color:var(--text-muted);">/item</span></span>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <!-- PANE 3: Promo -->
+                    <div class="phone-pane" id="pane-promo">
+                      <h5 style="font-size:0.95rem; font-weight:800; color:#fff; margin-bottom:0.75rem; text-align:left;">Promo Spesial</h5>
+                      <p style="font-size:0.68rem; color:var(--text-muted); margin-bottom:1rem; text-align:left;">Ketuk kupon untuk menyalin kode voucher secara instan.</p>
+                      
+                      <div class="mini-promo-card" data-code="WASHNEW20">
+                        <h6>Diskon Pelanggan Baru</h6>
+                        <div class="mini-promo-code">WASHNEW20</div>
+                        <p>Diskon 20% untuk transaksi pertama Anda.</p>
+                      </div>
+                      
+                      <div class="mini-promo-card" data-code="KILATCepat">
+                        <h6>Gratis Ongkir Wash Kilat</h6>
+                        <div class="mini-promo-code">KILATCepat</div>
+                        <p>Klaim bebas ongkir jemput &amp; antar khusus kilat.</p>
+                      </div>
+                    </div>
+                    
+                  </div>
+                  
+                  <!-- Bottom Tab Bar -->
+                  <div class="phone-nav-bar">
+                    <div class="phone-nav-item active" data-target="pane-lacak">
+                      <i class="ph-fill ph-radar"></i>
+                      <span>Lacak</span>
+                    </div>
+                    <div class="phone-nav-item" data-target="pane-layanan">
+                      <i class="ph-fill ph-list-bullets"></i>
+                      <span>Layanan</span>
+                    </div>
+                    <div class="phone-nav-item" data-target="pane-promo">
+                      <i class="ph-fill ph-ticket"></i>
+                      <span>Promo</span>
                     </div>
                   </div>
-                </div>
-
-                <div class="mini-stats">
-                  <div class="mini-stat">
-                    <span class="num">3</span>
-                    <span class="lbl">Aktif</span>
-                  </div>
-                  <div class="mini-stat">
-                    <span class="num">28</span>
-                    <span class="lbl">Selesai</span>
-                  </div>
-                  <div class="mini-stat">
-                    <span class="num">4,9<i class="ph-fill ph-star" style="font-size:0.65rem;color:var(--yellow);vertical-align:1px"></i></span>
-                    <span class="lbl">Rating</span>
-                  </div>
+                  
                 </div>
               </div>
-
-              <!-- Floating Card: Pickup -->
-              <div class="float-card card-pickup">
-                <div class="fc-icon blue"><i class="ph-fill ph-motorcycle"></i></div>
-                <div>
-                  <h6>Kurir Menuju Lokasi</h6>
-                  <p>ETA ~12 menit</p>
-                </div>
-              </div>
-
-              <!-- Floating Card: Rating -->
-              <div class="float-card card-rating">
-                <div class="fc-icon green"><i class="ph-fill ph-check-circle"></i></div>
-                <div>
-                  <h6>Pesanan Selesai!</h6>
-                  <div class="stars">★★★★★</div>
-                </div>
-              </div>
+              
+              <!-- Floating Ambient Glow behind smartphone -->
+              <div style="position:absolute; width:220px; height:220px; background:radial-gradient(circle, rgba(59,130,246,0.3) 0%, transparent 70%); top:15%; left:15%; filter:blur(30px); z-index:1; pointer-events:none;"></div>
             </div>
           </div>
 
@@ -402,7 +520,117 @@
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
 
+      <!-- ============ CALCULATOR ============ -->
+      <section id="estimator" class="calculator-section section-pad">
+        <div class="container">
+          <div class="section-header-center reveal-up">
+            <span class="section-label">Kalkulator Transparan</span>
+            <h2 class="section-title">Estimasi Harga &amp; Waktu</h2>
+            <p class="section-subtitle">Hitung perkiraan biaya dan durasi pengerjaan cucian Anda secara transparan dan instan.</p>
+          </div>
+
+          <div class="calculator-grid reveal-up">
+            
+            <!-- Left: Inputs -->
+            <div class="calculator-card-input">
+              
+              <!-- Service select buttons -->
+              <div class="calc-group">
+                <span class="calc-label">Pilih Layanan</span>
+                <div class="service-selector-grid">
+                  <div class="service-select-btn active" data-type="wash" data-price="8000" data-unit="kg" data-time="24 jam">
+                    <i class="ph-fill ph-washing-machine"></i>
+                    <span>Wash Regular</span>
+                  </div>
+                  <div class="service-select-btn" data-type="kilat" data-price="15000" data-unit="kg" data-time="6 jam">
+                    <i class="ph-fill ph-lightning"></i>
+                    <span>Wash Kilat</span>
+                  </div>
+                  <div class="service-select-btn" data-type="dry" data-price="25000" data-unit="pcs" data-time="2 hari">
+                    <i class="ph-fill ph-coat-hanger"></i>
+                    <span>Dry Cleaning</span>
+                  </div>
+                  <div class="service-select-btn" data-type="shoe" data-price="50000" data-unit="item" data-time="3 hari">
+                    <i class="ph-fill ph-sneaker"></i>
+                    <span>Shoe &amp; Bag</span>
+                  </div>
+                  <div class="service-select-btn" data-type="carpet" data-price="30000" data-unit="m²" data-time="3 hari">
+                    <i class="ph-fill ph-rug"></i>
+                    <span>Cuci Karpet</span>
+                  </div>
+                  <div class="service-select-btn" data-type="sofa" data-price="100000" data-unit="seat" data-time="1 hari">
+                    <i class="ph-fill ph-armchair"></i>
+                    <span>Cuci Sofa</span>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Quantity Adjuster -->
+              <div class="calc-group" style="text-align:center;">
+                <span class="calc-label">Jumlah / Berat Cucian</span>
+                <div class="weight-adjuster">
+                  <button class="adj-btn" id="calc-minus"><i class="ph-bold ph-minus"></i></button>
+                  <div class="adj-val">
+                    <span id="calc-qty-val">3</span> <span class="adj-unit" id="calc-unit-label">kg</span>
+                  </div>
+                  <button class="adj-btn" id="calc-plus"><i class="ph-bold ph-plus"></i></button>
+                </div>
+              </div>
+              
+              <!-- Addons Checkboxes -->
+              <div class="calc-group" style="margin-bottom:0;">
+                <span class="calc-label">Opsi Tambahan (Add-ons)</span>
+                <div class="addons-list">
+                  <label class="addon-item">
+                    <input type="checkbox" id="addon-perfume" data-price="2000">
+                    <div class="addon-info">
+                      <h6>Parfum Premium (+Rp2.000)</h6>
+                      <p>Wangi mewah 7 hari</p>
+                    </div>
+                  </label>
+                  <label class="addon-item">
+                    <input type="checkbox" id="addon-sorting" data-price="5000">
+                    <div class="addon-info">
+                      <h6>Pilah Baju (+Rp5.000)</h6>
+                      <p>Pilah warna &amp; bahan</p>
+                    </div>
+                  </label>
+                </div>
+              </div>
+              
+            </div>
+            
+            <!-- Right: Output Card -->
+            <div class="calculator-card-output">
+              <div>
+                <i class="ph-fill ph-receipt" style="font-size:2.5rem; color:var(--blue-bright); margin-bottom:1rem; display:inline-block;"></i>
+                <h4 style="font-size:1.2rem; font-weight:800; color:#fff; margin-bottom:0.5rem;">Rincian Estimasi</h4>
+                <p style="font-size:0.82rem; color:var(--text-muted); line-height:1.6; text-align:left;">Rincian ini bersifat estimasi kasar. Berat/kuantitas akhir akan diverifikasi oleh kurir kami saat penjemputan.</p>
+              </div>
+              
+              <div class="calc-price-wrap">
+                <span class="calc-price-lbl">Total Estimasi Biaya</span>
+                <div class="calc-price-val" id="calc-total-val">Rp 24.000</div>
+              </div>
+              
+              <div class="calc-time-card">
+                <i class="ph-fill ph-clock"></i>
+                <div style="text-align:left;">
+                  <h6>Estimasi Waktu Selesai</h6>
+                  <p id="calc-time-val">~ 24 Jam Pengerjaan</p>
+                </div>
+              </div>
+              
+              <button class="btn-primary btn-primary-lg" id="btn-calc-book" style="justify-content:center; width:100%;">
+                <i class="ph-bold ph-calendar-plus"></i>
+                <span>Pesan Layanan Ini</span>
+              </button>
+            </div>
+            
           </div>
         </div>
       </section>
@@ -493,10 +721,18 @@
               </li>
             </ul>
             <div style="margin-top:2.5rem;">
-              <button class="btn-primary btn-primary-lg auth-trigger" id="btn-lacak">
-                <i class="ph-bold ph-map-trifold"></i>
-                <span>Mulai Lacak Pesanan</span>
-              </button>
+              <div class="track-search-box">
+                <div class="track-search-input-wrap">
+                  <i class="ph-bold ph-magnifying-glass"></i>
+                  <input type="text" class="track-search-input" id="track-search-input" placeholder="Masukkan ID Pesanan (contoh: WB-2204)">
+                  <button class="track-search-btn" id="btn-track-search">
+                    <span>Lacak</span> <i class="ph-bold ph-arrow-right"></i>
+                  </button>
+                </div>
+                <div class="track-warning" id="track-warning">
+                  <i class="ph-bold ph-warning-circle"></i> ID Pesanan tidak ditemukan! Coba gunakan <strong>WB-2204</strong> atau lakukan pesanan baru.
+                </div>
+              </div>
             </div>
           </div>
 
@@ -513,114 +749,160 @@
           </div>
         </div>
 
-        <!-- Marquee Reviews -->
-        <div class="marquee-container" style="margin-top:3rem;">
-          <div class="marquee-track" style="gap:1.5rem;align-items:stretch;">
+        <!-- Interactive Carousel Reviews -->
+        <div class="testimonial-slider-wrap reveal-up">
+          <button class="slider-arrow-btn btn-prev" aria-label="Sebelumnya"><i class="ph-bold ph-caret-left"></i></button>
+          <button class="slider-arrow-btn btn-next" aria-label="Berikutnya"><i class="ph-bold ph-caret-right"></i></button>
+          
+          <div class="slider-view">
+            <div class="slider-track-wrap" id="testimonial-track">
+              
+              <!-- Slide 1 -->
+              <div class="testimonial-slide-card">
+                <div class="review-card">
+                  <div class="review-stars">★★★★★</div>
+                  <p class="review-text">"Live trackernya sangat akurat seperti aplikasi ojek online, dan bajuku wangi banget! Gak perlu was-was lagi. Sangat praktis untuk mahasiswa maupun pekerja kantoran."</p>
+                  <div class="reviewer">
+                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Amanda R.">
+                    <div class="reviewer-info">
+                      <h6>Amanda Rahayu</h6>
+                      <span>Karyawan Swasta, Jakarta</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Slide 2 -->
+              <div class="testimonial-slide-card">
+                <div class="review-card">
+                  <div class="review-stars">★★★★★</div>
+                  <p class="review-text">"Fitur Wash Kilat 6 Jam jadi penyelamat saya berkali-kali pas butuh jas dadakan buat meeting penting! Layanan laundry tercepat dan paling andal yang pernah saya coba."</p>
+                  <div class="reviewer">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Reza R.">
+                    <div class="reviewer-info">
+                      <h6>Reza Rahardian</h6>
+                      <span>Entrepreneur, Surabaya</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Slide 3 -->
+              <div class="testimonial-slide-card">
+                <div class="review-card">
+                  <div class="review-stars">★★★★★</div>
+                  <p class="review-text">"Bayar bisa QRIS langsung di app, gak perlu ribet siapin cash. Pengirimannya juga on time terus dan kurirnya ramah banget. Bintang lima pokoknya!"</p>
+                  <div class="reviewer">
+                    <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Sisca K.">
+                    <div class="reviewer-info">
+                      <h6>Sisca Kohl</h6>
+                      <span>Content Creator, Bali</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-            <div class="review-card">
-              <div class="review-stars">★★★★★</div>
-              <p class="review-text">"Live trackernya sangat akurat seperti aplikasi ojek online, dan bajuku wangi banget! Gak perlu was-was lagi."</p>
-              <div class="reviewer">
-                <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Amanda R.">
-                <div class="reviewer-info">
-                  <h6>Amanda Rahayu</h6>
-                  <span>Karyawan Swasta, Jakarta</span>
+              <!-- Slide 4 -->
+              <div class="testimonial-slide-card">
+                <div class="review-card">
+                  <div class="review-stars">★★★★★</div>
+                  <p class="review-text">"Cuci Karpet WashBuddy hasilnya luar biasa. Noda kopi yang udah berminggu-minggu pun hilang bersih! Wangi kamarku jadi segar kembali."</p>
+                  <div class="reviewer">
+                    <img src="https://randomuser.me/api/portraits/men/11.jpg" alt="Bambang P.">
+                    <div class="reviewer-info">
+                      <h6>Bambang Prasetyo</h6>
+                      <span>Manajer Resto, Bandung</span>
+                    </div>
+                  </div>
                 </div>
+              </div>
+              
+            </div>
+          </div>
+          
+          <!-- Dots indicators -->
+          <div class="slider-dots-indicator" id="slider-dots">
+            <button class="slider-dot-btn active" data-index="0" aria-label="Slide 1"></button>
+            <button class="slider-dot-btn" data-index="1" aria-label="Slide 2"></button>
+            <button class="slider-dot-btn" data-index="2" aria-label="Slide 3"></button>
+            <button class="slider-dot-btn" data-index="3" aria-label="Slide 4"></button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ FAQ SECTION ============ -->
+      <section id="faq" class="faq-section section-pad">
+        <div class="container">
+          <div class="section-header-center reveal-up">
+            <span class="section-label">Pertanyaan Umum</span>
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <p class="section-subtitle">Punya pertanyaan seputar layanan WashBuddy? Temukan jawabannya di bawah ini.</p>
+          </div>
+
+          <div class="faq-accordion-wrap reveal-up">
+            
+            <!-- Item 1 -->
+            <div class="faq-accordion-item">
+              <button class="faq-accordion-btn" type="button">
+                <h4>Berapa lama waktu pengerjaan laundry?</h4>
+                <div class="faq-accordion-icon">
+                  <i class="ph-bold ph-caret-down"></i>
+                </div>
+              </button>
+              <div class="faq-accordion-content">
+                <p>Kami menawarkan paket Regular (24 jam) dan Wash Kilat (6-12 jam) tergantung kebutuhan Anda. Pilihan kilat sangat cocok jika Anda membutuhkan pakaian bersih dalam waktu singkat.</p>
               </div>
             </div>
 
-            <div class="review-card">
-              <div class="review-stars">★★★★★</div>
-              <p class="review-text">"Fitur Wash Kilat 6 Jam jadi penyelamat saya berkali-kali pas butuh jas dadakan buat meeting penting!"</p>
-              <div class="reviewer">
-                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Reza Rahardian">
-                <div class="reviewer-info">
-                  <h6>Reza Rahardian</h6>
-                  <span>Entrepreneur, Surabaya</span>
+            <!-- Item 2 -->
+            <div class="faq-accordion-item">
+              <button class="faq-accordion-btn" type="button">
+                <h4>Apakah ada biaya untuk jemput dan antar pakaian?</h4>
+                <div class="faq-accordion-icon">
+                  <i class="ph-bold ph-caret-down"></i>
                 </div>
+              </button>
+              <div class="faq-accordion-content">
+                <p>Layanan jemput dan antar gratis untuk radius hingga 5 km dari outlet terdekat kami dengan minimum pemesanan Rp 50.000. Di luar itu, biaya flat yang terjangkau akan dikenakan.</p>
               </div>
             </div>
 
-            <div class="review-card">
-              <div class="review-stars">★★★★★</div>
-              <p class="review-text">"Bayar bisa QRIS langsung di app, gak perlu ribet siapin cash. Pengirimannya juga on time terus!"</p>
-              <div class="reviewer">
-                <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Sisca Kohl">
-                <div class="reviewer-info">
-                  <h6>Sisca Kohl</h6>
-                  <span>Content Creator, Bali</span>
+            <!-- Item 3 -->
+            <div class="faq-accordion-item">
+              <button class="faq-accordion-btn" type="button">
+                <h4>Bagaimana jika pakaian saya rusak atau hilang?</h4>
+                <div class="faq-accordion-icon">
+                  <i class="ph-bold ph-caret-down"></i>
                 </div>
+              </button>
+              <div class="faq-accordion-content">
+                <p>WashBuddy memberikan Garansi Kebersihan & Keamanan. Setiap pakaian diasuransikan hingga 10x lipat biaya cuci jika terjadi kehilangan atau kerusakan yang disebabkan oleh operasional kami.</p>
               </div>
             </div>
 
-            <div class="review-card">
-              <div class="review-stars">★★★★★</div>
-              <p class="review-text">"Cuci Karpet WashBuddy hasilnya luar biasa. Noda kopi yang udah berminggu-minggu pun hilang bersih!"</p>
-              <div class="reviewer">
-                <img src="https://randomuser.me/api/portraits/men/11.jpg" alt="Bambang P.">
-                <div class="reviewer-info">
-                  <h6>Bambang Prasetyo</h6>
-                  <span>Manajer Resto, Bandung</span>
+            <!-- Item 4 -->
+            <div class="faq-accordion-item">
+              <button class="faq-accordion-btn" type="button">
+                <h4>Metode pembayaran apa saja yang didukung?</h4>
+                <div class="faq-accordion-icon">
+                  <i class="ph-bold ph-caret-down"></i>
                 </div>
+              </button>
+              <div class="faq-accordion-content">
+                <p>Anda dapat membayar secara non-tunai langsung melalui aplikasi menggunakan QRIS (Gopay, OVO, Dana, LinkAja, ShopeePay) atau menggunakan metode Cash on Delivery (COD) saat kurir menjemput pakaian.</p>
               </div>
             </div>
 
-            <div class="review-card">
-              <div class="review-stars">★★★★★</div>
-              <p class="review-text">"Sebagai mahasiswa yang sok sibuk, WashBuddy beneran bantu saya irit waktu. Tinggal klik, beres!"</p>
-              <div class="reviewer">
-                <img src="https://randomuser.me/api/portraits/women/24.jpg" alt="Natasha W.">
-                <div class="reviewer-info">
-                  <h6>Natasha Wijaya</h6>
-                  <span>Mahasiswi, Jogja</span>
+            <!-- Item 5 -->
+            <div class="faq-accordion-item">
+              <button class="faq-accordion-btn" type="button">
+                <h4>Apakah saya perlu memisahkan pakaian sendiri?</h4>
+                <div class="faq-accordion-icon">
+                  <i class="ph-bold ph-caret-down"></i>
                 </div>
-              </div>
-            </div>
-
-            <div class="review-card">
-              <div class="review-stars">★★★★★</div>
-              <p class="review-text">"Dry cleaning baju pengantin saya aman terjaga. Terima kasih WashBuddy, sangat profesional dan teliti!"</p>
-              <div class="reviewer">
-                <img src="https://randomuser.me/api/portraits/women/55.jpg" alt="Dewi S.">
-                <div class="reviewer-info">
-                  <h6>Dewi Santoso</h6>
-                  <span>Ibu Rumah Tangga, Tangerang</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Duplicates for seamless loop -->
-            <div class="review-card">
-              <div class="review-stars">★★★★★</div>
-              <p class="review-text">"Live trackernya sangat akurat seperti aplikasi ojek online, dan bajuku wangi banget! Gak perlu was-was lagi."</p>
-              <div class="reviewer">
-                <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Amanda R.">
-                <div class="reviewer-info">
-                  <h6>Amanda Rahayu</h6>
-                  <span>Karyawan Swasta, Jakarta</span>
-                </div>
-              </div>
-            </div>
-            <div class="review-card">
-              <div class="review-stars">★★★★★</div>
-              <p class="review-text">"Fitur Wash Kilat 6 Jam jadi penyelamat saya berkali-kali pas butuh jas dadakan buat meeting penting!"</p>
-              <div class="reviewer">
-                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Reza Rahardian">
-                <div class="reviewer-info">
-                  <h6>Reza Rahardian</h6>
-                  <span>Entrepreneur, Surabaya</span>
-                </div>
-              </div>
-            </div>
-            <div class="review-card">
-              <div class="review-stars">★★★★★</div>
-              <p class="review-text">"Dry cleaning baju pengantin saya aman terjaga. Terima kasih WashBuddy, sangat profesional dan teliti!"</p>
-              <div class="reviewer">
-                <img src="https://randomuser.me/api/portraits/women/55.jpg" alt="Dewi S.">
-                <div class="reviewer-info">
-                  <h6>Dewi Santoso</h6>
-                  <span>Ibu Rumah Tangga, Tangerang</span>
-                </div>
+              </button>
+              <div class="faq-accordion-content">
+                <p>Tidak perlu repot! Tim profesional kami akan menyortir pakaian Anda berdasarkan warna dan jenis bahan untuk mencegah luntur atau kerusakan sebelum proses pencucian dimulai.</p>
               </div>
             </div>
 
@@ -628,7 +910,6 @@
         </div>
       </section>
 
-      <!-- ============ CTA BANNER ============ -->
       <section class="cta-section">
         <div class="container reveal-up">
           <div class="cta-box">
@@ -743,6 +1024,194 @@
             <i class="ph-bold ph-arrow-right auth-arrow"></i>
           </a>
         </div>
+      </div>
+    </div>
+
+    <!-- ============ BOOKING MODAL ============ -->
+    <div class="modal-overlay hidden" id="booking-modal">
+      <div class="wizard-box">
+        <button class="close-modal" id="close-booking" aria-label="Tutup">
+          <i class="ph-bold ph-x"></i>
+        </button>
+
+        <div class="auth-header" style="margin-bottom: 2rem;">
+          <div class="auth-logo">
+            <i class="ph-fill ph-calendar-plus" style="color:var(--blue-bright)"></i>
+          </div>
+          <h2>Jadwalkan Layanan</h2>
+          <p>Lengkapi formulir untuk memesan kurir jemput-antar</p>
+        </div>
+
+        <!-- Stepper -->
+        <div class="wizard-stepper">
+          <div class="wizard-progress-bar" id="wizard-progress" style="width: 0%;"></div>
+          
+          <!-- Step 1 -->
+          <div class="wizard-step-indicator active" data-step="1">
+            <div class="wizard-step-dot">1</div>
+            <div class="wizard-step-label">Layanan</div>
+          </div>
+          
+          <!-- Step 2 -->
+          <div class="wizard-step-indicator" data-step="2">
+            <div class="wizard-step-dot">2</div>
+            <div class="wizard-step-label">Jadwal &amp; Alamat</div>
+          </div>
+          
+          <!-- Step 3 -->
+          <div class="wizard-step-indicator" data-step="3">
+            <div class="wizard-step-dot">3</div>
+            <div class="wizard-step-label">Pembayaran</div>
+          </div>
+        </div>
+
+        <form id="booking-form" onsubmit="return false;">
+          
+          <!-- PANE 1: LAYANAN -->
+          <div class="wizard-pane active" data-pane="1">
+            <div class="wizard-field">
+              <label>Pilih Jenis Layanan</label>
+              <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                <div class="pay-card-btn active" data-service="regular">
+                  <div class="pay-card-left">
+                    <i class="ph-fill ph-clock"></i>
+                    <div style="text-align: left;">
+                      <span style="display: block; font-size: 0.9rem; font-weight: 700; color: #fff;">Wash Regular (Rp 8.000 /kg)</span>
+                      <small style="color: var(--text-muted); font-size: 0.75rem;">Selesai dalam 24 jam</small>
+                    </div>
+                  </div>
+                  <input type="radio" name="wizard-service" value="regular" checked style="display:none;">
+                </div>
+                
+                <div class="pay-card-btn" data-service="kilat">
+                  <div class="pay-card-left">
+                    <i class="ph-fill ph-lightning"></i>
+                    <div style="text-align: left;">
+                      <span style="display: block; font-size: 0.9rem; font-weight: 700; color: #fff;">Wash Kilat (Rp 15.000 /kg)</span>
+                      <small style="color: var(--text-muted); font-size: 0.75rem;">Selesai dalam 6-12 jam</small>
+                    </div>
+                  </div>
+                  <input type="radio" name="wizard-service" value="kilat" style="display:none;">
+                </div>
+
+                <div class="pay-card-btn" data-service="dryclean">
+                  <div class="pay-card-left">
+                    <i class="ph-fill ph-sparkles"></i>
+                    <div style="text-align: left;">
+                      <span style="display: block; font-size: 0.9rem; font-weight: 700; color: #fff;">Dry Cleaning (Rp 25.000 /pcs)</span>
+                      <small style="color: var(--text-muted); font-size: 0.75rem;">Jas, kebaya, gaun, dll (3 hari)</small>
+                    </div>
+                  </div>
+                  <input type="radio" name="wizard-service" value="dryclean" style="display:none;">
+                </div>
+              </div>
+            </div>
+
+            <div class="wizard-field" style="margin-top: 1.5rem;">
+              <label>Estimasi Berat / Jumlah Satuan</label>
+              <!-- Weight Adjuster -->
+              <div class="weight-adjuster" style="margin: 0;">
+                <button type="button" class="adj-btn" id="wizard-weight-minus"><i class="ph-bold ph-minus"></i></button>
+                <div class="adj-val"><span id="wizard-weight-val">3</span> <span class="adj-unit" id="wizard-weight-unit">kg</span></div>
+                <button type="button" class="adj-btn" id="wizard-weight-plus"><i class="ph-bold ph-plus"></i></button>
+              </div>
+              <small style="color: var(--text-muted); display: block; margin-top: 0.5rem; text-align: left;">Minimal pemesanan laundry kiloan adalah 3 kg. Pakaian dry clean dihitung per pcs.</small>
+            </div>
+          </div>
+
+          <!-- PANE 2: JADWAL & ALAMAT -->
+          <div class="wizard-pane" data-pane="2">
+            <div class="wizard-field">
+              <label for="wizard-address">Alamat Lengkap</label>
+              <textarea class="wizard-textarea" id="wizard-address" placeholder="Tulis alamat lengkap penjemputan Anda (contoh: Jl. Sudirman No. 12, Lantai 3, Jakarta Selatan)"></textarea>
+            </div>
+
+            <div class="wizard-field">
+              <label for="wizard-date">Tanggal Penjemputan</label>
+              <input type="date" class="wizard-input" id="wizard-date">
+            </div>
+
+            <div class="wizard-field">
+              <label>Pilih Slot Waktu</label>
+              <div class="slot-grid">
+                <div class="slot-btn active" data-slot="09:00 - 12:00">Pagi (09-12)</div>
+                <div class="slot-btn" data-slot="13:00 - 16:00">Siang (13-16)</div>
+                <div class="slot-btn" data-slot="17:00 - 20:00">Sore (17-20)</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PANE 3: PEMBAYARAN -->
+          <div class="wizard-pane" data-pane="3">
+            <!-- Summary Details -->
+            <div style="background: var(--bg-glass); border: 1px solid var(--border); border-radius: 16px; padding: 1.25rem; margin-bottom: 1.5rem; text-align: left;">
+              <h5 style="font-size: 0.85rem; font-weight: 700; color: #fff; margin-bottom: 0.75rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem;">Ringkasan Pesanan</h5>
+              <div style="display: flex; flex-direction: column; gap: 8px; font-size: 0.8rem;">
+                <div style="display: flex; justify-content: space-between;">
+                  <span style="color: var(--text-muted);">Layanan:</span>
+                  <span id="wizard-summary-service" style="font-weight: 700;">Wash Regular</span>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                  <span style="color: var(--text-muted);">Estimasi Porsi:</span>
+                  <span id="wizard-summary-qty" style="font-weight: 700;">3 kg</span>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                  <span style="color: var(--text-muted);">Jadwal Jemput:</span>
+                  <span id="wizard-summary-schedule" style="font-weight: 700;">Kamis, 22 Mei (09:00 - 12:00)</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; border-top: 1px dashed var(--border); padding-top: 8px; margin-top: 4px; font-size: 0.95rem;">
+                  <span style="color: #fff; font-weight: 700;">Total Biaya:</span>
+                  <span id="wizard-summary-total" style="font-weight: 800; color: var(--cyan);">Rp 24.000</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="wizard-field">
+              <label>Metode Pembayaran</label>
+              <div class="pay-card-grid">
+                <div class="pay-card-btn active" data-pay="qris">
+                  <div class="pay-card-left">
+                    <i class="ph-fill ph-qr-code"></i>
+                    <span>QRIS (E-Wallet &amp; M-Banking)</span>
+                  </div>
+                  <input type="radio" name="wizard-pay" value="qris" checked style="display:none;">
+                </div>
+                <div class="pay-card-btn" data-pay="cod">
+                  <div class="pay-card-left">
+                    <i class="ph-fill ph-hand-coins"></i>
+                    <span>Cash on Delivery (COD / Tunai)</span>
+                  </div>
+                  <input type="radio" name="wizard-pay" value="cod" style="display:none;">
+                </div>
+              </div>
+            </div>
+
+            <!-- QRIS Code Container -->
+            <div class="qris-container" id="qris-payment-view" style="display: none;">
+              <div class="qris-logo-header">
+                QRIS <span>PORTABLE</span>
+              </div>
+              <div class="qris-qr-wrapper">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=WashBuddyPayment" alt="QRIS QR Code" id="wizard-qris-img">
+              </div>
+              <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem; text-align: center;">Pindai QRIS di atas untuk menyelesaikan pesanan Anda.</p>
+              <div class="qris-timer">
+                <i class="ph-bold ph-spinner-gap spinner" style="font-size: 1rem; animation: spin 2s linear infinite;"></i> Menunggu Pembayaran... <span id="qris-timer-val">15:00</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Wizard Footer Navigation Buttons -->
+          <div class="wizard-footer">
+            <button type="button" class="btn-ghost" id="wizard-btn-prev" style="visibility: hidden;">
+              <i class="ph-bold ph-arrow-left"></i> Kembali
+            </button>
+            <button type="button" class="btn-primary" id="wizard-btn-next">
+              <span>Lanjut</span> <i class="ph-bold ph-arrow-right"></i>
+            </button>
+          </div>
+
+        </form>
       </div>
     </div>
 
