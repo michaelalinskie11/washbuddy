@@ -88,8 +88,8 @@ function clearNotifs() {
 }
 
 // ===== 3D HOVER AND PHYSICAL EFFECTS SYSTEM =====
-// 1. Bento Loyalty Card Hologram and 3D Tilting Physics
-const loyaltyCard = document.querySelector('.bento-loyalty');
+// 1. Bento Loyalty Card Hologram and 3D Hover and Physical Effects System
+const loyaltyCard = document.querySelector('#loyalty-card-3d');
 if (loyaltyCard) {
   loyaltyCard.addEventListener('mousemove', e => {
     const r = loyaltyCard.getBoundingClientRect();
@@ -104,19 +104,21 @@ if (loyaltyCard) {
     const rotX = -normalizedY * 15;
     const rotY = normalizedX * 15;
     
-    loyaltyCard.style.transform = `perspective(1000px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale3d(1.02, 1.02, 1.02)`;
+    const inner = loyaltyCard.querySelector('.lc-inner');
+    if (inner) inner.style.transform = `perspective(1000px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale3d(1.02, 1.02, 1.02)`;
     
     // Glow/Glare movement
-    const glare = loyaltyCard.querySelector('.card-glare');
+    const glare = loyaltyCard.querySelector('.lc-glare');
     if (glare) {
       glare.style.opacity = '1';
-      glare.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(0, 229, 255, 0.15) 0%, rgba(255, 255, 255, 0) 65%)`;
+      glare.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(96, 165, 250, 0.12) 0%, rgba(255, 255, 255, 0) 65%)`;
     }
   });
 
   loyaltyCard.addEventListener('mouseleave', () => {
-    loyaltyCard.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
-    const glare = loyaltyCard.querySelector('.card-glare');
+    const inner = loyaltyCard.querySelector('.lc-inner');
+    if (inner) inner.style.transform = '';
+    const glare = loyaltyCard.querySelector('.lc-glare');
     if (glare) glare.style.opacity = '0';
   });
 }
@@ -128,7 +130,7 @@ document.querySelectorAll('.hover-float').forEach(el => {
 });
 
 // 3. Wizard Service Cards 3D Effect
-document.querySelectorAll('.srv-card-img').forEach(card => {
+document.querySelectorAll('.srv-card').forEach(card => {
   card.addEventListener('mousemove', e => {
     const r = card.getBoundingClientRect();
     const x = (e.clientX - r.left) / r.width - 0.5;
@@ -205,14 +207,14 @@ function startScan() {
 
 // ===== ORDER WIZARD SYSTEM =====
 function selectService(element, serviceName) {
-  document.querySelectorAll('.srv-card-img').forEach(c => c.classList.remove('selected'));
+  document.querySelectorAll('.srv-card').forEach(c => c.classList.remove('selected'));
   element.classList.add('selected');
   currentService = serviceName;
   updateSummary();
 }
 
 function selectPayment(element, method) {
-  document.querySelectorAll('.pay-card').forEach(c => c.classList.remove('selected'));
+  document.querySelectorAll('.pay-option').forEach(c => c.classList.remove('selected'));
   element.classList.add('selected');
   currentPayment = method;
 }
@@ -533,8 +535,8 @@ if (chatCourierBtn) {
     const messages = document.getElementById('chat-messages');
     if (messages) {
       messages.innerHTML += `
-        <div class="message bot" style="border-left: 3px solid var(--secondary); background: rgba(0, 229, 255, 0.05); padding: 10px; border-radius: 8px; margin-bottom: 10px;">
-          <div style="font-size:0.8rem; color:var(--secondary); font-weight:800; margin-bottom:4px;"><i class="ph-fill ph-motorcycle"></i> Kurir (${courierName})</div>
+        <div class="cb-msg message bot" style="border-left: 3px solid #14b8a6; background: rgba(20, 184, 166, 0.05); padding: 10px; border-radius: 8px; margin-bottom: 10px;">
+          <div style="font-size:0.8rem; color:#2dd4bf; font-weight:800; margin-bottom:4px;"><i class="ph-fill ph-motorcycle"></i> Kurir (${courierName})</div>
           Halo Sultan! Saya ${courierName}, kurir WashBuddy Anda. Saya saat ini sedang dalam perjalanan menuju lokasi Anda. Mohon siapkan cucian Anda ya! Jika ada titipan pesan khusus atau petunjuk alamat, kabari saya di sini. Terima kasih! 🙏
         </div>
       `;
@@ -551,7 +553,7 @@ function toggleChatbox(forceOpen = false) {
     } else {
       chatbox.classList.toggle('active');
     }
-    const badge = document.querySelector('.chat-badge');
+    const badge = document.querySelector('.chat-fab-badge');
     if (badge && chatbox.classList.contains('active')) badge.style.display = 'none';
   }
 }
@@ -566,12 +568,12 @@ async function sendChatMessage() {
   if (!text) return;
 
   const messages = document.getElementById('chat-messages');
-  messages.innerHTML += `<div class="message user">${text}</div>`;
+  messages.innerHTML += `<div class="cb-msg message user">${text}</div>`;
   input.value = '';
   messages.scrollTop = messages.scrollHeight;
 
   const loadingId = 'load-' + Date.now();
-  messages.innerHTML += `<div class="message bot loading" id="${loadingId}"><span></span><span></span><span></span></div>`;
+  messages.innerHTML += `<div class="cb-msg message bot loading" id="${loadingId}"><span></span><span></span><span></span></div>`;
   messages.scrollTop = messages.scrollHeight;
 
   try {
@@ -582,7 +584,7 @@ async function sendChatMessage() {
     });
     const data = await res.json();
     document.getElementById(loadingId)?.remove();
-    messages.innerHTML += `<div class="message bot">${data.reply.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')}</div>`;
+    messages.innerHTML += `<div class="cb-msg message bot">${data.reply.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')}</div>`;
   } catch (e) {
     // API is offline (e.g. Vercel deployment) - run a high-fidelity local AI rule-engine reply!
     document.getElementById(loadingId)?.remove();
@@ -622,7 +624,7 @@ async function sendChatMessage() {
       botReply = `Halo Sultan! Selamat datang di WashBuddy Elite Customer Portal. Saya WashBot AI, asisten virtual pribadi Anda. Saya bisa membantu Anda cek tarif, melacak kurir, memberi rekomendasi noda, atau menghubungkan Anda ke Admin Whatsapp. Ada yang bisa dibantu hari ini?`;
     }
 
-    messages.innerHTML += `<div class="message bot">${botReply}</div>`;
+    messages.innerHTML += `<div class="cb-msg message bot">${botReply}</div>`;
   }
   messages.scrollTop = messages.scrollHeight;
 }

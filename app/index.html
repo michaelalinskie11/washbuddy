@@ -3,526 +3,856 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Portal Pelanggan WashBuddy - Pesan laundry, lacak pesanan, AI Scanner noda.">
-  <title>WashBuddy | Portal Pelanggan</title>
+  <meta name="description" content="Portal Pelanggan WashBuddy - Pesan laundry premium, lacak pesanan real-time, AI Scanner noda cerdas.">
+  <title>WashBuddy | Customer Portal</title>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <link rel="stylesheet" href="./app.css">
 </head>
 <body>
-  <!-- Custom Cyber Elements -->
-  <div class="cyber-grid"></div>
-  
-  
 
-  <!-- Animated Background Orbs -->
-  <div class="bg-orbs">
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-    <div class="orb orb-3"></div>
+  <!-- Ambient background -->
+  <div class="ambient-bg">
+    <div class="amb-blob amb-1"></div>
+    <div class="amb-blob amb-2"></div>
+    <div class="amb-blob amb-3"></div>
   </div>
 
-  <!-- Top Navigation Bar -->
-  <nav class="top-navbar">
-    <div class="nav-container">
-      <div class="brand">
-        <div class="logo-wrap advanced-logo">
-             <div class="ring ring1"></div>
-             <div class="ring ring2"></div>
-             <i class="ph-fill ph-drop drop-icon"></i>
-        </div> 
+  <!-- TOP NAV -->
+  <header class="portal-nav">
+    <div class="nav-inner">
+      <div class="nav-brand">
+        <div class="brand-logo">
+          <i class="ph-fill ph-drop"></i>
+        </div>
         <span>WashBuddy</span>
       </div>
-      
-      <div class="nav-links" id="main-nav">
-        <a data-target="view-dashboard" class="active">Dasbor</a>
-        <a data-target="view-order">Pesan Laundry</a>
-        <a data-target="view-pricing">Promo & Harga</a>
-        <a data-target="view-scanner">Scanner AI <span class="nav-badge">HOT</span></a>
-        <a data-target="view-tracking">Live Tracker</a>
-      </div>
 
-      <div class="nav-actions">
-        <div class="loyalty-badge pulse-glow">
-           <i class="ph-fill ph-star"></i> <span id="user-points">1,250 Pts</span>
+      <nav class="nav-menu" id="main-nav">
+        <a data-target="view-dashboard" class="active">
+          <i class="ph-bold ph-squares-four"></i> Dasbor
+        </a>
+        <a data-target="view-order">
+          <i class="ph-bold ph-shopping-cart"></i> Pesan
+        </a>
+        <a data-target="view-pricing">
+          <i class="ph-bold ph-tag"></i> Promo
+        </a>
+        <a data-target="view-scanner">
+          <i class="ph-bold ph-scan"></i> AI Scan
+          <span class="hot-pill">HOT</span>
+        </a>
+        <a data-target="view-tracking">
+          <i class="ph-bold ph-map-pin"></i> Lacak
+        </a>
+      </nav>
+
+      <div class="nav-right">
+        <div class="pts-chip">
+          <i class="ph-fill ph-star"></i>
+          <span id="user-points">1,250 Pts</span>
         </div>
-        <button class="icon-btn" onclick="toggleNotifications()">
-           <i class="ph-bold ph-bell"></i>
-           <span class="notif-dot" id="notif-dot"></span>
+        <button class="nav-icon-btn" onclick="toggleNotifications()" id="notif-toggle">
+          <i class="ph-bold ph-bell"></i>
+          <span class="badge-dot" id="notif-dot"></span>
         </button>
-        <a href="../index.html" class="icon-btn" style="color:var(--danger); margin-right:10px;"><i class="ph-bold ph-sign-out"></i></a>
-        <div class="user-profile">
-          <img src="https://ui-avatars.com/api/?name=Sultan&background=00E5FF&color=000&bold=true" alt="User">
+        <a href="../index.html" class="nav-icon-btn" style="color:#ff6b6b">
+          <i class="ph-bold ph-sign-out"></i>
+        </a>
+        <div class="avatar-wrap">
+          <img src="https://ui-avatars.com/api/?name=Sultan&background=3b82f6&color=fff&bold=true" alt="User">
+          <span class="avatar-status"></span>
         </div>
       </div>
     </div>
-  </nav>
+  </header>
 
-  <!-- Notification Dropdown -->
-  <div class="notification-dropdown hidden" id="notif-dropdown">
-     <div class="notif-header">
-        <h4>Notifikasi</h4>
-        <button class="btn-text" onclick="clearNotifs()">Tandai dibaca</button>
-     </div>
-     <div class="notif-list" id="notif-list">
-        <div class="notif-item unread">
-           <div class="n-icon"><i class="ph-fill ph-gift text-primary"></i></div>
-           <div class="n-text">
-              <p>Anda mendapatkan promo diskon 50%! Gunakan kode <strong>NEWUSER50</strong>.</p>
-              <span>Baru saja</span>
-           </div>
+  <!-- NOTIFICATION DROPDOWN -->
+  <div class="notif-panel hidden" id="notif-dropdown">
+    <div class="np-header">
+      <span>Notifikasi</span>
+      <button onclick="clearNotifs()">Tandai dibaca</button>
+    </div>
+    <div id="notif-list">
+      <div class="np-item unread">
+        <div class="np-icon" style="background:rgba(251,191,36,0.15); color:#fbbf24">
+          <i class="ph-fill ph-gift"></i>
         </div>
-        <div class="notif-item">
-           <div class="n-icon"><i class="ph-fill ph-check-circle text-success"></i></div>
-           <div class="n-text">
-              <p>Pesanan #WB-2931 telah selesai dicuci.</p>
-              <span>Kemarin, 14:30</span>
-           </div>
+        <div>
+          <p>Promo 50% untukmu! Kode: <strong>NEWUSER50</strong></p>
+          <span>Baru saja</span>
         </div>
-     </div>
-  </div>
-
-  <main class="main-container">
-      <!-- VIEW 1: BENTO DASHBOARD -->
-      <section id="view-dashboard" class="page-view active">
-         <div class="bento-grid">
-             <!-- Welcome Banner -->
-             <div class="glass-card bento-welcome">
-                 <div class="welcome-content">
-                     <h1>Cucian numpuk? Biar <span class="gradient-text">WashBuddy</span> urus.</h1>
-                     <p>Pesan sekarang dan nikmati waktu luang Anda. Kami siap menjemput cucian kotor Anda dalam hitungan menit.</p>
-                     <button class="btn-primary massive-btn hover-float" onclick="navigate('view-order')"><i class="ph-bold ph-rocket-launch"></i> Pesan Laundry Sekarang</button>
-                 </div>
-                 <i class="ph-fill ph-washing-machine watermark-icon"></i>
-             </div>
-
-             <!-- Tracker -->
-             <div class="glass-card bento-tracker">
-                <div class="card-header">
-                   <h3>Status Pesanan <span class="badge" id="active-order-id">Mencari...</span></h3>
-                   <button class="icon-btn-small" onclick="navigate('view-tracking')"><i class="ph-bold ph-arrow-right"></i></button>
-                </div>
-                <div class="status-tracker" id="tracking-steps">
-                  <div class="step"><div class="circle"><i class="ph-fill ph-package"></i></div><p>Jemput</p></div>
-                  <div class="line"></div>
-                  <div class="step"><div class="circle"><i class="ph-fill ph-drop"></i></div><p>Cuci</p></div>
-                  <div class="line"></div>
-                  <div class="step"><div class="circle"><i class="ph-fill ph-truck"></i></div><p>Antar</p></div>
-                  <div class="line"></div>
-                  <div class="step"><div class="circle"><i class="ph-fill ph-check-circle"></i></div><p>Selesai</p></div>
-                </div>
-                <div class="tracking-details">
-                   <p id="active-order-detail"><i class="ph-bold ph-spinner-gap spin"></i> Memuat status server...</p>
-                </div>
-             </div>
-
-             <!-- Loyalty Card -->
-             <div class="glass-card bento-loyalty hover-tilt">
-                 <div class="loyalty-inner">
-                     <div class="card-top">
-                        <i class="ph-fill ph-sim-card text-muted chip"></i>
-                        <i class="ph-bold ph-wifi-high text-muted contactless"></i>
-                     </div>
-                     <div class="card-bottom">
-                        <h4 class="member-tier">Platinum Member</h4>
-                        <h2 class="points-display">1,250 PTS</h2>
-                        <p class="card-holder">SULTAN <span>VALID 12/28</span></p>
-                     </div>
-                     <div class="card-glare"></div>
-                 </div>
-             </div>
-
-             <!-- Quick Action Scan -->
-             <div class="glass-card bento-action hover-float" onclick="navigate('view-scanner')">
-                <div class="action-icon">
-                   <i class="ph-fill ph-sparkle"></i>
-                </div>
-                <div class="action-text">
-                   <h3>AI Stain Scanner <span class="badge-accent">PRO</span></h3>
-                   <p>Kenali noda dengan kamera & dapatkan rekomendasi cerdas.</p>
-                </div>
-                <i class="ph-bold ph-caret-right action-arrow"></i>
-             </div>
-
-             <!-- Stats -->
-             <div class="glass-card bento-stat">
-                 <div class="stat-icon-wrap primary-bg"><i class="ph-fill ph-t-shirt"></i></div>
-                 <h2>24</h2>
-                 <p>Pakaian Bersih</p>
-             </div>
-             <div class="glass-card bento-stat">
-                 <div class="stat-icon-wrap success-bg"><i class="ph-fill ph-leaf"></i></div>
-                 <h2>1.2kg</h2>
-                 <p>Karbon Dihemat</p>
-             </div>
-         </div>
-      </section>
-
-      <!-- VIEW 2: SMART ORDERING WIZARD -->
-      <section id="view-order" class="page-view hidden">
-         <div class="view-header text-center">
-            <h2 class="gradient-text">Pemesanan Eksklusif</h2>
-            <p>Tiga langkah mudah untuk pakaian bersih dan wangi.</p>
-         </div>
-         <div class="wizard-container glass-card">
-            
-            <div class="wizard-step" id="w-step-1">
-               <div class="step-indicator">Langkah 1 dari 3</div>
-               <h3 class="step-title">Pilih Layanan Pencucian</h3>
-               
-               <div class="service-cards-visual" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;">
-                  <!-- Service 1 -->
-                  <div class="srv-card-img selected" onclick="selectService(this, 'Wash Regular')" style="background-image: url('https://images.unsplash.com/photo-1545173168-9f1947eebb7f?q=80&w=600&auto=format&fit=crop');">
-                     <div class="overlay">
-                         <div class="icon-wrap"><i class="ph-fill ph-washing-machine"></i></div>
-                         <h4>Wash Regular</h4>
-                         <p>Mulai Rp 8.000 / kg</p>
-                     </div>
-                  </div>
-                  <!-- Service 2 -->
-                  <div class="srv-card-img" onclick="selectService(this, 'Wash Kilat')" style="background-image: url('https://images.unsplash.com/photo-1582735689369-4fe89db7114c?q=80&w=600&auto=format&fit=crop');">
-                     <div class="overlay">
-                         <div class="icon-wrap"><i class="ph-fill ph-rocket"></i></div>
-                         <h4>Wash Kilat</h4>
-                         <p>Mulai Rp 15.000 / kg</p>
-                     </div>
-                  </div>
-                  <!-- Service 3 -->
-                  <div class="srv-card-img" onclick="selectService(this, 'Dry Cleaning')" style="background-image: url('https://images.unsplash.com/photo-1520637102912-2df6bb2aec6d?q=80&w=600&auto=format&fit=crop');">
-                     <div class="overlay">
-                         <div class="icon-wrap"><i class="ph-fill ph-coat-hanger"></i></div>
-                         <h4>Dry Cleaning</h4>
-                         <p>Mulai Rp 25.000 / pcs</p>
-                     </div>
-                  </div>
-                  <!-- Service 4 -->
-                  <div class="srv-card-img" onclick="selectService(this, 'Premium Spa')" style="background-image: url('https://images.unsplash.com/photo-1608231387042-66d1773070a5?q=80&w=600&auto=format&fit=crop');">
-                     <div class="overlay">
-                         <div class="icon-wrap"><i class="ph-fill ph-sneaker"></i></div>
-                         <h4>Shoe/Bag Spa</h4>
-                         <p>Mulai Rp 50.000 / item</p>
-                     </div>
-                  </div>
-                  <!-- Service 5 -->
-                  <div class="srv-card-img" onclick="selectService(this, 'Cuci Karpet')" style="background-image: url('https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?q=80&w=600&auto=format&fit=crop');">
-                     <div class="overlay">
-                         <div class="icon-wrap"><i class="ph-fill ph-rug"></i></div>
-                         <h4>Cuci Karpet</h4>
-                         <p>Mulai Rp 30.000 / m2</p>
-                     </div>
-                  </div>
-                  <!-- Service 6 -->
-                  <div class="srv-card-img" onclick="selectService(this, 'Cuci Sofa')" style="background-image: url('https://images.unsplash.com/photo-1555041469-a586c61ea9bc?q=80&w=600&auto=format&fit=crop');">
-                     <div class="overlay">
-                         <div class="icon-wrap"><i class="ph-fill ph-armchair"></i></div>
-                         <h4>Cuci Sofa</h4>
-                         <p>Mulai Rp 100.000 / seat</p>
-                     </div>
-                  </div>
-               </div>
-               
-               <div class="wizard-actions right-align">
-                  <button class="btn-primary" onclick="nextWizard(2)">Selanjutnya <i class="ph-bold ph-arrow-right"></i></button>
-               </div>
-            </div>
-
-            <div class="wizard-step hidden" id="w-step-2">
-               <div class="step-indicator">Langkah 2 dari 3</div>
-               <h3 class="step-title">Detail & Promo Khusus</h3>
-               <div class="order-summary-box">
-                  <div class="form-group">
-                     <label>Estimasi Berat / Jumlah Item</label>
-                     <div class="qty-selector">
-                        <button onclick="updateQty(-1)">-</button>
-                        <input type="number" id="order-qty" value="1" readonly>
-                        <button onclick="updateQty(1)">+</button>
-                     </div>
-                  </div>
-                  
-                  <div class="form-group" style="margin-top:2rem;">
-                     <label>Kode Promo / Voucher</label>
-                     <div class="promo-input-group">
-                        <input type="text" id="promo-input" placeholder="Ketik NEWUSER50">
-                        <button class="btn-secondary" onclick="applyPromo()">Gunakan</button>
-                     </div>
-                     <div id="promo-message" class="promo-msg hidden"><i class="ph-fill ph-check-circle"></i> Promo berhasil diterapkan!</div>
-                  </div>
-
-                  <div class="summary-totals">
-                     <div class="calc-row"><span>Subtotal:</span> <span id="summary-subtotal">Rp 8.000</span></div>
-                     <div class="calc-row text-success"><span>Diskon:</span> <span id="summary-discount">- Rp 0</span></div>
-                     <div class="calc-row grand-total"><span>Total Tagihan:</span> <span id="summary-total" class="text-primary">Rp 8.000</span></div>
-                  </div>
-               </div>
-               <div class="wizard-actions">
-                  <button class="btn-outline" onclick="nextWizard(1)"><i class="ph-bold ph-arrow-left"></i> Kembali</button>
-                  <button class="btn-primary" onclick="nextWizard(3)">Pilih Pembayaran <i class="ph-bold ph-arrow-right"></i></button>
-               </div>
-            </div>
-
-            <div class="wizard-step hidden" id="w-step-3">
-               <div class="step-indicator">Langkah 3 dari 3</div>
-               <h3 class="step-title">Penyelesaian Pembayaran</h3>
-               <div class="payment-methods">
-                   <div class="pay-card selected" onclick="selectPayment(this, 'QRIS')">
-                       <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Logo_QRIS.svg/1200px-Logo_QRIS.svg.png" alt="QRIS" class="pay-logo">
-                       <h4>QRIS Otomatis</h4>
-                   </div>
-                   <div class="pay-card" onclick="selectPayment(this, 'E-Wallet')">
-                       <i class="ph-fill ph-wallet text-secondary" style="font-size:3rem"></i>
-                       <h4>Dompet Digital</h4>
-                   </div>
-                   <div class="pay-card" onclick="selectPayment(this, 'Tunai')">
-                       <i class="ph-fill ph-money text-success" style="font-size:3rem"></i>
-                       <h4>Bayar di Tempat</h4>
-                   </div>
-               </div>
-               
-               <div class="final-checkout-box">
-                   <div>
-                       <p>Total Tagihan Akhir</p>
-                       <h1 id="final-bill" class="gradient-text">Rp 8.000</h1>
-                   </div>
-                   <button class="btn-primary massive-btn pulse-glow" onclick="showPaymentModal()"><i class="ph-bold ph-check-circle"></i> Bayar Sekarang</button>
-               </div>
-
-               <div class="wizard-actions left-align">
-                  <button class="btn-outline" onclick="nextWizard(2)"><i class="ph-bold ph-arrow-left"></i> Detail</button>
-               </div>
-            </div>
-         </div>
-       </section>
-
-       <!-- VIEW: PRICING -->
-       <section id="view-pricing" class="page-view hidden">
-          <div class="view-header text-center">
-             <h2 class="gradient-text">Harga Transparan. Hasil Cemerlang.</h2>
-             <p>Tidak ada biaya tersembunyi. Semua harga sesuai kualitas.</p>
-          </div>
-          <div class="pricing-grid">
-             <div class="promo-banner-large glass-card" style="background-image: url('https://images.unsplash.com/photo-1545173168-9f1947eebb7f?q=80&w=800&auto=format&fit=crop');">
-                <div class="promo-overlay">
-                    <h3 class="gradient-text" style="font-size: 2.5rem;">Diskon 50% Khusus Anda!</h3>
-                    <p>Klaim potongan harga 50% untuk pesanan pertama tanpa minimum order.</p>
-                    <div class="promo-code-box">
-                       <span id="promo-text">NEWUSER50</span>
-                       <button class="btn-primary" onclick="copyPromo()"><i class="ph-bold ph-copy"></i> Salin</button>
-                    </div>
-                </div>
-             </div>
-             
-             <div class="price-list glass-card">
-                <h3><i class="ph-fill ph-list-dashes text-primary"></i> Daftar Layanan Utama</h3>
-                <ul>
-                   <li><span><i class="ph-bold ph-check text-success"></i> Wash & Fold Reguler</span> <strong>Rp 8.000 / kg</strong></li>
-                   <li><span><i class="ph-bold ph-check text-success"></i> Wash & Iron Kilat</span> <strong>Rp 12.000 / kg</strong></li>
-                   <li><span><i class="ph-bold ph-check text-success"></i> Dry Cleaning Jas/Gaun</span> <strong>Rp 25.000 / pcs</strong></li>
-                   <li><span><i class="ph-bold ph-check text-success"></i> Premium Shoe Spa</span> <strong>Rp 50.000 / psg</strong></li>
-                   <li><span><i class="ph-bold ph-check text-success"></i> Karpet & Bedcover</span> <strong>Mulai Rp 40.000</strong></li>
-                </ul>
-             </div>
-          </div>
-       </section>
-
-       <!-- VIEW 3: AI SCANNER -->
-       <section id="view-scanner" class="page-view hidden">
-          <div class="view-header text-center">
-             <h2 class="gradient-text">WashBot Vision AI</h2>
-             <p>Upload atau arahkan kamera ke noda, biarkan AI kami menganalisis jenis kain dan nodanya.</p>
-          </div>
-          <div class="scanner-wrapper">
-             <div class="scanner-box glass-card">
-                <div class="scan-area" id="scan-area">
-                   <div class="pulse-ring">
-                      <div class="camera-icon-wrap"><i class="ph-fill ph-camera"></i></div>
-                   </div>
-                   <h3 style="margin-top: 1rem;">Aktifkan Lensa</h3>
-                   <p style="color:var(--text-muted); margin-bottom: 2rem;">Arahkan ke pakaian kotor.</p>
-                   <button class="btn-primary massive-btn" onclick="startScan()"><i class="ph-bold ph-scan"></i> Pindai Noda</button>
-                </div>
-                <div class="scan-animation hidden" id="scan-animation">
-                   <div class="scan-line"></div>
-                   <div class="scanner-grid"></div>
-                   <div class="scanner-target"><i class="ph-bold ph-crosshair"></i></div>
-                   <img id="scan-image" src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=600&auto=format&fit=crop" alt="Shirt" style="border-radius:12px; width:100%; height: 250px; object-fit: cover;">
-                   <div class="analyzing-backdrop"></div>
-                   <div class="analyzing-text"><i class="ph-bold ph-spinner-gap spin"></i> <span id="scan-status-text">Memproses Jaringan Saraf Tiruan...</span></div>
-                </div>
-             </div>
-
-             <div class="scan-result hidden" id="scan-result">
-                <div class="glass-card result-card">
-                    <h3 style="margin-bottom: 1.5rem;"><i class="ph-fill ph-check-circle text-success" style="font-size: 2rem;"></i> Analisis Selesai</h3>
-                    <div class="result-stats">
-                        <div class="stat-box">
-                            <i class="ph-fill ph-yarn text-primary"></i>
-                            <p>Kain</p>
-                            <h4 id="scan-fabric">Menganalisis...</h4>
-                        </div>
-                        <div class="stat-box">
-                            <i class="ph-fill ph-drop text-secondary"></i>
-                            <p>Noda</p>
-                            <h4 id="scan-stain">Menganalisis...</h4>
-                        </div>
-                    </div>
-                    <div class="recommendation-box">
-                       <h4><i class="ph-fill ph-lightbulb text-primary"></i> Solusi WashBot:</h4>
-                       <p id="scan-rec">Menunggu hasil analisis AI...</p>
-                    </div>
-                    <button class="btn-primary full-width massive-btn" onclick="navigate('view-order')"><i class="ph-bold ph-shopping-cart"></i> Pesan Rekomendasi Ini</button>
-                </div>
-             </div>
-          </div>
-       </section>
-
-       <!-- VIEW 4: LIVE TRACKING -->
-       <section id="view-tracking" class="page-view hidden">
-          <div class="view-header flex-header">
-             <div>
-                <h2 class="gradient-text">Lacak Pengiriman</h2>
-                <p>Pantau posisi mitra kurir WashBuddy menuju lokasi Anda secara live.</p>
-             </div>
-                  <!-- Reload button -->
-                  <button class="btn-secondary" onclick="if(isTracking){clearInterval(countdownInterval);isTracking=false;} startLiveTracking();"><i class="ph-fill ph-arrows-clockwise"></i> Mulai Ulang</button>
-          </div>
-          
-          <div class="tracker-layout">
-              <div class="map-simulation glass-card" style="padding: 0;">
-                 <div class="map-bg-modern">
-                    <svg class="route-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
-                       <path id="courier-path-bg" d="M 10 85 C 40 85, 30 20, 90 20" stroke="rgba(255,255,255,0.1)" stroke-width="2" stroke-dasharray="2,2" fill="none"/>
-                       <path id="courier-path" d="M 10 85 C 40 85, 30 20, 90 20" stroke="var(--primary)" stroke-width="2.5" fill="none" class="animated-path" style="filter: drop-shadow(0 0 5px var(--primary));"/>
-                    </svg>
-                    <div class="map-pin courier" id="moving-courier">
-                       <div class="pin-glow"></div>
-                       <i class="ph-fill ph-motorcycle"></i>
-                    </div>
-                    <div class="map-pin store" style="top: 85%; left: 10%;"><i class="ph-fill ph-storefront"></i><span class="pin-label">Toko Pusat</span></div>
-                    <div class="map-pin home" style="top: 20%; left: 90%;"><i class="ph-fill ph-house"></i><span class="pin-label">Rumah Anda</span></div>
-                 </div>
-              </div>
-              
-              <div class="glass-card courier-info-panel">
-                  <h3 style="margin-bottom: 1.5rem; font-size: 1.2rem;">Status Kurir</h3>
-                   <div class="courier-profile">
-                       <img id="courier-img" src="https://ui-avatars.com/api/?name=Kurir&background=00E5FF&color=0a0f1e&bold=true" alt="Kurir">
-                       <div>
-                           <h4 id="courier-name">Memilih Kurir...</h4>
-                           <p id="courier-rating"><i class="ph-fill ph-star text-primary"></i> -- (Mitra Elite)</p>
-                       </div>
-                   </div>
-                   
-                   <div class="delivery-stats-grid">
-                       <div class="d-stat-box">
-                           <i class="ph-fill ph-clock text-secondary"></i>
-                           <p>Estimasi</p>
-                           <h2 id="live-time" class="gradient-text">02:00</h2>
-                       </div>
-                       <div class="d-stat-box">
-                           <i class="ph-fill ph-map-pin text-primary"></i>
-                           <p>Sisa Jarak</p>
-                           <h2 id="live-distance">5.0 km</h2>
-                       </div>
-                   </div>
-                   
-                   <div class="progress-bar-modern">
-                       <div class="progress-fill" id="courier-progress" style="width:0%"></div>
-                   </div>
-                   
-                   <div class="courier-actions">
-                       <button class="btn-primary" id="chat-courier-btn" style="flex: 2;"><i class="ph-fill ph-chat-circle-dots"></i> Chat Kurir</button>
-                       <button class="btn-secondary" style="flex: 1;"><i class="ph-fill ph-phone"></i></button>
-                   </div>
-              </div>
-          </div>
-       </section>
-   </main>
-
-   <!-- Payment Modal -->
-   <div class="payment-modal hidden" id="payment-modal">
-       <div class="payment-box glass-card">
-           <button class="close-btn" onclick="closePayment()"><i class="ph-bold ph-x"></i></button>
-           
-           <div id="payment-content-qris" class="hidden text-center">
-               <div class="advanced-logo" style="margin: 0 auto 1.5rem; width: 55px; height: 55px;">
-                   <div class="ring ring1"></div>
-                   <div class="ring ring2"></div>
-                   <i class="ph-fill ph-drop drop-icon" style="font-size: 1.8rem;"></i>
-               </div>
-               <h3>Pembayaran QRIS</h3>
-              <p class="text-muted" style="margin-bottom: 1.5rem;">Scan kode QR ini menggunakan aplikasi E-Wallet atau M-Banking Anda.</p>
-              
-              <div style="background: white; padding: 1.5rem; border-radius: 12px; display: inline-block; margin-bottom: 1.5rem;">
-                  <!-- Mock QRIS code -->
-                  <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=WASHBUDDY-PAYMENT-MOCK" alt="QRIS WashBuddy">
-              </div>
-              
-              <h2 id="qris-amount" class="gradient-text" style="margin-bottom: 1.5rem;">Rp 0</h2>
-              <button class="btn-primary full-width massive-btn" onclick="confirmPayment()"><i class="ph-bold ph-check-circle"></i> Saya Sudah Bayar</button>
-          </div>
-
-          <div id="payment-content-va" class="hidden">
-              <div class="text-center">
-                  <i class="ph-fill ph-bank" style="font-size: 3rem; color: var(--secondary); margin-bottom: 1rem;"></i>
-                  <h3>Virtual Account / Transfer</h3>
-                  <p class="text-muted" style="margin-bottom: 1.5rem;">Transfer ke rekening resmi WashBuddy di bawah ini.</p>
-              </div>
-              
-              <div style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; text-align: center;">
-                  <p class="text-muted" style="font-size: 0.85rem; margin-bottom: 0.5rem;">Bank BCA - WashBuddy Indonesia</p>
-                  <h2 style="letter-spacing: 2px;" class="font-mono gradient-text">8839 2026 1234</h2>
-              </div>
-              
-              <h2 id="va-amount" class="text-center" style="margin-bottom: 1.5rem;">Rp 0</h2>
-              <button class="btn-primary full-width massive-btn" onclick="confirmPayment()"><i class="ph-bold ph-check-circle"></i> Konfirmasi Transfer</button>
-          </div>
-          
-          <div id="payment-content-cod" class="hidden text-center">
-              <i class="ph-fill ph-money" style="font-size: 4rem; color: var(--success); margin-bottom: 1rem;"></i>
-              <h3>Bayar di Tempat (Tunai)</h3>
-              <p class="text-muted" style="margin-bottom: 1.5rem;">Siapkan uang tunai saat kurir tiba untuk menjemput pakaian Anda.</p>
-              <h2 id="cod-amount" class="gradient-text" style="margin-bottom: 1.5rem;">Rp 0</h2>
-              <button class="btn-primary full-width massive-btn" onclick="confirmPayment()"><i class="ph-bold ph-truck"></i> Panggil Kurir Sekarang</button>
-          </div>
       </div>
+      <div class="np-item">
+        <div class="np-icon" style="background:rgba(34,197,94,0.15); color:#22c55e">
+          <i class="ph-fill ph-check-circle"></i>
+        </div>
+        <div>
+          <p>Pesanan #WB-2931 selesai dicuci.</p>
+          <span>Kemarin, 14:30</span>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <!-- AI Chatbot Floating Widget -->
-  <button class="chatbot-fab" onclick="toggleChat()">
-      <i class="ph-fill ph-robot"></i>
-      <span class="chat-badge">1</span>
-  </button>
-  
-  <div class="chatbox glass-card" id="ai-chatbox">
-     <div class="chat-header">
-        <div class="bot-info">
-           <div class="bot-avatar"><i class="ph-fill ph-robot"></i></div>
-           <div>
-              <h4>WashBot AI</h4>
-              <p><span class="online-dot"></span> Online</p>
-           </div>
+  <main class="portal-main">
+
+    <!-- ===========================
+         VIEW 1 — DASHBOARD
+         =========================== -->
+    <section id="view-dashboard" class="portal-view active">
+
+      <!-- Welcome Banner -->
+      <div class="welcome-banner">
+        <div class="wb-left">
+          <div class="wb-greeting">Selamat Datang, Sultan 👋</div>
+          <h1 class="wb-title">Cucian numpuk? <br><span class="highlight">WashBuddy</span> siap urus.</h1>
+          <p class="wb-sub">Penjemputan dalam 30 menit. Bersih, wangi, dan tepat waktu.</p>
+          <div class="wb-actions">
+            <button class="btn-cta" onclick="navigate('view-order')">
+              <i class="ph-bold ph-rocket-launch"></i> Pesan Sekarang
+            </button>
+            <button class="btn-ghost" onclick="navigate('view-tracking')">
+              <i class="ph-bold ph-map-pin"></i> Lacak Pesanan
+            </button>
+          </div>
         </div>
-        <button class="close-btn" onclick="toggleChat()"><i class="ph-bold ph-x"></i></button>
-     </div>
-     <div class="chat-messages" id="chat-messages">
-        <div class="message bot">Halo Sultan! Cuaca cerah hari ini, waktu yang tepat untuk mencuci. Ada yang bisa saya bantu?</div>
-     </div>
-     <div class="chat-options-panel" style="padding: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 5px; background: rgba(255,255,255,0.05); border-top: 1px solid rgba(255,255,255,0.1);">
-        <button class="btn-outline" style="font-size: 0.8rem; padding: 5px; justify-content: center;" onclick="sendOption('Cek Harga Wash Regular')">Cek Harga</button>
-        <button class="btn-outline" style="font-size: 0.8rem; padding: 5px; justify-content: center;" onclick="sendOption('Promo Hari Ini')">Promo Hari Ini</button>
-        <button class="btn-outline" style="font-size: 0.8rem; padding: 5px; justify-content: center;" onclick="sendOption('Lacak Pesanan Saya')">Lacak Pesanan</button>
-        <button class="btn-outline" style="font-size: 0.8rem; padding: 5px; justify-content: center;" onclick="sendOption('Berapa Lama Dry Clean?')">Waktu Dry Clean</button>
-        <button class="btn-outline" style="font-size: 0.8rem; padding: 5px; justify-content: center;" onclick="sendOption('Cara Cuci Karpet')">Cuci Karpet</button>
-        <button class="btn-outline" style="font-size: 0.8rem; padding: 5px; justify-content: center;" onclick="sendOption('Apakah Bisa Bayar COD?')">Metode Bayar</button>
-        <button class="btn-outline" style="font-size: 0.8rem; padding: 5px; justify-content: center;" onclick="sendOption('Komplain Layanan')">Komplain</button>
-        <button class="btn-primary" style="font-size: 0.8rem; padding: 5px; grid-column: span 2; justify-content: center;" onclick="sendOption('Hubungkan dengan Admin')"><i class="ph-bold ph-headset"></i> Tanya Admin Langsung</button>
-     </div>
-     <div class="chat-input">
-        <input type="text" id="chat-input-field" placeholder="Ketik pesan...">
-        <button onclick="sendChatMessage()"><i class="ph-bold ph-paper-plane-right"></i></button>
-     </div>
+        <div class="wb-right">
+          <img src="https://images.unsplash.com/photo-1582735689369-4fe89db7114c?w=500&auto=format&fit=crop" alt="Laundry" class="wb-img">
+          <div class="wb-stat-float">
+            <div class="wsf-item">
+              <span class="wsf-num">48</span>
+              <span class="wsf-label">Pesanan Selesai</span>
+            </div>
+            <div class="wsf-divider"></div>
+            <div class="wsf-item">
+              <span class="wsf-num">4.9⭐</span>
+              <span class="wsf-label">Rating Anda</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dashboard Grid -->
+      <div class="dash-grid">
+
+        <!-- Active Order Tracker -->
+        <div class="dash-card card-tracker">
+          <div class="dc-header">
+            <div class="dc-title">
+              <div class="dc-icon-wrap" style="background:rgba(59,130,246,0.15)">
+                <i class="ph-fill ph-package" style="color:#60a5fa"></i>
+              </div>
+              <div>
+                <h3>Status Pesanan Aktif</h3>
+                <span class="order-badge" id="active-order-id">Tidak ada pesanan</span>
+              </div>
+            </div>
+            <button class="btn-sm-outline" onclick="navigate('view-tracking')">
+              Lihat Detail <i class="ph-bold ph-arrow-right"></i>
+            </button>
+          </div>
+
+          <div class="tracker-steps">
+            <div class="ts-step step">
+              <div class="ts-dot circle"><i class="ph-fill ph-package"></i></div>
+              <div class="ts-connector line"></div>
+              <span>Jemput</span>
+            </div>
+            <div class="ts-step step">
+              <div class="ts-dot circle"><i class="ph-fill ph-drop"></i></div>
+              <div class="ts-connector line"></div>
+              <span>Cuci</span>
+            </div>
+            <div class="ts-step step">
+              <div class="ts-dot circle"><i class="ph-fill ph-truck"></i></div>
+              <div class="ts-connector line"></div>
+              <span>Antar</span>
+            </div>
+            <div class="ts-step step">
+              <div class="ts-dot circle"><i class="ph-fill ph-check-circle"></i></div>
+              <span>Selesai</span>
+            </div>
+          </div>
+
+          <div class="tracker-status-msg">
+            <p id="active-order-detail"><i class="ph-bold ph-spinner-gap spin"></i> Memuat status pesanan...</p>
+          </div>
+        </div>
+
+        <!-- Loyalty Card 3D -->
+        <div class="dash-card card-loyalty" id="loyalty-card-3d">
+          <div class="lc-inner">
+            <div class="lc-top">
+              <div class="lc-brand">
+                <i class="ph-fill ph-drop"></i>
+                <span>WashBuddy</span>
+              </div>
+              <div class="lc-tier-chip">PLATINUM</div>
+            </div>
+            <div class="lc-mid">
+              <div class="lc-chip">
+                <i class="ph-fill ph-sim-card"></i>
+              </div>
+              <i class="ph-bold ph-wifi-high lc-nfc"></i>
+            </div>
+            <div class="lc-bottom">
+              <div>
+                <div class="lc-pts-label">Total Poin</div>
+                <div class="lc-pts">1,250 PTS</div>
+              </div>
+              <div class="lc-holder-info">
+                <span class="lc-name">SULTAN</span>
+                <span class="lc-exp">12/28</span>
+              </div>
+            </div>
+            <div class="lc-glare"></div>
+            <div class="lc-shine"></div>
+          </div>
+        </div>
+
+        <!-- AI Scanner Quick Action -->
+        <div class="dash-card card-ai-action" onclick="navigate('view-scanner')">
+          <div class="ai-action-bg"></div>
+          <div class="ai-action-content">
+            <div class="ai-pulse-icon">
+              <div class="pulse-ring-1"></div>
+              <div class="pulse-ring-2"></div>
+              <i class="ph-fill ph-sparkle"></i>
+            </div>
+            <div>
+              <div class="ai-action-label"><i class="ph-fill ph-robot"></i> WashBot Vision AI</div>
+              <h3>Scan Noda Pakaian</h3>
+              <p>Kenali noda & dapatkan rekomendasi pencucian cerdas.</p>
+            </div>
+          </div>
+          <div class="ai-action-arrow">
+            <i class="ph-bold ph-arrow-right"></i>
+          </div>
+        </div>
+
+        <!-- Stat Cards -->
+        <div class="dash-card card-stat">
+          <div class="stat-ring" style="--ring-color: #60a5fa">
+            <i class="ph-fill ph-t-shirt"></i>
+          </div>
+          <div class="stat-info">
+            <span class="stat-num">24</span>
+            <span class="stat-lbl">Pakaian Bersih</span>
+            <span class="stat-change up">+3 minggu ini</span>
+          </div>
+        </div>
+
+        <div class="dash-card card-stat">
+          <div class="stat-ring" style="--ring-color: #22c55e">
+            <i class="ph-fill ph-leaf"></i>
+          </div>
+          <div class="stat-info">
+            <span class="stat-num">1.2<small>kg</small></span>
+            <span class="stat-lbl">CO₂ Dihemat</span>
+            <span class="stat-change up">Eco-friendly</span>
+          </div>
+        </div>
+
+        <div class="dash-card card-stat">
+          <div class="stat-ring" style="--ring-color: #a855f7">
+            <i class="ph-fill ph-clock-countdown"></i>
+          </div>
+          <div class="stat-info">
+            <span class="stat-num">2.5<small>hr</small></span>
+            <span class="stat-lbl">Avg. Waktu</span>
+            <span class="stat-change">Express tersedia</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===========================
+         VIEW 2 — ORDERING
+         =========================== -->
+    <section id="view-order" class="portal-view hidden">
+      <div class="view-top">
+        <h2>Pesan Laundry</h2>
+        <p>Pilih layanan dan selesaikan pembayaran dalam 3 langkah mudah.</p>
+      </div>
+
+      <div class="wizard-shell">
+        <!-- Step indicator -->
+        <div class="step-bar">
+          <div class="sb-item active" id="sb-1">
+            <div class="sb-num">1</div>
+            <span>Layanan</span>
+          </div>
+          <div class="sb-line"></div>
+          <div class="sb-item" id="sb-2">
+            <div class="sb-num">2</div>
+            <span>Detail</span>
+          </div>
+          <div class="sb-line"></div>
+          <div class="sb-item" id="sb-3">
+            <div class="sb-num">3</div>
+            <span>Bayar</span>
+          </div>
+        </div>
+
+        <!-- STEP 1: Services -->
+        <div class="wizard-step" id="w-step-1">
+          <h3 class="ws-title">Pilih Layanan</h3>
+          <div class="srv-grid">
+
+            <div class="srv-card selected" onclick="selectService(this, 'Wash Regular')"
+              style="--img: url('https://images.unsplash.com/photo-1545173168-9f1947eebb7f?w=600&auto=format&fit=crop')">
+              <div class="sc-overlay"></div>
+              <div class="sc-content">
+                <div class="sc-icon"><i class="ph-fill ph-washing-machine"></i></div>
+                <h4>Wash Regular</h4>
+                <p class="sc-price">Rp 8.000<span>/kg</span></p>
+                <p class="sc-desc">Cuci & lipat standar, selesai 1-2 hari</p>
+              </div>
+              <div class="sc-selected-badge"><i class="ph-bold ph-check"></i></div>
+            </div>
+
+            <div class="srv-card" onclick="selectService(this, 'Wash Kilat')"
+              style="--img: url('https://images.unsplash.com/photo-1582735689369-4fe89db7114c?w=600&auto=format&fit=crop')">
+              <div class="sc-overlay"></div>
+              <div class="sc-content">
+                <div class="sc-icon"><i class="ph-fill ph-rocket"></i></div>
+                <h4>Wash Kilat</h4>
+                <p class="sc-price">Rp 15.000<span>/kg</span></p>
+                <p class="sc-desc">Proses express, selesai dalam 24 jam</p>
+              </div>
+              <div class="sc-selected-badge"><i class="ph-bold ph-check"></i></div>
+            </div>
+
+            <div class="srv-card" onclick="selectService(this, 'Dry Cleaning')"
+              style="--img: url('https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=600&auto=format&fit=crop')">
+              <div class="sc-overlay"></div>
+              <div class="sc-content">
+                <div class="sc-icon"><i class="ph-fill ph-coat-hanger"></i></div>
+                <h4>Dry Cleaning</h4>
+                <p class="sc-price">Rp 25.000<span>/pcs</span></p>
+                <p class="sc-desc">Khusus baju formal, jas, gaun & sutra</p>
+              </div>
+              <div class="sc-selected-badge"><i class="ph-bold ph-check"></i></div>
+            </div>
+
+            <div class="srv-card" onclick="selectService(this, 'Premium Spa')"
+              style="--img: url('https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&auto=format&fit=crop')">
+              <div class="sc-overlay"></div>
+              <div class="sc-content">
+                <div class="sc-icon"><i class="ph-fill ph-sneaker"></i></div>
+                <h4>Shoe & Bag Spa</h4>
+                <p class="sc-price">Rp 50.000<span>/item</span></p>
+                <p class="sc-desc">Perawatan premium sepatu & tas mewah</p>
+              </div>
+              <div class="sc-selected-badge"><i class="ph-bold ph-check"></i></div>
+            </div>
+
+            <div class="srv-card" onclick="selectService(this, 'Cuci Karpet')"
+              style="--img: url('https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=600&auto=format&fit=crop')">
+              <div class="sc-overlay"></div>
+              <div class="sc-content">
+                <div class="sc-icon"><i class="ph-fill ph-rug"></i></div>
+                <h4>Cuci Karpet</h4>
+                <p class="sc-price">Rp 30.000<span>/m²</span></p>
+                <p class="sc-desc">Ekstraksi debu & tungau hingga tuntas</p>
+              </div>
+              <div class="sc-selected-badge"><i class="ph-bold ph-check"></i></div>
+            </div>
+
+            <div class="srv-card" onclick="selectService(this, 'Cuci Sofa')"
+              style="--img: url('https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&auto=format&fit=crop')">
+              <div class="sc-overlay"></div>
+              <div class="sc-content">
+                <div class="sc-icon"><i class="ph-fill ph-armchair"></i></div>
+                <h4>Cuci Sofa</h4>
+                <p class="sc-price">Rp 100.000<span>/seat</span></p>
+                <p class="sc-desc">Cuci sofa on-site atau antar ke toko</p>
+              </div>
+              <div class="sc-selected-badge"><i class="ph-bold ph-check"></i></div>
+            </div>
+
+          </div>
+          <div class="ws-actions right">
+            <button class="btn-cta" onclick="nextWizard(2)">Lanjutkan <i class="ph-bold ph-arrow-right"></i></button>
+          </div>
+        </div>
+
+        <!-- STEP 2: Detail -->
+        <div class="wizard-step hidden" id="w-step-2">
+          <h3 class="ws-title">Detail Pesanan</h3>
+          <div class="detail-grid">
+            <div class="detail-left">
+              <div class="form-field">
+                <label>Estimasi Berat / Jumlah Item</label>
+                <div class="qty-box">
+                  <button onclick="updateQty(-1)">−</button>
+                  <input type="number" id="order-qty" value="1" readonly>
+                  <button onclick="updateQty(1)">+</button>
+                </div>
+              </div>
+              <div class="form-field" style="margin-top:2rem">
+                <label>Kode Voucher / Promo</label>
+                <div class="promo-row">
+                  <input type="text" id="promo-input" placeholder="Coba NEWUSER50">
+                  <button class="btn-apply" onclick="applyPromo()">Pakai</button>
+                </div>
+                <div id="promo-message" class="promo-msg hidden"></div>
+              </div>
+            </div>
+            <div class="detail-right">
+              <div class="invoice-box">
+                <div class="ib-header">Ringkasan Pesanan</div>
+                <div class="ib-row"><span>Subtotal</span><span id="summary-subtotal">Rp 8.000</span></div>
+                <div class="ib-row success"><span>Diskon</span><span id="summary-discount">- Rp 0</span></div>
+                <div class="ib-divider"></div>
+                <div class="ib-total"><span>Total</span><span id="summary-total" class="ib-price">Rp 8.000</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="ws-actions">
+            <button class="btn-ghost" onclick="nextWizard(1)"><i class="ph-bold ph-arrow-left"></i> Kembali</button>
+            <button class="btn-cta" onclick="nextWizard(3)">Pilih Pembayaran <i class="ph-bold ph-arrow-right"></i></button>
+          </div>
+        </div>
+
+        <!-- STEP 3: Payment -->
+        <div class="wizard-step hidden" id="w-step-3">
+          <h3 class="ws-title">Metode Pembayaran</h3>
+          <div class="pay-grid">
+            <div class="pay-option selected" onclick="selectPayment(this, 'QRIS')">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Logo_QRIS.svg/1200px-Logo_QRIS.svg.png" alt="QRIS">
+              <span>QRIS</span>
+            </div>
+            <div class="pay-option" onclick="selectPayment(this, 'E-Wallet')">
+              <i class="ph-fill ph-wallet"></i>
+              <span>Dompet Digital</span>
+            </div>
+            <div class="pay-option" onclick="selectPayment(this, 'Tunai')">
+              <i class="ph-fill ph-money"></i>
+              <span>Bayar COD</span>
+            </div>
+          </div>
+          <div class="checkout-summary">
+            <div>
+              <p>Total Tagihan Akhir</p>
+              <h2 class="ck-total" id="final-bill">Rp 8.000</h2>
+            </div>
+            <button class="btn-cta btn-cta-lg pulse-pay" onclick="showPaymentModal()">
+              <i class="ph-bold ph-check-circle"></i> Bayar Sekarang
+            </button>
+          </div>
+          <div class="ws-actions" style="border-top:0; padding-top:0; margin-top:1rem">
+            <button class="btn-ghost" onclick="nextWizard(2)"><i class="ph-bold ph-arrow-left"></i> Detail</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===========================
+         VIEW 3 — PRICING
+         =========================== -->
+    <section id="view-pricing" class="portal-view hidden">
+      <div class="view-top">
+        <h2>Promo & Harga</h2>
+        <p>Transparan, terjangkau, dan selalu ada penawaran spesial untuk Anda.</p>
+      </div>
+
+      <div class="promo-hero-card">
+        <div class="phc-left">
+          <div class="phc-badge">🎁 EKSKLUSIF UNTUKMU</div>
+          <h2>Diskon 50% Pesanan Pertama</h2>
+          <p>Klaim potongan harga 50% tanpa minimum order. Berlaku untuk semua layanan.</p>
+          <div class="promo-code-row">
+            <div class="promo-code-display">NEWUSER50</div>
+            <button class="btn-copy" onclick="copyPromo()"><i class="ph-bold ph-copy"></i> Salin Kode</button>
+          </div>
+        </div>
+        <div class="phc-right">
+          <img src="https://images.unsplash.com/photo-1545173168-9f1947eebb7f?w=500&auto=format&fit=crop" alt="Promo">
+          <div class="phc-badge-float">-50%</div>
+        </div>
+      </div>
+
+      <div class="price-table-wrap">
+        <h3>Daftar Harga Layanan</h3>
+        <div class="price-table">
+          <div class="pt-row pt-head">
+            <span>Layanan</span>
+            <span>Harga</span>
+            <span>Estimasi</span>
+          </div>
+          <div class="pt-row">
+            <div class="pt-service">
+              <div class="pt-ico" style="background:rgba(59,130,246,0.15); color:#60a5fa"><i class="ph-fill ph-washing-machine"></i></div>
+              <div><strong>Wash & Fold Reguler</strong><p>Pakaian harian, celana, kaos</p></div>
+            </div>
+            <span class="pt-price">Rp 8.000 / kg</span>
+            <span class="pt-est">1–2 hari</span>
+          </div>
+          <div class="pt-row">
+            <div class="pt-service">
+              <div class="pt-ico" style="background:rgba(251,191,36,0.15); color:#fbbf24"><i class="ph-fill ph-rocket"></i></div>
+              <div><strong>Wash & Iron Kilat</strong><p>Express dengan setrika premium</p></div>
+            </div>
+            <span class="pt-price">Rp 12.000 / kg</span>
+            <span class="pt-est">24 jam</span>
+          </div>
+          <div class="pt-row">
+            <div class="pt-service">
+              <div class="pt-ico" style="background:rgba(20,184,166,0.15); color:#14b8a6"><i class="ph-fill ph-coat-hanger"></i></div>
+              <div><strong>Dry Cleaning</strong><p>Jas, gaun, sutra, baju formal</p></div>
+            </div>
+            <span class="pt-price">Rp 25.000 / pcs</span>
+            <span class="pt-est">2–3 hari</span>
+          </div>
+          <div class="pt-row">
+            <div class="pt-service">
+              <div class="pt-ico" style="background:rgba(168,85,247,0.15); color:#a855f7"><i class="ph-fill ph-sneaker"></i></div>
+              <div><strong>Shoe & Bag Spa</strong><p>Sepatu, tas kulit, sneakers</p></div>
+            </div>
+            <span class="pt-price">Rp 50.000 / item</span>
+            <span class="pt-est">3–5 hari</span>
+          </div>
+          <div class="pt-row">
+            <div class="pt-service">
+              <div class="pt-ico" style="background:rgba(34,197,94,0.15); color:#22c55e"><i class="ph-fill ph-rug"></i></div>
+              <div><strong>Cuci Karpet & Bedcover</strong><p>Ekstraktor khusus, anti tungau</p></div>
+            </div>
+            <span class="pt-price">Mulai Rp 40.000</span>
+            <span class="pt-est">3–5 hari</span>
+          </div>
+          <div class="pt-row">
+            <div class="pt-service">
+              <div class="pt-ico" style="background:rgba(239,68,68,0.15); color:#ef4444"><i class="ph-fill ph-armchair"></i></div>
+              <div><strong>Cuci Sofa</strong><p>On-site atau antar ke toko kami</p></div>
+            </div>
+            <span class="pt-price">Rp 100.000 / seat</span>
+            <span class="pt-est">Sesuai jadwal</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===========================
+         VIEW 4 — AI SCANNER
+         =========================== -->
+    <section id="view-scanner" class="portal-view hidden">
+      <div class="view-top">
+        <h2>WashBot Vision AI</h2>
+        <p>Arahkan kamera ke noda. AI kami mendeteksi jenis kain & rekomendasi pencucian terbaik.</p>
+      </div>
+
+      <div class="scanner-layout">
+        <!-- Camera / Scan Box -->
+        <div class="scan-cam-box">
+          <!-- Initial State -->
+          <div class="scan-idle" id="scan-area">
+            <div class="scan-crosshair">
+              <div class="sh-line sh-h"></div>
+              <div class="sh-line sh-v"></div>
+              <div class="sh-corner c-tl"></div>
+              <div class="sh-corner c-tr"></div>
+              <div class="sh-corner c-bl"></div>
+              <div class="sh-corner c-br"></div>
+            </div>
+            <div class="scan-idle-text">
+              <i class="ph-fill ph-camera"></i>
+              <h3>Siap Memindai</h3>
+              <p>Tekan tombol untuk mulai analisis noda dengan teknologi AI.</p>
+            </div>
+            <button class="btn-cta btn-scan-trigger" onclick="startScan()">
+              <i class="ph-bold ph-scan"></i> Mulai Pindai Noda
+            </button>
+          </div>
+
+          <!-- Scanning Animation -->
+          <div class="scan-active hidden" id="scan-animation">
+            <img id="scan-image" src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=600&auto=format&fit=crop" alt="Scan">
+            <div class="scan-overlay">
+              <div class="scan-laser"></div>
+              <div class="scan-grid-overlay"></div>
+              <div class="scan-reticle">
+                <div class="sh-corner c-tl"></div>
+                <div class="sh-corner c-tr"></div>
+                <div class="sh-corner c-bl"></div>
+                <div class="sh-corner c-br"></div>
+              </div>
+            </div>
+            <div class="scan-log-bar">
+              <span class="slb-dot"></span>
+              <span id="scan-status-text">Memulai lensa WashBot Vision AI...</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Result Panel (hidden until done) -->
+        <div class="scan-result hidden" id="scan-result">
+          <div class="sr-header">
+            <div class="sr-check"><i class="ph-bold ph-check"></i></div>
+            <div>
+              <h3>Analisis Selesai</h3>
+              <p>WashBot AI telah menentukan rekomendasi terbaik untuk pakaian Anda.</p>
+            </div>
+          </div>
+          <div class="sr-chips">
+            <div class="sr-chip">
+              <div class="sr-chip-lbl">Jenis Kain</div>
+              <div class="sr-chip-val" id="scan-fabric">—</div>
+            </div>
+            <div class="sr-chip">
+              <div class="sr-chip-lbl">Jenis Noda</div>
+              <div class="sr-chip-val" id="scan-stain">—</div>
+            </div>
+          </div>
+          <div class="sr-rec">
+            <div class="sr-rec-icon"><i class="ph-fill ph-lightbulb"></i></div>
+            <div>
+              <div class="sr-rec-title">Rekomendasi WashBot:</div>
+              <div id="scan-rec">—</div>
+            </div>
+          </div>
+          <button class="btn-cta" style="width:100%" onclick="navigate('view-order')">
+            <i class="ph-bold ph-shopping-cart"></i> Pesan Layanan Ini
+          </button>
+          <button class="btn-ghost" style="width:100%; margin-top:0.8rem" onclick="document.getElementById('scan-area').classList.remove('hidden'); document.getElementById('scan-result').classList.add('hidden'); document.getElementById('scan-animation').classList.add('hidden');">
+            <i class="ph-bold ph-arrow-counter-clockwise"></i> Scan Ulang
+          </button>
+        </div>
+
+        <!-- Info Panel (always visible) -->
+        <div class="scan-info-panel">
+          <h4>Cara Kerja</h4>
+          <div class="sip-steps">
+            <div class="sip-step">
+              <div class="sip-num">1</div>
+              <div>Tekan "Mulai Pindai" dan arahkan ke area noda pada pakaian.</div>
+            </div>
+            <div class="sip-step">
+              <div class="sip-num">2</div>
+              <div>AI menganalisis spektrum warna, tekstur kain, dan pola noda.</div>
+            </div>
+            <div class="sip-step">
+              <div class="sip-num">3</div>
+              <div>WashBot memberikan rekomendasi layanan terbaik untuk Anda.</div>
+            </div>
+          </div>
+          <div class="sip-capabilities">
+            <div class="sip-cap"><i class="ph-bold ph-check-circle"></i> 9+ Jenis Noda</div>
+            <div class="sip-cap"><i class="ph-bold ph-check-circle"></i> 15+ Material Kain</div>
+            <div class="sip-cap"><i class="ph-bold ph-check-circle"></i> 10.000+ Data Training</div>
+            <div class="sip-cap"><i class="ph-bold ph-check-circle"></i> Akurasi 96.4%</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===========================
+         VIEW 5 — LIVE TRACKING
+         =========================== -->
+    <section id="view-tracking" class="portal-view hidden">
+      <div class="view-top flex-top">
+        <div>
+          <h2>Lacak Pengiriman</h2>
+          <p>Posisi kurir WashBuddy ditampilkan secara real-time.</p>
+        </div>
+        <button class="btn-ghost" onclick="if(isTracking){clearInterval(countdownInterval);isTracking=false;} startLiveTracking();">
+          <i class="ph-fill ph-arrows-clockwise"></i> Mulai Ulang
+        </button>
+      </div>
+
+      <div class="tracking-layout">
+        <!-- Map -->
+        <div class="map-card">
+          <div class="map-area">
+            <svg class="route-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+              <path d="M 10 85 C 40 85, 30 20, 90 20" stroke="rgba(255,255,255,0.08)" stroke-width="2.5" stroke-dasharray="4,3" fill="none"/>
+              <path d="M 10 85 C 40 85, 30 20, 90 20" stroke="url(#routeGrad)" stroke-width="2.5" fill="none" class="animated-path" style="filter: drop-shadow(0 0 4px rgba(96,165,250,0.6))"/>
+              <defs>
+                <linearGradient id="routeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" style="stop-color:#3b82f6"/>
+                  <stop offset="100%" style="stop-color:#14b8a6"/>
+                </linearGradient>
+              </defs>
+            </svg>
+
+            <!-- Courier Pin -->
+            <div class="courier-pin" id="moving-courier">
+              <div class="cp-pulse"></div>
+              <i class="ph-fill ph-motorcycle"></i>
+            </div>
+
+            <!-- Location Labels -->
+            <div class="map-loc store" style="top: 85%; left: 10%">
+              <i class="ph-fill ph-storefront"></i>
+              <span>Toko Pusat</span>
+            </div>
+            <div class="map-loc home" style="top: 20%; left: 87%">
+              <i class="ph-fill ph-house"></i>
+              <span>Rumah Anda</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Courier Panel -->
+        <div class="courier-panel">
+          <!-- Courier Profile -->
+          <div class="cp-profile">
+            <img id="courier-img" src="https://ui-avatars.com/api/?name=Kurir&background=3b82f6&color=fff&bold=true" alt="Kurir">
+            <div class="cp-info">
+              <h4 id="courier-name">Memilih kurir...</h4>
+              <p id="courier-rating"><i class="ph-fill ph-star" style="color:#fbbf24"></i> — (Mitra Elite)</p>
+            </div>
+            <div class="cp-live-badge"><span></span> Live</div>
+          </div>
+
+          <!-- ETA Stats -->
+          <div class="cp-stats">
+            <div class="cp-stat-item">
+              <div class="cps-icon"><i class="ph-fill ph-clock-countdown"></i></div>
+              <span class="cps-val" id="live-time">02:00</span>
+              <span class="cps-lbl">Estimasi Tiba</span>
+            </div>
+            <div class="cp-stat-divider"></div>
+            <div class="cp-stat-item">
+              <div class="cps-icon"><i class="ph-fill ph-map-pin"></i></div>
+              <span class="cps-val" id="live-distance">5.0 km</span>
+              <span class="cps-lbl">Jarak Tersisa</span>
+            </div>
+          </div>
+
+          <!-- Progress Bar -->
+          <div class="cp-progress-wrap">
+            <div class="cp-progress-track">
+              <div class="cp-progress-fill" id="courier-progress"></div>
+            </div>
+          </div>
+
+          <!-- Status Steps -->
+          <div class="status-tracker">
+            <div class="step"><div class="circle"><i class="ph-fill ph-package"></i></div><p>Jemput</p></div>
+            <div class="line"></div>
+            <div class="step"><div class="circle"><i class="ph-fill ph-drop"></i></div><p>Cuci</p></div>
+            <div class="line"></div>
+            <div class="step"><div class="circle"><i class="ph-fill ph-truck"></i></div><p>Antar</p></div>
+            <div class="line"></div>
+            <div class="step"><div class="circle"><i class="ph-fill ph-check-circle"></i></div><p>Tiba</p></div>
+          </div>
+
+          <div class="cp-status-msg">
+            <p id="active-order-detail">📦 Memuat status pesanan...</p>
+          </div>
+
+          <!-- Actions -->
+          <div class="cp-actions">
+            <button class="btn-cta" id="chat-courier-btn" style="flex:2">
+              <i class="ph-fill ph-chat-circle-dots"></i> Chat Kurir
+            </button>
+            <button class="btn-ghost" style="flex:1">
+              <i class="ph-fill ph-phone"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===========================
+       PAYMENT MODAL
+       =========================== -->
+  <div class="modal-overlay hidden" id="payment-modal">
+    <div class="modal-card">
+      <button class="modal-close" onclick="closePayment()"><i class="ph-bold ph-x"></i></button>
+
+      <!-- QRIS -->
+      <div id="payment-content-qris" class="hidden">
+        <div class="mc-header">
+          <div class="mc-icon"><i class="ph-fill ph-qr-code"></i></div>
+          <h3>Bayar via QRIS</h3>
+          <p>Scan dengan aplikasi e-wallet atau m-banking Anda</p>
+        </div>
+        <div class="qris-frame">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=WASHBUDDY-PAYMENT-MOCK" alt="QRIS">
+        </div>
+        <div class="mc-amount" id="qris-amount">Rp 0</div>
+        <button class="btn-cta" style="width:100%" onclick="confirmPayment()">
+          <i class="ph-bold ph-check-circle"></i> Saya Sudah Bayar
+        </button>
+      </div>
+
+      <!-- E-Wallet -->
+      <div id="payment-content-va" class="hidden">
+        <div class="mc-header">
+          <div class="mc-icon"><i class="ph-fill ph-bank"></i></div>
+          <h3>Transfer Bank / E-Wallet</h3>
+          <p>Transfer ke nomor rekening WashBuddy di bawah</p>
+        </div>
+        <div class="va-info">
+          <span class="va-bank">Bank BCA — WashBuddy Indonesia</span>
+          <span class="va-number">8839 2026 1234</span>
+        </div>
+        <div class="mc-amount" id="va-amount">Rp 0</div>
+        <button class="btn-cta" style="width:100%" onclick="confirmPayment()">
+          <i class="ph-bold ph-check-circle"></i> Konfirmasi Transfer
+        </button>
+      </div>
+
+      <!-- COD -->
+      <div id="payment-content-cod" class="hidden">
+        <div class="mc-header">
+          <div class="mc-icon" style="background:rgba(34,197,94,0.15); color:#22c55e"><i class="ph-fill ph-money"></i></div>
+          <h3>Bayar di Tempat (COD)</h3>
+          <p>Siapkan uang tunai saat kurir datang menjemput cucian</p>
+        </div>
+        <div class="mc-amount" id="cod-amount">Rp 0</div>
+        <button class="btn-cta" style="width:100%" onclick="confirmPayment()">
+          <i class="ph-bold ph-truck"></i> Panggil Kurir Sekarang
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===========================
+       AI CHATBOT WIDGET
+       =========================== -->
+  <button class="chat-fab" onclick="toggleChat()">
+    <i class="ph-fill ph-robot"></i>
+    <span class="chat-fab-badge">1</span>
+  </button>
+
+  <div class="chatbox" id="ai-chatbox">
+    <div class="cb-header">
+      <div class="cb-bot-info">
+        <div class="cb-avatar"><i class="ph-fill ph-robot"></i></div>
+        <div>
+          <h4>WashBot AI</h4>
+          <p><span class="cb-online"></span> Online • Aktif sekarang</p>
+        </div>
+      </div>
+      <button class="modal-close" style="position:static" onclick="toggleChat()"><i class="ph-bold ph-x"></i></button>
+    </div>
+
+    <div class="cb-messages" id="chat-messages">
+      <div class="cb-msg bot">Halo Sultan! Cuaca cerah hari ini, waktu yang tepat untuk mencuci 😄 Ada yang bisa WashBot bantu?</div>
+    </div>
+
+    <div class="cb-quick-actions">
+      <button onclick="sendOption('Cek Harga Wash Regular')">💰 Cek Harga</button>
+      <button onclick="sendOption('Promo Hari Ini')">🎁 Promo</button>
+      <button onclick="sendOption('Lacak Pesanan Saya')">📍 Lacak</button>
+      <button onclick="sendOption('Berapa Lama Dry Clean?')">⏱️ Durasi</button>
+      <button onclick="sendOption('Cara Cuci Karpet')">🏠 Karpet</button>
+      <button onclick="sendOption('Apakah Bisa Bayar COD?')">💵 COD</button>
+    </div>
+
+    <div class="cb-input">
+      <input type="text" id="chat-input-field" placeholder="Ketik pesan...">
+      <button onclick="sendChatMessage()"><i class="ph-bold ph-paper-plane-right"></i></button>
+    </div>
   </div>
 
   <script type="module" src="./app.js"></script>
