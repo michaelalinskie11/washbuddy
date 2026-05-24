@@ -1,5 +1,5 @@
 // =====================================================
-// WASHBUDDY LANDING PAGE JS v6
+// WASHBUDDY LANDING PAGE JS v7
 // =====================================================
 
 // Theme Engine
@@ -20,32 +20,62 @@ function toggleTheme() {
   applyTheme(current === 'dark' ? 'light' : 'dark');
 }
 
-// Background Bubbles
-function initBubbles() {
-  const bg = document.getElementById('laundry-bg');
-  if (!bg) return;
-  const bubbles = [
-    { w: 18, l: 8,  delay: 0,   dur: 22 },
-    { w: 12, l: 25, delay: 3,   dur: 18 },
-    { w: 24, l: 42, delay: 6,   dur: 26 },
-    { w: 9,  l: 60, delay: 1,   dur: 20 },
-    { w: 16, l: 75, delay: 4,   dur: 24 },
-    { w: 10, l: 88, delay: 8,   dur: 16 },
-    { w: 20, l: 15, delay: 10,  dur: 28 },
-    { w: 14, l: 52, delay: 12,  dur: 19 },
-    { w: 8,  l: 95, delay: 5,   dur: 23 },
-    { w: 22, l: 35, delay: 14,  dur: 21 },
-  ];
-  bubbles.forEach(b => {
+// Parallax Bubbles Background
+const bubbles = [];
+function initParallaxBubbles() {
+  const layer = document.getElementById('px-bubbles');
+  if (!layer) return;
+
+  for (let i = 0; i < 20; i++) {
     const el = document.createElement('div');
-    el.className = 'bubble';
-    el.style.cssText = `
-      width:${b.w}px; height:${b.w}px;
-      left:${b.l}%; bottom:-${b.w}px;
-      animation-duration:${b.dur}s;
-      animation-delay:${b.delay}s;
-    `;
-    bg.appendChild(el);
+    el.className = 'bbl';
+    const size = Math.random() * 40 + 10;
+    const x = Math.random() * 100;
+    const y = Math.random() * 100;
+    const speed = Math.random() * 0.05 + 0.01;
+    
+    el.style.width = size + 'px';
+    el.style.height = size + 'px';
+    el.style.left = x + 'vw';
+    el.style.top = y + 'vh';
+    
+    layer.appendChild(el);
+    bubbles.push({ el, x, y, speed });
+  }
+
+  document.addEventListener('mousemove', (e) => {
+    const cx = window.innerWidth / 2;
+    const cy = window.innerHeight / 2;
+    const mx = (e.clientX - cx) / cx;
+    const my = (e.clientY - cy) / cy;
+
+    bubbles.forEach(b => {
+      const offsetX = mx * b.speed * 200;
+      const offsetY = my * b.speed * 200;
+      b.el.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+    });
+  });
+}
+
+// Mascot Eye Tracking on Landing Page
+function initMascot() {
+  const pupils = document.querySelectorAll('.pupil');
+  if (pupils.length === 0) return;
+
+  document.addEventListener('mousemove', (e) => {
+    pupils.forEach(pupil => {
+      const rect = pupil.getBoundingClientRect();
+      const eyeX = rect.left + rect.width / 2;
+      const eyeY = rect.top + rect.height / 2;
+      
+      const angle = Math.atan2(e.clientY - eyeY, e.clientX - eyeX);
+      const dist  = Math.min(3, Math.hypot(e.clientX - eyeX, e.clientY - eyeY) / 100);
+      
+      const px = Math.cos(angle) * dist;
+      const py = Math.sin(angle) * dist;
+      
+      pupil.style.transform = `translate(${px}px, ${py}px)`;
+    });
   });
 }
 
@@ -56,7 +86,7 @@ window.addEventListener('scroll', () => {
   else nav.classList.remove('scrolled');
 });
 
-// Smooth Scroll for Nav Links
+// Smooth Scroll
 document.querySelectorAll('.nav-links a').forEach(link => {
   link.addEventListener('click', e => {
     const targetId = link.getAttribute('href');
@@ -75,5 +105,6 @@ document.querySelectorAll('.nav-links a').forEach(link => {
 // Init
 document.addEventListener('DOMContentLoaded', () => {
   initTheme();
-  initBubbles();
+  initParallaxBubbles();
+  initMascot();
 });
