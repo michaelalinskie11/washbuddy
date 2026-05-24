@@ -65,16 +65,20 @@
   </header>
 
   <!-- ==========================================
-       HERO SECTION (Cinematic Video Background)
+       FIXED VIDEO BACKGROUND (Horai Restaurant Style)
+       ========================================== -->
+  <div class="fixed-video-bg" id="horai-bg">
+    <video autoplay muted loop playsinline class="hero-video">
+      <source src="https://assets.mixkit.co/videos/preview/mixkit-water-bubbles-rising-in-slow-motion-1191-large.mp4" type="video/mp4">
+    </video>
+    <div class="video-overlay" id="horai-overlay"></div>
+  </div>
+
+  <!-- ==========================================
+       HERO SECTION
        ========================================== -->
   <section class="hero cinematic-hero" id="beranda">
-    <!-- Cinematic Video Background (Aesthetic Water Bubbles) -->
-    <div class="video-wrap">
-      <video autoplay muted loop playsinline class="hero-video">
-        <source src="https://assets.mixkit.co/videos/preview/mixkit-water-bubbles-rising-in-slow-motion-1191-large.mp4" type="video/mp4">
-      </video>
-      <div class="video-overlay"></div>
-    </div>
+    <!-- Transparent hero to let video show through -->
     
     <div class="container hero-grid relative-z">
       <div class="hero-text scroll-reveal-up float-anim-1">

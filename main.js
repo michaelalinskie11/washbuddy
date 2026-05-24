@@ -152,3 +152,16 @@ window.runAIScanner = function() {
 document.addEventListener('DOMContentLoaded', () => {
   initMascot();
 });
+
+// Horai scroll animation
+window.addEventListener('scroll', () => {
+  const scrollPos = window.scrollY;
+  const bgVideo = document.querySelector('#horai-bg .hero-video');
+  const bgOverlay = document.querySelector('#horai-overlay');
+  if(bgVideo) {
+    bgVideo.style.transform = `scale(${1.05 + (scrollPos * 0.0005)})`;
+  }
+  if(bgOverlay) {
+    bgOverlay.style.background = `rgba(15,23,42,${Math.min(0.9, 0.6 + (scrollPos * 0.001))})`;
+  }
+});
