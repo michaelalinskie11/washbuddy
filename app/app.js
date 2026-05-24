@@ -1,39 +1,42 @@
 // =====================================================
-// WASHBUDDY PORTAL — Refactored JS Engine v5.0
-// All bugs fixed, clean structure
+// WASHBUDDY PORTAL v6 — Full Engine
+// Features: dark/light theme, laundry bg, schedule,
+//           eco, referral, clothes tracker
 // =====================================================
 
-// --- Config & State ---
+// --- Config & Constants ---
 const API = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
-  ? 'http://localhost:3000/api'
-  : '/api';
+  ? 'http://localhost:3000/api' : '/api';
 
 const PRICING = {
-  'Wash Regular': 8000,
-  'Wash Kilat':   15000,
-  'Dry Cleaning': 25000,
-  'Premium Spa':  50000,
-  'Cuci Karpet':  30000,
-  'Cuci Sofa':    100000,
+  'Wash Regular': 8000, 'Wash Kilat': 15000,
+  'Dry Cleaning': 25000, 'Premium Spa': 50000,
+  'Cuci Karpet':  30000, 'Cuci Sofa':  100000,
 };
-
 const COURIERS = [
-  { name: 'Ahmad Fauzi',    rating: '4.9', avatar: 'https://ui-avatars.com/api/?name=Ahmad+Fauzi&background=4F7EFF&color=fff&bold=true' },
-  { name: 'Budi Santoso',   rating: '4.8', avatar: 'https://ui-avatars.com/api/?name=Budi+Santoso&background=22c55e&color=fff&bold=true' },
+  { name: 'Ahmad Fauzi',    rating: '4.9', avatar: 'https://ui-avatars.com/api/?name=Ahmad+F&background=4F7EFF&color=fff&bold=true' },
+  { name: 'Budi Santoso',   rating: '4.8', avatar: 'https://ui-avatars.com/api/?name=Budi+S&background=22c55e&color=fff&bold=true' },
   { name: 'Chandra Wijaya', rating: '5.0', avatar: 'https://ui-avatars.com/api/?name=Chandra&background=a855f7&color=fff&bold=true' },
   { name: 'Dimas Pratama',  rating: '4.7', avatar: 'https://ui-avatars.com/api/?name=Dimas&background=f59e0b&color=fff&bold=true' },
   { name: 'Eko Prasetyo',   rating: '4.9', avatar: 'https://ui-avatars.com/api/?name=Eko&background=14b8a6&color=fff&bold=true' },
 ];
-
 const SCAN_SCENARIOS = [
-  { fabric: 'Sutra Murni', stain: 'Kopi & Lipstik', rec: 'Premium Spa — Delicate Mode. Formula enzim khusus sutra.', img: 'https://images.unsplash.com/photo-1520637102912-2df6bb2aec6d?w=600&auto=format&fit=crop' },
-  { fabric: 'Katun Oxford', stain: 'Kopi Susu', rec: 'Dry Cleaning + Oxi-Boost Treatment untuk noda organik membandel.', img: 'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=600&auto=format&fit=crop' },
-  { fabric: 'Denim Premium', stain: 'Noda Oli Mesin', rec: 'Wash Regular + Heavy-Duty Degreaser. Rendam 30 menit sebelum cuci.', img: 'https://images.unsplash.com/photo-1542272604-787c3835535d?w=600&auto=format&fit=crop' },
-  { fabric: 'Wol Merino', stain: 'Noda Cokelat', rec: 'Premium Spa Anti-Shrink. Suhu air maksimum 30°C.', img: 'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=600&auto=format&fit=crop' },
-  { fabric: 'Linen Halus', stain: 'Saus Tomat', rec: 'Dry Cleaning + Spot Treatment enzim asam sebelum proses utama.', img: 'https://images.unsplash.com/photo-1596755094514-f87e32f85e2c?w=600&auto=format&fit=crop' },
-  { fabric: 'Polyester Active', stain: 'Keringat & Lumpur', rec: 'Wash Kilat + Anti-Odor Sport Treatment. Efektif hilangkan bakteri.', img: 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=600&auto=format&fit=crop' },
+  { fabric: 'Sutra Murni',     stain: 'Kopi & Lipstik',    rec: 'Premium Spa — Delicate Mode. Formula enzim khusus sutra.',          img: 'https://images.unsplash.com/photo-1520637102912-2df6bb2aec6d?w=600&auto=format&fit=crop' },
+  { fabric: 'Katun Oxford',    stain: 'Kopi Susu',          rec: 'Dry Cleaning + Oxi-Boost untuk noda organik.',                     img: 'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=600&auto=format&fit=crop' },
+  { fabric: 'Denim Premium',   stain: 'Oli Mesin',          rec: 'Wash Regular + Heavy-Duty Degreaser. Rendam 30 menit.',            img: 'https://images.unsplash.com/photo-1542272604-787c3835535d?w=600&auto=format&fit=crop' },
+  { fabric: 'Wol Merino',      stain: 'Cokelat Cair',       rec: 'Premium Spa Anti-Shrink. Suhu max 30°C.',                          img: 'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=600&auto=format&fit=crop' },
+  { fabric: 'Linen Halus',     stain: 'Saus Tomat',         rec: 'Dry Cleaning + Spot Treatment enzim asam.',                        img: 'https://images.unsplash.com/photo-1596755094514-f87e32f85e2c?w=600&auto=format&fit=crop' },
+  { fabric: 'Polyester Active',stain: 'Keringat & Lumpur',  rec: 'Wash Kilat + Anti-Odor Sport Treatment.',                          img: 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=600&auto=format&fit=crop' },
+];
+const WEATHER_DATA = [
+  { icon: '☀️', temp: '32°C', desc: 'Cerah Terang', cond: 'Sangat Cerah', tip: '☀️ Sempurna untuk jemur' },
+  { icon: '⛅', temp: '29°C', desc: 'Berawan, Jakarta', cond: 'Berawan Sebagian', tip: '💡 Cocok untuk jemur' },
+  { icon: '🌧️', temp: '24°C', desc: 'Hujan Ringan', cond: 'Hujan Ringan', tip: '🏠 Lebih baik angin-anginkan' },
+  { icon: '🌤️', temp: '27°C', desc: 'Cerah Berawan', cond: 'Cerah Berawan', tip: '✅ Baik untuk jemur' },
+  { icon: '⛈️', temp: '22°C', desc: 'Hujan Deras', cond: 'Badai Petir', tip: '❌ Hindari jemur di luar' },
 ];
 
+// --- State ---
 let currentService     = 'Wash Regular';
 let currentPayment     = 'QRIS';
 let discountMultiplier = 0;
@@ -41,20 +44,85 @@ let trackingInterval   = null;
 let countdownInterval  = null;
 let globalTimeLeft     = 120;
 let isTracking         = false;
-
-// =====================================================
-// NAVIGATION
-// =====================================================
-const navLinks = document.querySelectorAll('#main-nav a');
-const pageViews = document.querySelectorAll('.page-view');
+let selectedDate       = null;
+let selectedTimeSlot   = null;
+let calYear            = new Date().getFullYear();
+let calMonth           = new Date().getMonth();
 
 const PAGE_TITLES = {
   'view-dashboard': 'Dashboard',
   'view-order':     'Pesan Laundry',
+  'view-schedule':  'Jadwal Penjemputan',
   'view-pricing':   'Harga & Promo',
   'view-scanner':   'AI Scanner',
   'view-tracking':  'Lacak Pesanan',
+  'view-clothes':   'Lemari Cucian',
+  'view-eco':       'Eco Dashboard',
+  'view-referral':  'Referral & Reward',
 };
+
+// =====================================================
+// THEME ENGINE
+// =====================================================
+function initTheme() {
+  const saved = localStorage.getItem('wb_theme') || 'dark';
+  applyTheme(saved);
+}
+
+function applyTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('wb_theme', theme);
+  const isDark = theme === 'dark';
+
+  const icon   = document.getElementById('theme-icon');
+  const tbIcon = document.getElementById('topbar-theme-icon');
+
+  if (icon)   icon.className   = isDark ? 'ph-fill ph-moon'    : 'ph-fill ph-sun';
+  if (tbIcon) tbIcon.className = isDark ? 'ph-fill ph-sun-dim' : 'ph-fill ph-moon';
+}
+
+function toggleTheme() {
+  const current = document.documentElement.getAttribute('data-theme') || 'dark';
+  applyTheme(current === 'dark' ? 'light' : 'dark');
+}
+
+// =====================================================
+// LAUNDRY BACKGROUND BUBBLES
+// =====================================================
+function initBubbles() {
+  const bg = document.getElementById('laundry-bg');
+  if (!bg) return;
+  const bubbles = [
+    { w: 18, l: 8,  delay: 0,   dur: 22 },
+    { w: 12, l: 25, delay: 3,   dur: 18 },
+    { w: 24, l: 42, delay: 6,   dur: 26 },
+    { w: 9,  l: 60, delay: 1,   dur: 20 },
+    { w: 16, l: 75, delay: 4,   dur: 24 },
+    { w: 10, l: 88, delay: 8,   dur: 16 },
+    { w: 20, l: 15, delay: 10,  dur: 28 },
+    { w: 14, l: 52, delay: 12,  dur: 19 },
+    { w: 8,  l: 95, delay: 5,   dur: 23 },
+    { w: 22, l: 35, delay: 14,  dur: 21 },
+  ];
+  bubbles.forEach(b => {
+    const el = document.createElement('div');
+    el.className = 'bubble';
+    el.style.cssText = `
+      width:${b.w}px; height:${b.w}px;
+      left:${b.l}%;
+      bottom: -${b.w}px;
+      animation-duration:${b.dur}s;
+      animation-delay:${b.delay}s;
+    `;
+    bg.appendChild(el);
+  });
+}
+
+// =====================================================
+// NAVIGATION
+// =====================================================
+const navLinks  = document.querySelectorAll('#main-nav a');
+const pageViews = document.querySelectorAll('.page-view');
 
 function navigate(targetId) {
   navLinks.forEach(link => {
@@ -62,21 +130,14 @@ function navigate(targetId) {
   });
   pageViews.forEach(view => {
     const isTarget = view.id === targetId;
-    if (isTarget) {
-      view.classList.remove('hidden');
-      view.classList.add('active');
-    } else {
-      view.classList.add('hidden');
-      view.classList.remove('active');
-    }
+    view.classList.toggle('hidden',  !isTarget);
+    view.classList.toggle('active',   isTarget);
   });
-  const breadcrumb = document.getElementById('tb-breadcrumb');
-  if (breadcrumb) breadcrumb.textContent = PAGE_TITLES[targetId] || '';
+  const crumb = document.getElementById('tb-breadcrumb');
+  if (crumb) crumb.innerHTML = `<strong>${PAGE_TITLES[targetId] || ''}</strong>`;
 
-  // Close sidebar on mobile after navigation
-  if (window.innerWidth < 900) {
-    document.getElementById('sidebar')?.classList.remove('open');
-  }
+  if (targetId === 'view-tracking') setTimeout(startLiveTracking, 300);
+  if (window.innerWidth < 900) document.getElementById('sidebar')?.classList.remove('open');
 }
 
 navLinks.forEach(link => {
@@ -87,36 +148,45 @@ navLinks.forEach(link => {
 });
 
 // =====================================================
-// SIDEBAR MOBILE TOGGLE
+// SIDEBAR MOBILE
 // =====================================================
 function toggleSidebar() {
   document.getElementById('sidebar')?.classList.toggle('open');
 }
-
-// Close sidebar clicking outside on mobile
 document.addEventListener('click', e => {
   const sidebar = document.getElementById('sidebar');
-  const menuBtn = document.getElementById('menu-toggle');
+  const btn     = document.getElementById('menu-toggle');
   if (sidebar && window.innerWidth < 900 &&
       sidebar.classList.contains('open') &&
-      !sidebar.contains(e.target) &&
-      !menuBtn.contains(e.target)) {
+      !sidebar.contains(e.target) && !btn?.contains(e.target)) {
     sidebar.classList.remove('open');
   }
 });
 
 // =====================================================
+// WEATHER SIMULATION
+// =====================================================
+function initWeather() {
+  const w = WEATHER_DATA[Math.floor(Math.random() * WEATHER_DATA.length)];
+  const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+  set('sb-weather-icon',  w.icon);
+  set('sb-weather-temp',  w.temp);
+  set('sb-weather-desc',  w.desc);
+  set('sb-weather-tip',   w.tip);
+  set('dash-weather-icon', w.icon);
+  set('dash-weather-temp', w.temp);
+  set('dash-weather-cond', w.cond);
+  set('dash-weather-tip',  w.tip);
+}
+
+// =====================================================
 // NOTIFICATIONS
 // =====================================================
-const notifBtn = document.getElementById('notif-btn');
-notifBtn?.addEventListener('click', e => {
+document.getElementById('notif-btn')?.addEventListener('click', e => {
   e.stopPropagation();
-  const panel = document.getElementById('notif-dropdown');
-  panel?.classList.toggle('hidden');
-  const dot = document.getElementById('notif-dot');
-  if (dot) dot.style.display = 'none';
+  document.getElementById('notif-dropdown')?.classList.toggle('hidden');
+  document.getElementById('notif-dot')?.remove();
 });
-
 document.addEventListener('click', e => {
   const panel = document.getElementById('notif-dropdown');
   const btn   = document.getElementById('notif-btn');
@@ -125,7 +195,6 @@ document.addEventListener('click', e => {
     panel.classList.add('hidden');
   }
 });
-
 function clearNotifs() {
   document.querySelectorAll('.np-item.unread').forEach(el => el.classList.remove('unread'));
   document.getElementById('notif-dot')?.remove();
@@ -133,27 +202,23 @@ function clearNotifs() {
 }
 
 // =====================================================
-// LOYALTY CARD 3D TILT
+// LOYALTY CARD 3D
 // =====================================================
 const loyaltyCard = document.getElementById('loyalty-card-3d');
 if (loyaltyCard) {
   const inner = loyaltyCard.querySelector('.lc-inner');
   const glare = document.getElementById('lc-glare');
-
   loyaltyCard.addEventListener('mousemove', e => {
     if (!inner) return;
-    const r = loyaltyCard.getBoundingClientRect();
-    const x = e.clientX - r.left;
-    const y = e.clientY - r.top;
-    const nx = (x / r.width)  - 0.5;
-    const ny = (y / r.height) - 0.5;
-    inner.style.transform = `perspective(1000px) rotateX(${-ny * 14}deg) rotateY(${nx * 14}deg) scale3d(1.02, 1.02, 1.02)`;
+    const r  = loyaltyCard.getBoundingClientRect();
+    const nx = (e.clientX - r.left) / r.width  - 0.5;
+    const ny = (e.clientY - r.top)  / r.height - 0.5;
+    inner.style.transform = `perspective(900px) rotateX(${-ny*14}deg) rotateY(${nx*14}deg) scale3d(1.02,1.02,1.02)`;
     if (glare) {
       glare.style.opacity = '1';
-      glare.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(79,126,255,0.1) 0%, transparent 65%)`;
+      glare.style.background = `radial-gradient(circle at ${e.clientX - r.left}px ${e.clientY - r.top}px, rgba(79,126,255,0.1) 0%, transparent 65%)`;
     }
   });
-
   loyaltyCard.addEventListener('mouseleave', () => {
     if (inner) inner.style.transform = '';
     if (glare) glare.style.opacity = '0';
@@ -161,141 +226,94 @@ if (loyaltyCard) {
 }
 
 // =====================================================
-// AI STAIN SCANNER
+// AI SCANNER
 // =====================================================
 function startScan() {
-  const idleEl   = document.getElementById('scan-idle-state');
-  const activeEl = document.getElementById('scan-active-state');
-  const resultEl = document.getElementById('scan-result');
-  const statusEl = document.getElementById('scan-status-text');
-  const scanImg  = document.getElementById('scan-image');
+  const idle   = document.getElementById('scan-idle-state');
+  const active = document.getElementById('scan-active-state');
+  const result = document.getElementById('scan-result');
+  const status = document.getElementById('scan-status-text');
+  const img    = document.getElementById('scan-image');
+  if (!idle || !active) return;
 
-  if (!idleEl || !activeEl) return;
-
-  idleEl.style.display   = 'none';
-  activeEl.classList.remove('hidden');
-  resultEl?.classList.add('hidden');
+  idle.style.display = 'none';
+  active.classList.remove('hidden');
+  result?.classList.add('hidden');
 
   const scenario = SCAN_SCENARIOS[Math.floor(Math.random() * SCAN_SCENARIOS.length)];
   const imgPool  = SCAN_SCENARIOS.map(s => s.img);
   let imgIdx = 0;
 
   const logs = [
-    'Memulai kamera WashBot Vision AI...',
-    'Memindai spektrum warna & pola noda...',
-    'Menganalisis kerapatan serat kain...',
-    'Mencocokkan dengan 10.000+ data WashBot...',
+    'Memulai kamera WashBot Vision AI...', 'Memindai spektrum warna & pola noda...',
+    'Menganalisis kerapatan serat kain...', 'Mencocokkan dengan 10.000+ data WashBot...',
     'Menyusun rekomendasi pencucian...',
   ];
   let logIdx = 0;
-  if (statusEl) statusEl.textContent = logs[0];
-
-  const logTimer = setInterval(() => {
-    logIdx++;
-    if (logIdx < logs.length && statusEl) statusEl.textContent = logs[logIdx];
-  }, 750);
-
+  if (status) status.textContent = logs[0];
+  const logTimer = setInterval(() => { if (++logIdx < logs.length && status) status.textContent = logs[logIdx]; }, 750);
   const imgTimer = setInterval(() => {
-    if (!scanImg) return;
-    scanImg.style.opacity = '0.3';
-    setTimeout(() => {
-      scanImg.src = imgPool[imgIdx % imgPool.length];
-      scanImg.style.transition = 'opacity 0.15s';
-      scanImg.style.opacity = '1';
-      imgIdx++;
-    }, 150);
+    if (!img) return;
+    img.style.opacity = '0.3';
+    setTimeout(() => { img.src = imgPool[imgIdx++ % imgPool.length]; img.style.opacity = '1'; }, 150);
   }, 550);
 
   setTimeout(() => {
-    clearInterval(logTimer);
-    clearInterval(imgTimer);
-
-    activeEl.classList.add('hidden');
-    idleEl.style.display = '';
-
-    const fabEl  = document.getElementById('scan-fabric');
-    const stnEl  = document.getElementById('scan-stain');
-    const recEl  = document.getElementById('scan-rec');
-
-    if (fabEl) fabEl.textContent = scenario.fabric;
-    if (stnEl) stnEl.textContent = scenario.stain;
-    if (recEl) recEl.textContent = scenario.rec;
-
-    if (resultEl) {
-      resultEl.classList.remove('hidden');
-      resultEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }
+    clearInterval(logTimer); clearInterval(imgTimer);
+    active.classList.add('hidden');
+    idle.style.display = '';
+    const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+    set('scan-fabric', scenario.fabric);
+    set('scan-stain',  scenario.stain);
+    set('scan-rec',    scenario.rec);
+    result?.classList.remove('hidden');
+    result?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }, 4200);
 }
-
 function resetScan() {
-  const idleEl   = document.getElementById('scan-idle-state');
-  const activeEl = document.getElementById('scan-active-state');
-  const resultEl = document.getElementById('scan-result');
-  if (idleEl)   idleEl.style.display = '';
-  if (activeEl) activeEl.classList.add('hidden');
-  if (resultEl) resultEl.classList.add('hidden');
+  document.getElementById('scan-idle-state').style.display  = '';
+  document.getElementById('scan-active-state')?.classList.add('hidden');
+  document.getElementById('scan-result')?.classList.add('hidden');
 }
 
 // =====================================================
 // ORDER WIZARD
 // =====================================================
-let currentWizardStep = 1;
-
 function selectService(el, name) {
   document.querySelectorAll('.srv-item').forEach(c => c.classList.remove('selected'));
   el.classList.add('selected');
   currentService = name;
   recalc();
 }
-
 function selectPayment(el, method) {
   document.querySelectorAll('.pay-opt').forEach(c => c.classList.remove('selected'));
   el.classList.add('selected');
   currentPayment = method;
 }
-
 function goStep(step) {
-  // Hide all steps
   document.querySelectorAll('.wizard-step').forEach(s => s.classList.add('hidden'));
-
-  // Show target
   const target = document.getElementById('w-step-' + step);
   if (!target) return;
   target.classList.remove('hidden');
-  currentWizardStep = step;
-
-  // Update step indicator
-  [1, 2, 3].forEach(n => {
-    const el  = document.getElementById('si-' + n);
-    const ln  = document.getElementById('si-line-' + n);
+  [1,2,3].forEach(n => {
+    const el = document.getElementById('si-' + n);
+    const ln = document.getElementById('si-line-' + n);
     if (!el) return;
-    el.classList.remove('active', 'done');
+    el.classList.remove('active','done');
     if (ln) ln.classList.remove('active');
-    if (n < step) {
-      el.classList.add('done');
-      if (ln) ln.classList.add('active');
-    } else if (n === step) {
-      el.classList.add('active');
-    }
+    if (n < step) { el.classList.add('done'); if (ln) ln.classList.add('active'); }
+    else if (n === step) el.classList.add('active');
   });
-
-  // Sync detail view labels
-  if (step === 2 || step === 3) recalc();
-
+  if (step >= 2) recalc();
   target.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
-
 function updateQty(delta) {
   const input = document.getElementById('order-qty');
   if (!input) return;
-  let val = (parseInt(input.value) || 1) + delta;
-  if (val < 1)  val = 1;
-  if (val > 50) val = 50;
+  let val = Math.min(50, Math.max(1, (parseInt(input.value)||1) + delta));
   input.value = val;
   recalc();
 }
-
 function recalc() {
   const qty      = parseInt(document.getElementById('order-qty')?.value) || 1;
   const unit     = PRICING[currentService] || 8000;
@@ -303,7 +321,6 @@ function recalc() {
   const discount = Math.round(subtotal * discountMultiplier);
   const total    = subtotal - discount;
   const fmt      = n => 'Rp ' + n.toLocaleString('id-ID');
-
   const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
   set('inv-service',      currentService);
   set('inv-qty',          qty + ' item');
@@ -312,15 +329,12 @@ function recalc() {
   set('summary-total',    fmt(total));
   set('final-bill',       fmt(total));
 }
-
 function applyPromo() {
   const input = document.getElementById('promo-input');
   const msg   = document.getElementById('promo-message');
   if (!input || !msg) return;
-
   const code = input.value.trim().toUpperCase();
-  msg.classList.remove('hidden', 'ok', 'err');
-
+  msg.classList.remove('hidden','ok','err');
   if (code === 'NEWUSER50') {
     discountMultiplier = 0.5;
     msg.textContent = '✓ Kode NEWUSER50 berhasil! Diskon 50% diterapkan.';
@@ -339,266 +353,340 @@ function applyPromo() {
   }
   recalc();
 }
-
 function copyPromo(code, btn) {
   navigator.clipboard.writeText(code).then(() => {
-    if (btn) {
-      const original = btn.innerHTML;
-      btn.innerHTML = '<i class="ph-bold ph-check"></i> Disalin!';
-      btn.style.color = 'var(--green)';
-      setTimeout(() => { btn.innerHTML = original; btn.style.color = ''; }, 2000);
-    }
-  }).catch(() => {
-    showToast('Salin manual: ' + code);
-  });
+    if (!btn) return;
+    const orig = btn.innerHTML;
+    btn.innerHTML = '<i class="ph-bold ph-check"></i> Disalin!';
+    btn.style.color = 'var(--green)';
+    setTimeout(() => { btn.innerHTML = orig; btn.style.color = ''; }, 2000);
+  }).catch(() => showToast('Salin manual: ' + code));
 }
 
 // =====================================================
 // PAYMENT MODAL
 // =====================================================
 function showPaymentModal() {
-  const qty    = parseInt(document.getElementById('order-qty')?.value) || 1;
-  const unit   = PRICING[currentService] || 8000;
-  const total  = Math.round(qty * unit * (1 - discountMultiplier));
-  const fmt    = 'Rp ' + total.toLocaleString('id-ID');
+  const qty   = parseInt(document.getElementById('order-qty')?.value) || 1;
+  const total = Math.round(qty * (PRICING[currentService]||8000) * (1 - discountMultiplier));
+  const fmt   = 'Rp ' + total.toLocaleString('id-ID');
 
-  // Hide all content panels
-  ['qris', 'va', 'cod'].forEach(id => {
-    document.getElementById('payment-content-' + id)?.classList.add('hidden');
-  });
-
-  // Show relevant panel
-  const panelMap = { 'QRIS': 'qris', 'E-Wallet': 'va', 'Tunai': 'cod' };
-  const panelId  = panelMap[currentPayment] || 'qris';
-  const panel    = document.getElementById('payment-content-' + panelId);
-  panel?.classList.remove('hidden');
-
-  // Set amounts
-  const setAmt = (id) => { const el = document.getElementById(id); if (el) el.textContent = fmt; };
-  setAmt('qris-amount');
-  setAmt('va-amount');
-  setAmt('cod-amount');
-
-  // Show backdrop
-  const backdrop = document.getElementById('payment-modal-backdrop');
-  if (backdrop) backdrop.classList.remove('hidden');
+  ['qris','va','cod'].forEach(id => document.getElementById('payment-content-'+id)?.classList.add('hidden'));
+  const panelMap = { 'QRIS':'qris', 'E-Wallet':'va', 'Tunai':'cod' };
+  document.getElementById('payment-content-'+(panelMap[currentPayment]||'qris'))?.classList.remove('hidden');
+  ['qris-amount','va-amount','cod-amount'].forEach(id => { const el = document.getElementById(id); if (el) el.textContent = fmt; });
+  document.getElementById('payment-modal-backdrop')?.classList.remove('hidden');
 }
-
 function closePayment() {
   document.getElementById('payment-modal-backdrop')?.classList.add('hidden');
 }
-
 function closePaymentOutside(e) {
-  if (e.target === document.getElementById('payment-modal-backdrop')) {
-    closePayment();
-  }
+  if (e.target === document.getElementById('payment-modal-backdrop')) closePayment();
 }
-
 function confirmPayment() {
   closePayment();
-
-  // Save order to localStorage
-  const orderId = 'WB-' + Math.floor(1000 + Math.random() * 9000);
+  const orderId = 'WB-' + Math.floor(1000 + Math.random()*9000);
   const qty     = parseInt(document.getElementById('order-qty')?.value) || 1;
-  const unit    = PRICING[currentService] || 8000;
-  const total   = Math.round(qty * unit * (1 - discountMultiplier));
-
-  const order = {
-    id:      orderId,
-    service: currentService,
-    qty,
-    total,
-    status:  'pickup',
-    date:    new Date().toISOString(),
-    payment: currentPayment,
-  };
-
-  // Store
+  const total   = Math.round(qty * (PRICING[currentService]||8000) * (1 - discountMultiplier));
+  const order   = { id: orderId, service: currentService, qty, total, status:'pickup', date: new Date().toISOString(), payment: currentPayment };
   const existing = JSON.parse(localStorage.getItem('wb_bookings') || '[]');
   existing.unshift(order);
-  localStorage.setItem('wb_bookings', JSON.stringify(existing.slice(0, 20)));
+  localStorage.setItem('wb_bookings',     JSON.stringify(existing.slice(0, 20)));
   localStorage.setItem('wb_active_order', JSON.stringify(order));
-
   showToast('✓ Pesanan #' + orderId + ' berhasil dibuat!');
-
-  // Reset wizard
   discountMultiplier = 0;
-  setTimeout(() => {
-    goStep(1);
-    navigate('view-dashboard');
-    loadActiveOrder();
-    updateRecentOrders();
-  }, 1200);
+  setTimeout(() => { goStep(1); navigate('view-dashboard'); loadActiveOrder(); updateRecentOrders(); }, 1000);
 }
 
 // =====================================================
-// LOAD ACTIVE ORDER (localStorage fallback)
+// ACTIVE ORDER FROM LOCALSTORAGE
 // =====================================================
 function loadActiveOrder() {
-  const raw = localStorage.getItem('wb_active_order');
+  const raw   = localStorage.getItem('wb_active_order');
   const order = raw ? JSON.parse(raw) : null;
-
-  const idEl     = document.getElementById('active-order-id');
-  const detailEl = document.querySelectorAll('#active-order-detail');
+  const idEl  = document.getElementById('active-order-id');
+  const detailEls = document.querySelectorAll('#active-order-detail');
 
   if (!order) {
-    if (idEl) {
-      idEl.textContent = 'Tidak ada pesanan';
-      idEl.style.background = '';
-    }
-    detailEl.forEach(el => {
-      el.innerHTML = 'Belum ada pesanan aktif. <a href="#" onclick="navigate(\'view-order\'); return false;">Pesan sekarang →</a>';
-    });
-    // Reset all tracker steps
-    document.querySelectorAll('.step').forEach(s => s.classList.remove('completed', 'active'));
-    document.querySelectorAll('.step').forEach((s, i) => { if (i === 0) s.classList.add('active'); });
-    document.querySelectorAll('.ts-circle').forEach(c => c.classList.remove('completed', 'active'));
+    if (idEl) idEl.textContent = 'Tidak ada';
+    detailEls.forEach(el => { el.innerHTML = 'Belum ada pesanan aktif. <a href="#" onclick="navigate(\'view-order\'); return false;">Pesan sekarang →</a>'; });
+    resetTrackerSteps('#st-', '#ln-', 4);
+    resetTrackerSteps('#tr-st-', '#tr-ln-', 4);
     return;
   }
 
   if (idEl) idEl.textContent = '#' + order.id;
 
   const statusMap = {
-    pickup:   { step: 0, label: '📦 Kurir dalam perjalanan menjemput cucian kamu.' },
-    washing:  { step: 1, label: '🧺 Pakaian sedang dalam proses pencucian.' },
-    delivery: { step: 2, label: '🚴 Kurir sedang mengantar pesanan ke lokasimu.' },
-    done:     { step: 3, label: '✅ Pesanan telah selesai dan diterima. Terima kasih!' },
+    pickup:   { step:0, label:'📦 Kurir sedang dalam perjalanan menjemput cucian kamu.' },
+    washing:  { step:1, label:'🧺 Pakaian sedang dalam proses pencucian di outlet kami.' },
+    delivery: { step:2, label:'🚴 Kurir sedang mengantar pesanan ke lokasimu.' },
+    done:     { step:3, label:'✅ Pesanan selesai dan sudah diterima. Terima kasih!' },
   };
-
   const info = statusMap[order.status] || statusMap['pickup'];
+  detailEls.forEach(el => { el.textContent = info.label; });
 
-  detailEl.forEach(el => { el.textContent = info.label; });
+  updateTrackerSteps('#st-', '#ln-', info.step, 4);
+  updateTrackerSteps('#tr-st-', '#tr-ln-', info.step, 4);
+}
 
-  // Update tracker circles & lines
-  document.querySelectorAll('.step').forEach((stepEl, idx) => {
-    stepEl.classList.remove('completed', 'active');
-    if (idx < info.step)       stepEl.classList.add('completed');
-    else if (idx === info.step) stepEl.classList.add('active');
-  });
+function resetTrackerSteps(stepPfx, linePfx, count) {
+  for (let i = 0; i < count; i++) {
+    document.querySelector(stepPfx + i)?.classList.remove('completed','active');
+    if (i < count - 1) document.querySelector(linePfx + i)?.classList.remove('active');
+  }
+  document.querySelector(stepPfx + '0')?.classList.add('active');
+}
 
-  document.querySelectorAll('.line').forEach((lineEl, idx) => {
-    lineEl.classList.toggle('active', idx < info.step);
-  });
+function updateTrackerSteps(stepPfx, linePfx, activeIdx, count) {
+  for (let i = 0; i < count; i++) {
+    const stepEl = document.querySelector(stepPfx + i);
+    if (!stepEl) continue;
+    stepEl.classList.remove('completed','active');
+    if (i < activeIdx)        stepEl.classList.add('completed');
+    else if (i === activeIdx) stepEl.classList.add('active');
+
+    if (i < count - 1) {
+      const lineEl = document.querySelector(linePfx + i);
+      lineEl?.classList.toggle('active', i < activeIdx);
+    }
+  }
 }
 
 function updateRecentOrders() {
-  const list = document.getElementById('recent-orders-list');
+  const list   = document.getElementById('recent-orders-list');
   if (!list) return;
   const orders = JSON.parse(localStorage.getItem('wb_bookings') || '[]');
   if (!orders.length) return;
-
-  const iconMap = {
-    'Wash Regular': 'ph-washing-machine',
-    'Wash Kilat':   'ph-rocket',
-    'Dry Cleaning': 'ph-coat-hanger',
-    'Premium Spa':  'ph-sneaker',
-    'Cuci Karpet':  'ph-rug',
-    'Cuci Sofa':    'ph-armchair',
-  };
-
-  list.innerHTML = orders.slice(0, 4).map(o => `
+  const iconMap = { 'Wash Regular':'ph-washing-machine','Wash Kilat':'ph-rocket','Dry Cleaning':'ph-coat-hanger','Premium Spa':'ph-sneaker','Cuci Karpet':'ph-rug','Cuci Sofa':'ph-armchair' };
+  list.innerHTML = orders.slice(0,5).map(o => `
     <div class="ro-item">
-      <div class="ro-icon"><i class="ph-fill ${iconMap[o.service] || 'ph-package'}"></i></div>
+      <div class="ro-icon"><i class="ph-fill ${iconMap[o.service]||'ph-package'}"></i></div>
       <div class="ro-info">
         <span class="ro-name">${o.service} — ${o.qty} item</span>
-        <span class="ro-date">${new Date(o.date).toLocaleDateString('id-ID', { day:'numeric', month:'long', year:'numeric' })}</span>
+        <span class="ro-date">${new Date(o.date).toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'})}</span>
       </div>
       <span class="ro-badge done">Selesai</span>
-    </div>
-  `).join('');
+    </div>`).join('');
+}
+
+// =====================================================
+// SCHEDULE PICKUP — CALENDAR
+// =====================================================
+const MONTHS = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+const DAYS   = ['Min','Sen','Sel','Rab','Kam','Jum','Sab'];
+
+function renderCalendar() {
+  const grid  = document.getElementById('cal-grid');
+  const label = document.getElementById('cal-month-label');
+  if (!grid || !label) return;
+  label.textContent = MONTHS[calMonth] + ' ' + calYear;
+
+  const today     = new Date();
+  const firstDay  = new Date(calYear, calMonth, 1).getDay();
+  const daysInMon = new Date(calYear, calMonth+1, 0).getDate();
+
+  let html = DAYS.map(d => `<div class="cal-day-name">${d}</div>`).join('');
+
+  for (let i = 0; i < firstDay; i++) html += '<div class="cal-day empty"></div>';
+
+  for (let d = 1; d <= daysInMon; d++) {
+    const isToday    = d === today.getDate() && calMonth === today.getMonth() && calYear === today.getFullYear();
+    const isSelected = selectedDate && d === selectedDate.getDate() && calMonth === selectedDate.getMonth() && calYear === selectedDate.getFullYear();
+    const isPast     = new Date(calYear, calMonth, d) < new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    const cls = [
+      'cal-day',
+      isToday    ? 'today'    : '',
+      isSelected ? 'selected' : '',
+      isPast     ? 'empty'    : '',
+    ].filter(Boolean).join(' ');
+
+    html += isPast
+      ? `<div class="${cls}" style="opacity:0.3">${d}</div>`
+      : `<div class="${cls}" onclick="pickDate(${d})">${d}</div>`;
+  }
+  grid.innerHTML = html;
+}
+
+function changeMonth(dir) {
+  calMonth += dir;
+  if (calMonth < 0) { calMonth = 11; calYear--; }
+  if (calMonth > 11){ calMonth = 0;  calYear++; }
+  renderCalendar();
+}
+
+function pickDate(day) {
+  selectedDate = new Date(calYear, calMonth, day);
+  renderCalendar();
+  updateScheduleSummary();
+}
+
+function selectTimeSlot(el, slot) {
+  document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedTimeSlot = slot;
+  updateScheduleSummary();
+}
+
+function updateScheduleSummary() {
+  const el = document.getElementById('sch-summary');
+  if (!el) return;
+  if (selectedDate && selectedTimeSlot) {
+    el.textContent = selectedDate.toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'}) + ' · ' + selectedTimeSlot;
+    el.style.color = 'var(--text)';
+  } else if (selectedDate) {
+    el.textContent = selectedDate.toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'}) + ' · Pilih slot waktu';
+    el.style.color = 'var(--text-2)';
+  } else {
+    el.textContent = 'Pilih tanggal & slot waktu';
+    el.style.color = 'var(--text-2)';
+  }
+}
+
+function confirmSchedule() {
+  if (!selectedDate || !selectedTimeSlot) {
+    showToast('❗ Pilih tanggal dan slot waktu terlebih dahulu.', 'error');
+    return;
+  }
+  const service = document.getElementById('sch-service')?.value || 'Wash Regular';
+  const notes   = document.getElementById('sch-notes')?.value || '';
+  const schKey  = selectedDate.toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long'}) + ' · ' + selectedTimeSlot;
+
+  // Save to localStorage
+  const schedules = JSON.parse(localStorage.getItem('wb_schedules') || '[]');
+  schedules.unshift({ date: selectedDate.toISOString(), slot: selectedTimeSlot, service, notes, id: 'SCH-' + Date.now() });
+  localStorage.setItem('wb_schedules', JSON.stringify(schedules.slice(0, 10)));
+
+  // Update sidebar upcoming
+  updateSidebarSchedule();
+
+  showToast('✓ Jadwal dikonfirmasi: ' + schKey);
+  selectedDate = null; selectedTimeSlot = null;
+  renderCalendar();
+  updateScheduleSummary();
+  document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
+  if (document.getElementById('sch-notes')) document.getElementById('sch-notes').value = '';
+}
+
+function updateSidebarSchedule() {
+  const el = document.getElementById('sb-schedule-preview');
+  if (!el) return;
+  const schedules = JSON.parse(localStorage.getItem('wb_schedules') || '[]');
+  if (!schedules.length) {
+    el.innerHTML = '<div class="sb-no-schedule">Belum ada jadwal aktif</div>';
+    return;
+  }
+  const s = schedules[0];
+  const d = new Date(s.date);
+  el.innerHTML = `
+    <div class="sb-upcoming-dot"></div>
+    <span class="sb-upcoming-text">${d.toLocaleDateString('id-ID',{day:'numeric',month:'short'})}</span>
+    <span class="sb-upcoming-time">${s.slot.split('–')[0]}</span>
+  `;
+}
+
+// =====================================================
+// CLOTHES TRACKER — FILTER
+// =====================================================
+function filterClothes(status, btn) {
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  btn?.classList.add('active');
+  document.querySelectorAll('.clothes-item').forEach(item => {
+    if (status === 'all' || item.dataset.status === status) {
+      item.style.display = '';
+    } else {
+      item.style.display = 'none';
+    }
+  });
+}
+document.getElementById('clothes-search')?.addEventListener('input', e => {
+  const q = e.target.value.toLowerCase();
+  document.querySelectorAll('.clothes-item').forEach(item => {
+    const name = item.querySelector('.ci-name')?.textContent.toLowerCase() || '';
+    item.style.display = name.includes(q) ? '' : 'none';
+  });
+});
+
+// =====================================================
+// REFERRAL
+// =====================================================
+function shareReferral() {
+  const code = document.getElementById('referral-code')?.textContent || 'SULTAN-X72';
+  const text = `Hei! Coba layanan laundry premium WashBuddy 🧺 Pakai kode referral aku ${code} dan dapet diskon 30% di pesanan pertamamu! 🎉 https://washbuddy-umber.vercel.app`;
+  if (navigator.share) {
+    navigator.share({ title: 'WashBuddy Referral', text, url: 'https://washbuddy-umber.vercel.app' });
+  } else {
+    navigator.clipboard.writeText(text).then(() => showToast('✓ Link referral disalin!'));
+  }
 }
 
 // =====================================================
 // LIVE TRACKING
 // =====================================================
-// Bezier curve parametric: P = (1-t)³P0 + 3(1-t)²tP1 + 3(1-t)t²P2 + t³P3
+const BEZIER = { x:[10,40,30,90], y:[85,85,20,20] };
 function bezier(t, p0, p1, p2, p3) {
-  const mt = 1 - t;
-  return mt*mt*mt*p0 + 3*mt*mt*t*p1 + 3*mt*t*t*p2 + t*t*t*p3;
+  const m = 1-t;
+  return m*m*m*p0 + 3*m*m*t*p1 + 3*m*t*t*p2 + t*t*t*p3;
 }
 
-// Bezier control points matching the SVG path: M 10 85 C 40 85, 30 20, 90 20
-const PATH = { x: [10, 40, 30, 90], y: [85, 85, 20, 20] };
-
 function startLiveTracking() {
-  if (isTracking) {
-    clearInterval(trackingInterval);
-    clearInterval(countdownInterval);
-  }
+  if (isTracking) { clearInterval(trackingInterval); clearInterval(countdownInterval); }
 
-  const order   = JSON.parse(localStorage.getItem('wb_active_order') || 'null');
   const courier = COURIERS[Math.floor(Math.random() * COURIERS.length)];
+  const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+  const setImg = (id, val) => { const el = document.getElementById(id); if (el) el.src = val; };
 
-  // Update courier profile
-  const nameEl   = document.getElementById('courier-name');
-  const ratingEl = document.getElementById('courier-rating');
-  const imgEl    = document.getElementById('courier-img');
-  if (nameEl)   nameEl.textContent  = courier.name;
-  if (ratingEl) ratingEl.textContent = '⭐ ' + courier.rating + ' (Mitra Elite)';
-  if (imgEl)    imgEl.src            = courier.avatar;
+  set('courier-name',   courier.name);
+  set('courier-rating', '⭐ ' + courier.rating + ' (Mitra Elite)');
+  setImg('courier-img', courier.avatar);
 
-  // Countdown
-  globalTimeLeft = order ? 120 : 120;
+  globalTimeLeft = 120;
   isTracking = true;
-
-  let t = 0; // progress 0→1 along bezier
+  let t = 0;
 
   countdownInterval = setInterval(() => {
     globalTimeLeft = Math.max(0, globalTimeLeft - 1);
-    const mm = String(Math.floor(globalTimeLeft / 60)).padStart(2, '0');
-    const ss = String(globalTimeLeft % 60).padStart(2, '0');
-    const timeEl = document.getElementById('live-time');
-    if (timeEl) timeEl.textContent = mm + ':' + ss;
-
-    // Distance
-    const distEl = document.getElementById('live-distance');
-    if (distEl) {
-      const d = Math.max(0, (5 * (1 - t))).toFixed(1);
-      distEl.textContent = d + ' km';
-    }
-
-    if (globalTimeLeft <= 0) {
-      clearInterval(countdownInterval);
-      if (timeEl) timeEl.textContent = 'Tiba!';
-      isTracking = false;
-    }
+    const mm = String(Math.floor(globalTimeLeft / 60)).padStart(2,'0');
+    const ss = String(globalTimeLeft % 60).padStart(2,'0');
+    set('live-time', mm + ':' + ss);
+    const km = Math.max(0, (5 * (1-t))).toFixed(1);
+    set('live-distance', km + ' km');
+    if (globalTimeLeft <= 0) { clearInterval(countdownInterval); isTracking = false; set('live-time','Tiba!'); }
   }, 1000);
 
-  // Move courier along path
   trackingInterval = setInterval(() => {
     t = Math.min(1, t + 0.005);
-    const courier_el = document.getElementById('moving-courier');
-    if (courier_el) {
-      const px = bezier(t, ...PATH.x);
-      const py = bezier(t, ...PATH.y);
-      courier_el.style.left = px + '%';
-      courier_el.style.top  = py + '%';
-    }
-
-    // Progress bar
+    const dot = document.getElementById('moving-courier');
+    if (dot) { dot.style.left = bezier(t,...BEZIER.x)+'%'; dot.style.top  = bezier(t,...BEZIER.y)+'%'; }
     const fill = document.getElementById('courier-progress');
-    if (fill) fill.style.width = (t * 100) + '%';
-
-    if (t >= 1) {
-      clearInterval(trackingInterval);
-    }
+    if (fill) fill.style.width = (t*100)+'%';
+    if (t >= 1) clearInterval(trackingInterval);
   }, 500);
 
-  // Inject chat message from courier after 3s
+  // Inject courier chat
   setTimeout(() => {
-    const messages = document.getElementById('chat-messages');
-    if (messages) {
-      const msgEl = document.createElement('div');
-      msgEl.className = 'msg bot';
-      msgEl.style.borderLeft = '2px solid var(--teal)';
-      msgEl.innerHTML = `<strong style="color:#2dd4bf; font-size:0.75rem">🏍 Kurir (${courier.name})</strong><br>Halo! Saya sudah dalam perjalanan ke lokasi kamu. Estimasi tiba sekitar 2 menit. Ada petunjuk khusus untuk alamat? 🙏`;
-      messages.appendChild(msgEl);
-      messages.scrollTop = messages.scrollHeight;
+    const msgs = document.getElementById('chat-messages');
+    if (msgs) {
+      const el = document.createElement('div');
+      el.className = 'msg bot';
+      el.style.borderLeft = '2px solid var(--teal)';
+      el.innerHTML = `<strong style="color:var(--teal);font-size:0.72rem">🏍 Kurir (${courier.name})</strong><br>Halo! Saya sudah otw ke lokasi kamu. Estimasi ~2 menit. Ada petunjuk khusus untuk alamat? 🙏`;
+      msgs.appendChild(el);
+      msgs.scrollTop = msgs.scrollHeight;
     }
   }, 3000);
+
+  loadActiveOrder();
 }
 
 function restartTracking() {
+  clearInterval(trackingInterval);
+  clearInterval(countdownInterval);
+  isTracking = false;
+  const dot = document.getElementById('moving-courier');
+  if (dot) { dot.style.left = '10%'; dot.style.top = '85%'; }
+  const fill = document.getElementById('courier-progress');
+  if (fill) fill.style.width = '0%';
   startLiveTracking();
 }
 
@@ -606,119 +694,105 @@ function restartTracking() {
 // CHATBOT
 // =====================================================
 function toggleChat() {
-  const box  = document.getElementById('ai-chatbox');
-  const dot  = document.getElementById('chat-dot');
+  const box = document.getElementById('ai-chatbox');
+  const dot = document.getElementById('chat-dot');
   if (!box) return;
   box.classList.toggle('open');
   if (box.classList.contains('open') && dot) dot.style.display = 'none';
 }
-
 function sendOption(text) {
   const input = document.getElementById('chat-input-field');
   if (input) input.value = text;
   sendChatMessage();
 }
-
 async function sendChatMessage() {
-  const input    = document.getElementById('chat-input-field');
-  const messages = document.getElementById('chat-messages');
-  if (!input || !messages) return;
-
+  const input = document.getElementById('chat-input-field');
+  const msgs  = document.getElementById('chat-messages');
+  if (!input || !msgs) return;
   const text = input.value.trim();
   if (!text) return;
 
-  // User bubble
-  const userMsg = document.createElement('div');
-  userMsg.className = 'msg user';
-  userMsg.textContent = text;
-  messages.appendChild(userMsg);
+  const userEl = document.createElement('div');
+  userEl.className = 'msg user';
+  userEl.textContent = text;
+  msgs.appendChild(userEl);
   input.value = '';
-  messages.scrollTop = messages.scrollHeight;
+  msgs.scrollTop = msgs.scrollHeight;
 
-  // Loading
-  const loadId = 'load-' + Date.now();
   const loadEl = document.createElement('div');
   loadEl.className = 'msg bot loading';
-  loadEl.id = loadId;
+  loadEl.id = 'load-' + Date.now();
   loadEl.innerHTML = '<span></span><span></span><span></span>';
-  messages.appendChild(loadEl);
-  messages.scrollTop = messages.scrollHeight;
+  msgs.appendChild(loadEl);
+  msgs.scrollTop = msgs.scrollHeight;
 
-  // Try API first, fallback to local AI
   try {
-    const res = await fetch(API + '/chat', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message: text }),
-    });
+    const res = await fetch(API + '/chat', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ message: text }) });
     if (!res.ok) throw new Error('offline');
     const data = await res.json();
-    document.getElementById(loadId)?.remove();
-    appendBotMsg(messages, data.reply);
+    loadEl.remove();
+    appendBot(msgs, data.reply);
   } catch {
-    document.getElementById(loadId)?.remove();
-    appendBotMsg(messages, getLocalReply(text));
+    loadEl.remove();
+    appendBot(msgs, getLocalReply(text));
   }
 }
-
-function appendBotMsg(container, text) {
+function appendBot(container, text) {
   const el = document.createElement('div');
   el.className = 'msg bot';
-  el.innerHTML = text.replace(/\n/g, '<br>');
+  el.innerHTML = text.replace(/\n/g,'<br>');
   container.appendChild(el);
   container.scrollTop = container.scrollHeight;
 }
-
-function getLocalReply(text) {
-  const t = text.toLowerCase();
-  if (/harga|tarif|biaya/.test(t))       return 'Harga layanan kami mulai dari <strong>Rp 8.000/kg</strong> untuk Wash Regular hingga <strong>Rp 100.000/seat</strong> untuk Cuci Sofa. Lihat tabel lengkap di menu Harga & Promo!';
-  if (/promo|diskon|voucher/.test(t))    return 'Ada 2 promo aktif sekarang:\n<strong>NEWUSER50</strong> — diskon 50%\n<strong>WEEKEND20</strong> — diskon 20%\nMasukkan kode saat checkout!';
-  if (/dry clean/.test(t))              return 'Dry Cleaning cocok untuk jas, gaun, sutra, dan baju formal. Mulai <strong>Rp 25.000/pcs</strong>, selesai dalam 2–3 hari kerja.';
-  if (/karpet/.test(t))                 return 'Cuci karpet menggunakan mesin ekstraktor khusus yang efektif mengangkat debu, tungau, dan noda membandel. Mulai <strong>Rp 40.000</strong>.';
-  if (/sofa/.test(t))                   return 'Cuci sofa bisa on-site (kami datang ke rumah) atau antar ke toko. Harga <strong>Rp 100.000/seat</strong>.';
-  if (/kilat|express|cepat/.test(t))    return 'Wash Kilat selesai dalam <strong>24 jam</strong>! Termasuk cuci + setrika. Harga <strong>Rp 15.000/kg</strong>.';
-  if (/cod|tunai|cash/.test(t))         return 'Ya, kami menerima pembayaran tunai (COD) saat penjemputan atau pengiriman. Siapkan uang pas ya! 😊';
-  if (/lacak|track|pesanan/.test(t))    return 'Kamu bisa lacak pesanan aktif di menu <strong>Lacak Pesanan</strong>. Posisi kurir ditampilkan secara real-time!';
-  if (/waktu|lama|durasi/.test(t))      return 'Estimasi waktu:\n• Wash Regular: 1–2 hari\n• Wash Kilat: 24 jam\n• Dry Cleaning: 2–3 hari\n• Shoe Spa: 3–5 hari';
-  if (/scan|ai|noda/.test(t))           return 'WashBot Vision AI bisa mendeteksi jenis noda dan merekomendasikan layanan terbaik! Coba di menu <strong>AI Scanner</strong>.';
-  if (/sepatu|tas|shoe|bag/.test(t))    return 'Shoe & Bag Spa kami menangani sepatu, tas kulit, dan aksesori. Mulai <strong>Rp 50.000/item</strong>, selesai 3–5 hari.';
-  return 'Halo! Saya WashBot AI siap membantu. Coba tanya tentang harga, promo, durasi, atau fitur AI Scanner kami! 😊';
+function getLocalReply(t) {
+  t = t.toLowerCase();
+  if (/harga|tarif|biaya/.test(t))      return 'Harga laundry kami mulai dari <strong>Rp 8.000/kg</strong> (Wash Regular) hingga <strong>Rp 100.000/seat</strong> (Cuci Sofa). Lihat selengkapnya di menu Harga & Promo!';
+  if (/promo|diskon|voucher|kode/.test(t)) return 'Promo aktif sekarang:\n<strong>NEWUSER50</strong> — diskon 50% (member baru)\n<strong>WEEKEND20</strong> — diskon 20% (akhir pekan)\nMasukkan kode saat checkout!';
+  if (/jadwal|jemput|schedule/.test(t)) return 'Kamu bisa jadwalkan penjemputan di menu <strong>Jadwal Penjemputan</strong>! Pilih tanggal dan slot waktu yang nyaman, kurir kami siap datang.';
+  if (/dry clean|jas|gaun|formal/.test(t))  return 'Dry Cleaning untuk jas, gaun, sutra, dan formal mulai <strong>Rp 25.000/pcs</strong>, selesai 2–3 hari kerja.';
+  if (/karpet/.test(t))                 return 'Cuci karpet menggunakan ekstraktor khusus, efektif angkat debu & tungau. Mulai <strong>Rp 30.000/m²</strong>.';
+  if (/sofa/.test(t))                   return 'Cuci sofa on-site atau antar ke outlet. Harga <strong>Rp 100.000/seat</strong>.';
+  if (/kilat|express|24 jam/.test(t))   return 'Wash Kilat + Setrika selesai dalam <strong>24 jam</strong>! Harga <strong>Rp 15.000/kg</strong>.';
+  if (/lacak|track|pesanan/.test(t))    return 'Lacak pesanan aktif kamu di menu <strong>Lacak Pesanan</strong> — posisi kurir real-time dengan peta!';
+  if (/scan|noda|ai/.test(t))           return 'WashBot Vision AI bisa deteksi jenis noda secara otomatis! Coba di menu <strong>AI Scanner</strong> — gratis dan akurasi 96%!';
+  if (/referral|ajak|teman/.test(t))    return 'Program referral WashBuddy: bagikan kode unikmu dan kamu dapat <strong>200 poin</strong> tiap teman yang berhasil pesan. Cek menu Referral!';
+  if (/eco|hijau|lingkungan/.test(t))   return 'WashBuddy menggunakan detergen bio-enzim, batch washing hemat energi, dan kurir eco-route. Lihat dampakmu di <strong>Eco Dashboard</strong>!';
+  if (/poin|point|reward/.test(t))      return 'Kamu punya <strong>1.250 poin</strong> saat ini! Gunakan di checkout untuk diskon tambahan, atau tukar dengan voucher layanan.';
+  return 'Halo Sultan! Saya WashBot siap membantu 😊 Tanya soal harga, jadwal, promo, AI Scanner, atau apa saja!';
 }
 
 // =====================================================
-// TOAST NOTIFICATION
+// TOAST
 // =====================================================
-function showToast(msg) {
-  const existing = document.querySelector('.toast');
-  if (existing) existing.remove();
-
-  const toast = document.createElement('div');
-  toast.className = 'toast';
-  toast.innerHTML = '<i class="ph-fill ph-check-circle"></i> ' + msg;
-  document.body.appendChild(toast);
-  setTimeout(() => toast.remove(), 3500);
+function showToast(msg, type = 'success') {
+  document.querySelector('.toast')?.remove();
+  const el = document.createElement('div');
+  el.className = 'toast' + (type === 'error' ? ' error' : '');
+  el.innerHTML = `<i class="ph-fill ${type==='error'?'ph-warning-circle':'ph-check-circle'}"></i> ${msg}`;
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 3500);
 }
 
 // =====================================================
 // INIT
 // =====================================================
 document.addEventListener('DOMContentLoaded', () => {
+  // Date display
+  const dateEl = document.getElementById('current-date');
+  if (dateEl) dateEl.textContent = new Date().toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+
+  initTheme();
+  initBubbles();
+  initWeather();
   loadActiveOrder();
   updateRecentOrders();
+  updateSidebarSchedule();
   recalc();
+  renderCalendar();
 
-  // Auto-start tracking when view-tracking is visited
-  navLinks.forEach(link => {
-    link.addEventListener('click', () => {
-      if (link.getAttribute('data-target') === 'view-tracking') {
-        setTimeout(startLiveTracking, 300);
-      }
-    });
-  });
-
-  // Show notif dot if there are unreads
-  const unread = document.querySelectorAll('.np-item.unread');
-  const dot    = document.getElementById('notif-dot');
-  if (unread.length > 0 && dot) dot.style.display = 'block';
+  // Show notif dot if unreads exist
+  const unreads = document.querySelectorAll('.np-item.unread');
+  const dot     = document.getElementById('notif-dot');
+  if (unreads.length > 0 && dot) dot.style.display = 'block';
   else if (dot) dot.style.display = 'none';
 });
