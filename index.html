@@ -4,9 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="WashBuddy – Laundry Express Profesional No.1 di Indonesia.">
-  <title>WashBuddy - No. 1 Laundry Express di Indonesia</title>
+  <title>WashBuddy - Laundry Express Premium</title>
   
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- PREMIUM FONTS: Montserrat for Headings, Nunito for Body -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800;900&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  
   <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
   <link rel="stylesheet" href="./style.css">
 </head>
@@ -19,93 +23,66 @@
     <div class="nav-container">
       <a href="#" class="brand">
         <div class="brand-icon"><i class="ph-fill ph-drop"></i></div>
-        <span style="font-weight: 800; font-size:1.4rem;">WashBuddy</span>
+        <span class="brand-text">WashBuddy</span>
       </a>
       
       <nav class="nav-links">
         <a href="#beranda" class="active">Beranda</a>
-        <a href="#tentang-kami">Tentang Kami</a>
-        <a href="#layanan">Layanan Kami</a>
+        <a href="#layanan">Layanan</a>
+        <a href="#cara-kerja">Cara Kerja</a>
         <a href="#ai-scanner">AI Scanner</a>
         <a href="#testimoni">Testimoni</a>
       </nav>
 
       <div class="nav-actions">
         <a href="./app/index.html" class="btn-primary pulse-btn">
-          <i class="ph-bold ph-truck"></i> Pickup Now
+          <i class="ph-bold ph-truck"></i> Booking Pickup
         </a>
       </div>
     </div>
   </header>
 
   <!-- ==========================================
-       HERO SECTION
+       HERO SECTION (With Booking Form)
        ========================================== -->
   <section class="hero" id="beranda">
-    <!-- SVG Background Wave (Like Chingu) -->
     <div class="hero-bg">
-      <svg viewBox="0 0 1440 320" preserveAspectRatio="none"><path fill="#f0f4ff" fill-opacity="1" d="M0,128L48,138.7C96,149,192,171,288,181.3C384,192,480,192,576,170.7C672,149,768,107,864,106.7C960,107,1056,149,1152,154.7C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>
+      <!-- Premium Wavy SVG -->
+      <svg viewBox="0 0 1440 320" preserveAspectRatio="none"><path fill="#f8fafc" fill-opacity="1" d="M0,160L48,176C96,192,192,224,288,213.3C384,203,480,149,576,144C672,139,768,181,864,197.3C960,213,1056,203,1152,176C1248,149,1344,107,1392,85.3L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>
     </div>
     
     <div class="container hero-grid">
       <div class="hero-text animate-fade-in-up">
-        <h2>No.1 Laundry Express di Indonesia</h2>
-        <h1 class="hero-title">Pickup dalam <span class="highlight">30 menit</span></h1>
-        <p class="hero-subtitle">Harga Mulai Dari IDR 8.000<br>Express 3 Jam Selesai</p>
+        <div class="badge-premium"><i class="ph-fill ph-star"></i> Laundry Profesional No.1</div>
+        <h1 class="hero-title">Solusi Laundry Cepat,<br><span class="highlight">Bersih & Wangi</span></h1>
+        <p class="hero-subtitle">Nikmati layanan laundry premium dengan layanan antar-jemput gratis. Pakaian Anda ditangani oleh ahlinya menggunakan teknologi AI dan detergen bio-enzim.</p>
         
-        <div class="hero-buttons mt-4">
-          <a href="./app/index.html" class="btn-primary btn-large pulse-btn">Reservasi Laundry</a>
-          <a href="#tentang-kami" class="btn-outline btn-large" style="margin-left: 10px;">우리의 이야기 (Our Story)</a>
+        <div class="hero-features">
+          <span><i class="ph-fill ph-check-circle text-green"></i> Express 3 Jam</span>
+          <span><i class="ph-fill ph-check-circle text-green"></i> 1 Mesin 1 Pelanggan</span>
+          <span><i class="ph-fill ph-check-circle text-green"></i> Garansi 100%</span>
         </div>
-      </div>
-      <div class="hero-image animate-fade-in-up" style="animation-delay: 0.2s;">
-        <img src="https://images.unsplash.com/photo-1545173168-9f1947eebb7f?auto=format&fit=crop&w=800" alt="Laundry Profesional" class="img-rounded-blob">
-      </div>
-    </div>
-  </section>
-
-  <!-- ==========================================
-       LAYANAN KAMI (CHINGU CIRCLE GRID STYLE)
-       ========================================== -->
-  <section class="section bg-white" id="layanan">
-    <div class="container">
-      <div class="section-title animate-fade-in-up">
-        <h2>Layanan WashBuddy</h2>
-        <div class="title-underline"></div>
       </div>
       
-      <div class="service-circle-grid mt-4">
-        <div class="circle-item animate-fade-in-up" style="animation-delay: 0.1s;">
-          <div class="circle-icon"><img src="https://cdn-icons-png.flaticon.com/512/3003/3003984.png" alt="Kiloan"></div>
-          <h3>Daily Kiloan</h3>
+      <!-- Chingu-Style Hero Form Widget -->
+      <div class="hero-form-widget animate-fade-in-up" style="animation-delay: 0.2s;">
+        <div class="widget-header">
+          <h3><i class="ph-bold ph-moped"></i> Pesan Pickup Sekarang</h3>
         </div>
-        <div class="circle-item animate-fade-in-up" style="animation-delay: 0.2s;">
-          <div class="circle-icon"><img src="https://cdn-icons-png.flaticon.com/512/2916/2916315.png" alt="Cuci Setrika"></div>
-          <h3>Cuci & Setrika</h3>
-        </div>
-        <div class="circle-item animate-fade-in-up" style="animation-delay: 0.3s;">
-          <div class="circle-icon"><img src="https://cdn-icons-png.flaticon.com/512/3345/3345384.png" alt="Sepatu"></div>
-          <h3>Laundry Sepatu</h3>
-        </div>
-        <div class="circle-item animate-fade-in-up" style="animation-delay: 0.4s;">
-          <div class="circle-icon"><img src="https://cdn-icons-png.flaticon.com/512/3043/3043834.png" alt="Tas"></div>
-          <h3>Laundry Tas</h3>
-        </div>
-        <div class="circle-item animate-fade-in-up" style="animation-delay: 0.5s;">
-          <div class="circle-icon"><img src="https://cdn-icons-png.flaticon.com/512/4812/4812361.png" alt="Karpet"></div>
-          <h3>Laundry Karpet</h3>
-        </div>
-        <div class="circle-item animate-fade-in-up" style="animation-delay: 0.6s;">
-          <div class="circle-icon"><img src="https://cdn-icons-png.flaticon.com/512/11267/11267599.png" alt="Gorden"></div>
-          <h3>Laundry Gorden</h3>
-        </div>
-        <div class="circle-item animate-fade-in-up" style="animation-delay: 0.7s;">
-          <div class="circle-icon"><img src="https://cdn-icons-png.flaticon.com/512/2800/2800164.png" alt="Stroller"></div>
-          <h3>Laundry Stroller</h3>
-        </div>
-        <div class="circle-item animate-fade-in-up" style="animation-delay: 0.8s;">
-          <div class="circle-icon"><img src="https://cdn-icons-png.flaticon.com/512/3063/3063822.png" alt="Boneka"></div>
-          <h3>Laundry Boneka</h3>
+        <div class="widget-body">
+          <div class="form-group">
+            <label>Layanan yang dibutuhkan</label>
+            <select class="form-input">
+              <option>Daily Kiloan</option>
+              <option>Dry Cleaning Premium</option>
+              <option>Laundry Sepatu / Tas</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Nomor WhatsApp</label>
+            <input type="text" class="form-input" placeholder="Contoh: 08123456789">
+          </div>
+          <button class="btn-primary w-100 mt-2" onclick="window.location.href='./app/index.html'">Lanjutkan Pemesanan <i class="ph-bold ph-arrow-right"></i></button>
         </div>
       </div>
     </div>
@@ -114,7 +91,7 @@
   <!-- ==========================================
        STATS COUNTER SECTION
        ========================================== -->
-  <section class="section bg-primary text-white" id="tentang-kami">
+  <section class="section stats-section">
     <div class="container stats-counter-grid">
       <div class="stat-box animate-fade-in-up">
         <h2 class="counter" data-target="5">0</h2>
@@ -125,8 +102,116 @@
         <p>Cabang (Outlet)</p>
       </div>
       <div class="stat-box animate-fade-in-up" style="animation-delay: 0.4s;">
-        <h2 class="counter" data-target="150">0</h2>
-        <p>Staf Profesional</p>
+        <h2 class="counter" data-target="5000">0</h2>
+        <p>Pelanggan Puas</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       LAYANAN KAMI (CHINGU ANIMATED GRID)
+       ========================================== -->
+  <section class="section bg-light" id="layanan">
+    <div class="container">
+      <div class="section-title text-center animate-fade-in-up">
+        <span class="sub-heading">KATEGORI LAYANAN</span>
+        <h2>Layanan Premium WashBuddy</h2>
+        <div class="title-underline mx-auto"></div>
+        <p class="mt-3 text-muted">Kami melayani berbagai jenis kebutuhan kebersihan pakaian dan barang kesayangan Anda.</p>
+      </div>
+      
+      <div class="service-card-grid mt-5">
+        <!-- Card 1 -->
+        <div class="srv-card animate-fade-in-up" style="animation-delay: 0.1s;">
+          <div class="srv-icon-wrap"><img src="https://cdn-icons-png.flaticon.com/512/3003/3003984.png" alt="Kiloan" class="srv-img"></div>
+          <h3>Daily Kiloan</h3>
+          <p>Layanan cuci lipat reguler untuk pakaian sehari-hari.</p>
+        </div>
+        <!-- Card 2 -->
+        <div class="srv-card animate-fade-in-up" style="animation-delay: 0.2s;">
+          <div class="srv-icon-wrap"><img src="https://cdn-icons-png.flaticon.com/512/2916/2916315.png" alt="Cuci Setrika" class="srv-img"></div>
+          <h3>Cuci & Setrika</h3>
+          <p>Pakaian bersih, wangi, dan disetrika rapi sempurna.</p>
+        </div>
+        <!-- Card 3 -->
+        <div class="srv-card animate-fade-in-up" style="animation-delay: 0.3s;">
+          <div class="srv-icon-wrap"><img src="https://cdn-icons-png.flaticon.com/512/3345/3345384.png" alt="Sepatu" class="srv-img"></div>
+          <h3>Laundry Sepatu</h3>
+          <p>Deep cleaning untuk mengembalikan warna asli sepatu.</p>
+        </div>
+        <!-- Card 4 -->
+        <div class="srv-card animate-fade-in-up" style="animation-delay: 0.4s;">
+          <div class="srv-icon-wrap"><img src="https://cdn-icons-png.flaticon.com/512/3043/3043834.png" alt="Tas" class="srv-img"></div>
+          <h3>Laundry Tas</h3>
+          <p>Perawatan khusus untuk tas kulit dan kain premium.</p>
+        </div>
+        <!-- Card 5 -->
+        <div class="srv-card animate-fade-in-up" style="animation-delay: 0.5s;">
+          <div class="srv-icon-wrap"><img src="https://cdn-icons-png.flaticon.com/512/4812/4812361.png" alt="Karpet" class="srv-img"></div>
+          <h3>Laundry Karpet</h3>
+          <p>Pembersihan tungau dan noda membandel pada karpet.</p>
+        </div>
+        <!-- Card 6 -->
+        <div class="srv-card animate-fade-in-up" style="animation-delay: 0.6s;">
+          <div class="srv-icon-wrap"><img src="https://cdn-icons-png.flaticon.com/512/11267/11267599.png" alt="Gorden" class="srv-img"></div>
+          <h3>Laundry Gorden</h3>
+          <p>Pembersihan gorden tanpa merusak serat kain.</p>
+        </div>
+        <!-- Card 7 -->
+        <div class="srv-card animate-fade-in-up" style="animation-delay: 0.7s;">
+          <div class="srv-icon-wrap"><img src="https://cdn-icons-png.flaticon.com/512/2800/2800164.png" alt="Stroller" class="srv-img"></div>
+          <h3>Stroller Bayi</h3>
+          <p>Sterilisasi dan pembersihan aman untuk peralatan bayi.</p>
+        </div>
+        <!-- Card 8 -->
+        <div class="srv-card animate-fade-in-up" style="animation-delay: 0.8s;">
+          <div class="srv-icon-wrap"><img src="https://cdn-icons-png.flaticon.com/512/3063/3063822.png" alt="Boneka" class="srv-img"></div>
+          <h3>Helm & Boneka</h3>
+          <p>Pembersihan anti-bakteri untuk helm dan boneka.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       CARA KERJA (STEP-BY-STEP)
+       ========================================== -->
+  <section class="section bg-white" id="cara-kerja">
+    <div class="container">
+      <div class="section-title text-center animate-fade-in-up">
+        <span class="sub-heading">PROSES MUDAH</span>
+        <h2>Bagaimana Cara Kerjanya?</h2>
+        <div class="title-underline mx-auto"></div>
+      </div>
+      
+      <div class="steps-grid mt-5">
+        <div class="step-card animate-fade-in-up">
+          <div class="step-num">1</div>
+          <div class="step-icon"><i class="ph-fill ph-device-mobile"></i></div>
+          <h4>Pesan via Aplikasi</h4>
+          <p>Pilih layanan dan jadwalkan penjemputan dari HP Anda.</p>
+        </div>
+        <div class="step-line animate-fade-in-up"></div>
+        <div class="step-card animate-fade-in-up" style="animation-delay: 0.2s;">
+          <div class="step-num">2</div>
+          <div class="step-icon"><i class="ph-fill ph-truck"></i></div>
+          <h4>Kurir Menjemput</h4>
+          <p>Kurir kami akan menjemput cucian kotor ke lokasi Anda.</p>
+        </div>
+        <div class="step-line animate-fade-in-up"></div>
+        <div class="step-card animate-fade-in-up" style="animation-delay: 0.4s;">
+          <div class="step-num">3</div>
+          <div class="step-icon"><i class="ph-fill ph-waves"></i></div>
+          <h4>Proses Pencucian</h4>
+          <p>Dicuci terpisah menggunakan detergen premium & AI Scanner.</p>
+        </div>
+        <div class="step-line animate-fade-in-up"></div>
+        <div class="step-card animate-fade-in-up" style="animation-delay: 0.6s;">
+          <div class="step-num">4</div>
+          <div class="step-icon"><i class="ph-fill ph-package"></i></div>
+          <h4>Diantar Kembali</h4>
+          <p>Cucian bersih, wangi, dan rapi diantar kembali ke rumah.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -134,28 +219,68 @@
   <!-- ==========================================
        WASHBUDDY UNIQUE FEATURE: AI SCANNER
        ========================================== -->
-  <section class="section bg-light" id="ai-scanner">
-    <div class="container">
-      <div class="section-title animate-fade-in-up">
-        <h2>Teknologi AI Scanner</h2>
-        <div class="title-underline"></div>
-        <p style="margin-top:1rem;">Fitur eksklusif WashBuddy. Kenali noda pada pakaian Anda dalam hitungan detik menggunakan kecerdasan buatan.</p>
+  <section class="section bg-dark text-white" id="ai-scanner">
+    <div class="container ai-scanner-box animate-fade-in-up">
+      <div class="ai-info">
+        <span class="badge-premium" style="background:rgba(255,255,255,0.1); color:#fff; border:1px solid rgba(255,255,255,0.2);">Teknologi Eksklusif</span>
+        <h2 style="font-size:2.5rem; margin-top:1rem;">AI Fabric Scanner</h2>
+        <p style="color:#cbd5e1; font-size:1.1rem; margin-bottom:2rem;">Setiap pakaian dianalisis menggunakan kecerdasan buatan untuk mendeteksi noda tersembunyi dan merekomendasikan penanganan spesifik agar serat kain tidak rusak.</p>
+        
+        <button class="btn-primary pulse-btn" onclick="runAIScanner()">
+          <i class="ph-bold ph-scan"></i> Coba Simulasi Scan
+        </button>
+        
+        <div class="scanner-result mt-4" id="scanner-result" style="display:none;">
+          <div class="sr-header"><i class="ph-fill ph-check-circle text-green"></i> Analisis Selesai</div>
+          <div class="sr-body">
+            <strong>Noda Terdeteksi:</strong> Kopi / Tanin (Area Dada)<br>
+            <strong>Rekomendasi:</strong> Spot Treatment Enzim Aktif.
+          </div>
+        </div>
       </div>
       
-      <div class="ai-scanner-box animate-fade-in-up mt-4">
+      <div class="ai-visual">
         <div class="scanner-screen">
           <div class="scanner-grid"></div>
           <div class="scanner-laser" id="scanner-laser"></div>
           <img src="https://images.unsplash.com/photo-1542318042-5f693086eb29?w=600&auto=format&fit=crop" alt="Pakaian Kotor" id="scanner-img">
         </div>
-        <div class="scanner-controls">
-          <button class="btn-primary pulse-btn" style="width:100%" onclick="runAIScanner()">
-            <i class="ph-bold ph-scan"></i> Mulai Scan Kain
-          </button>
-          <div class="scanner-result mt-3" id="scanner-result" style="display:none;">
-            <strong>Hasil Analisis:</strong>
-            <p><i class="ph-fill ph-warning-circle text-accent"></i> Terdeteksi noda kopi di area dada.</p>
-            <p><i class="ph-fill ph-check-circle text-green"></i> Rekomendasi: Wash & Fold + Bio-Enzim Spot Treatment.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       MAPS & CONTACT
+       ========================================== -->
+  <section class="section bg-light">
+    <div class="container hero-grid">
+      <div class="maps-iframe animate-fade-in-up">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.4253331575453!2d106.82024761476906!3d-6.207490095506721!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f41f71a067d5%3A0xc3cf3fb81ab81682!2sJl.%20Jend.%20Sudirman%2C%20Daerah%20Khusus%20Ibukota%20Jakarta!5e0!3m2!1sid!2sid!4v1680000000000!5m2!1sid!2sid" width="100%" height="450" style="border:0; border-radius:24px; box-shadow:var(--shadow-lg);" allowfullscreen="" loading="lazy"></iframe>
+      </div>
+      <div class="contact-info-card animate-fade-in-up" style="animation-delay: 0.2s;">
+        <span class="sub-heading">KUNJUNGI KAMI</span>
+        <h2>Outlet Pusat WashBuddy</h2>
+        <p class="text-muted mt-3 mb-4">Kami memiliki 24 cabang yang tersebar di Jabodetabek. Ini adalah lokasi outlet percontohan pusat kami.</p>
+        
+        <div class="info-item">
+          <i class="ph-fill ph-map-pin"></i>
+          <div>
+            <strong>Alamat</strong>
+            <span>Jl. Jend. Sudirman Kav 52-53, Senayan, Jakarta Selatan.</span>
+          </div>
+        </div>
+        <div class="info-item mt-3">
+          <i class="ph-fill ph-clock"></i>
+          <div>
+            <strong>Jam Operasional</strong>
+            <span>Buka Setiap Hari: 07.00 - 22.00 WIB</span>
+          </div>
+        </div>
+        <div class="info-item mt-3">
+          <i class="ph-fill ph-whatsapp-logo"></i>
+          <div>
+            <strong>WhatsApp Hotline</strong>
+            <span>+62 812-3456-7890 (Respon Cepat)</span>
           </div>
         </div>
       </div>
@@ -163,39 +288,17 @@
   </section>
 
   <!-- ==========================================
-       WHY CHOOSE US & MAPS
-       ========================================== -->
-  <section class="section bg-white">
-    <div class="container hero-grid">
-      <div class="maps-iframe animate-fade-in-up">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.4253331575453!2d106.82024761476906!3d-6.207490095506721!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f41f71a067d5%3A0xc3cf3fb81ab81682!2sJl.%20Jend.%20Sudirman%2C%20Daerah%20Khusus%20Ibukota%20Jakarta!5e0!3m2!1sid!2sid!4v1680000000000!5m2!1sid!2sid" width="100%" height="400" style="border:0; border-radius:20px; box-shadow:var(--shadow-md);" allowfullscreen="" loading="lazy"></iframe>
-      </div>
-      <div class="why-us-text animate-fade-in-up" style="animation-delay: 0.2s;">
-        <h2>Mengapa Memilih Kami?</h2>
-        <div class="title-underline" style="margin: 1rem 0;"></div>
-        <ul class="why-list">
-          <li><i class="ph-fill ph-check-circle"></i> <strong>Cepat & Tepat:</strong> Proses express 3 Jam selesai.</li>
-          <li><i class="ph-fill ph-check-circle"></i> <strong>Gratis Antar Jemput:</strong> Radius 5 KM dari outlet terdekat.</li>
-          <li><i class="ph-fill ph-check-circle"></i> <strong>Detergen Premium:</strong> Ramah lingkungan dan wangi tahan lama.</li>
-          <li><i class="ph-fill ph-check-circle"></i> <strong>1 Mesin 1 Pelanggan:</strong> Pakaian Anda tidak akan dicampur dengan pelanggan lain.</li>
-          <li><i class="ph-fill ph-check-circle"></i> <strong>Aplikasi Canggih:</strong> Lacak pesanan secara real-time via smartphone.</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- ==========================================
        TESTIMONI
        ========================================== -->
-  <section class="section bg-light" id="testimoni">
+  <section class="section bg-white" id="testimoni">
     <div class="container">
-      <div class="section-title animate-fade-in-up">
-        <p class="text-primary font-bold">그들의 경험을 들어보세요.</p>
-        <h2>Apa kata pelanggan setia Kami?</h2>
-        <div class="title-underline"></div>
+      <div class="section-title text-center animate-fade-in-up">
+        <span class="sub-heading" style="color:var(--primary); font-family: 'Plus Jakarta Sans', sans-serif;">그들의 경험을 들어보세요.</span>
+        <h2>Ulasan Pelanggan Kami</h2>
+        <div class="title-underline mx-auto"></div>
       </div>
       
-      <div class="testimonial-grid mt-4">
+      <div class="testimonial-grid mt-5">
         <div class="testi-card animate-fade-in-up">
           <div class="testi-user">
             <img src="https://ui-avatars.com/api/?name=Lillian+Bell&background=random" alt="User">
@@ -205,8 +308,7 @@
             </div>
           </div>
           <div class="testi-text">
-            <i class="ph-fill ph-quotes text-accent" style="font-size:2rem; opacity:0.3; position:absolute; top:20px; right:20px;"></i>
-            "Cepat, tepat, wangi, rapi, dan ada delivery servicenya. Ada WashBuddy saya ga khawatir kehabisan baju."
+            "Cepat, tepat, wangi, rapi, dan ada delivery servicenya. Ada WashBuddy saya ga khawatir kehabisan baju. Sangat profesional."
           </div>
           <div class="stars">⭐⭐⭐⭐⭐</div>
         </div>
@@ -216,12 +318,11 @@
             <img src="https://ui-avatars.com/api/?name=Arief+F&background=random" alt="User">
             <div>
               <strong>Arief Fathur</strong>
-              <span>Content Creator</span>
+              <span>Karyawan Swasta</span>
             </div>
           </div>
           <div class="testi-text">
-            <i class="ph-fill ph-quotes text-accent" style="font-size:2rem; opacity:0.3; position:absolute; top:20px; right:20px;"></i>
-            "Lagi traveling bawa stock baju yang gak banyak. Ketemu deh laundry yang super cepet banget— WashBuddy Express!"
+            "Lagi butuh cepat buat meeting besok. Ketemu deh laundry yang super cepet banget— WashBuddy Express benar-benar penyelamat!"
           </div>
           <div class="stars">⭐⭐⭐⭐⭐</div>
         </div>
@@ -235,8 +336,7 @@
             </div>
           </div>
           <div class="testi-text">
-            <i class="ph-fill ph-quotes text-accent" style="font-size:2rem; opacity:0.3; position:absolute; top:20px; right:20px;"></i>
-            "Penyelamat banget buat yang suka lupa nyuci. Pasti bersih dan wangi. Harganya sangat terjangkau sekali untuk kantong mahasiswa."
+            "Pasti bersih dan wangi. Harganya sangat terjangkau sekali untuk kantong mahasiswa. Poin rewardnya juga banyak."
           </div>
           <div class="stars">⭐⭐⭐⭐⭐</div>
         </div>
@@ -245,15 +345,20 @@
   </section>
 
   <!-- ==========================================
-       PARTNER
+       PARTNER (Infinite Slider)
        ========================================== -->
-  <section class="section bg-white border-top">
+  <section class="section bg-light border-top" style="overflow: hidden;">
     <div class="container text-center animate-fade-in-up">
-      <h2>Partner Kami</h2>
-      <div class="partner-logos mt-4">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Gojek_logo_2019.svg/2560px-Gojek_logo_2019.svg.png" alt="Gojek">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Lalamove_logo.png/1200px-Lalamove_logo.png" alt="Lalamove">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Meta_Platforms_Inc._logo.svg/2560px-Meta_Platforms_Inc._logo.svg.png" alt="Meta">
+      <h3 style="color:var(--text-muted); font-size:1rem; letter-spacing:2px;">DIPERCAYA OLEH PARTNER TERKEMUKA</h3>
+      <div class="partner-slider mt-4">
+        <div class="partner-track">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Gojek_logo_2019.svg/2560px-Gojek_logo_2019.svg.png" alt="Gojek">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Lalamove_logo.png/1200px-Lalamove_logo.png" alt="Lalamove">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Meta_Platforms_Inc._logo.svg/2560px-Meta_Platforms_Inc._logo.svg.png" alt="Meta">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Gojek_logo_2019.svg/2560px-Gojek_logo_2019.svg.png" alt="Gojek">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Lalamove_logo.png/1200px-Lalamove_logo.png" alt="Lalamove">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Meta_Platforms_Inc._logo.svg/2560px-Meta_Platforms_Inc._logo.svg.png" alt="Meta">
+        </div>
       </div>
     </div>
   </section>
@@ -261,26 +366,38 @@
   <!-- ==========================================
        FOOTER
        ========================================== -->
-  <footer class="footer bg-dark text-white">
+  <footer class="footer">
     <div class="container footer-grid">
       <div class="f-col">
-        <div class="brand" style="color:#fff; margin-bottom:1rem;">
+        <div class="brand" style="color:#fff; margin-bottom:1.5rem;">
           <div class="brand-icon" style="background:#fff; color:var(--primary)"><i class="ph-fill ph-drop"></i></div>
-          WashBuddy
+          <span class="brand-text text-white">WashBuddy</span>
         </div>
         <p>No. 1 Laundry Express di Indonesia. Merubah cara mencuci menjadi pengalaman yang cepat, bersih, dan profesional.</p>
       </div>
       <div class="f-col">
-        <h4>Tautan Cepat</h4>
-        <a href="#">Outlet</a>
-        <a href="#">Kemitraan</a>
-        <a href="#">Cek Status Cucianmu</a>
+        <h4>Layanan</h4>
+        <a href="#">Daily Kiloan</a>
+        <a href="#">Dry Cleaning</a>
+        <a href="#">Cuci Sepatu</a>
+        <a href="#">Laundry Karpet</a>
+      </div>
+      <div class="f-col">
+        <h4>Perusahaan</h4>
+        <a href="#">Tentang Kami</a>
+        <a href="#">Outlet & Cabang</a>
+        <a href="#">Kemitraan (Franchise)</a>
         <a href="#">Syarat & Ketentuan</a>
       </div>
     </div>
     <div class="footer-bottom">
-      <div class="container text-center">
-        &copy; 2026 WashBuddy. All Rights Reserved.
+      <div class="container" style="display:flex; justify-content:space-between; align-items:center;">
+        <div>&copy; 2026 WashBuddy. All Rights Reserved.</div>
+        <div style="display:flex; gap:1rem; font-size:1.5rem;">
+          <i class="ph-fill ph-instagram-logo hover-white"></i>
+          <i class="ph-fill ph-tiktok-logo hover-white"></i>
+          <i class="ph-fill ph-facebook-logo hover-white"></i>
+        </div>
       </div>
     </div>
   </footer>
@@ -289,7 +406,6 @@
        FLOATING ACTION BUTTONS (Mascot + WA)
        ========================================== -->
   <div class="fab-container">
-    <!-- WashBuddy Mascot -->
     <div class="floating-mascot" id="mascot-obj" onclick="triggerMascot()">
       <div class="mascot-bubble">
         <div class="mascot-eyes">
@@ -298,10 +414,9 @@
         </div>
         <div class="mascot-smile"></div>
       </div>
-      <div class="float-msg" id="mascot-msg">Halo! Aku WashBot 🫧</div>
+      <div class="float-msg" id="mascot-msg">Pesan sekarang via App! 🫧</div>
     </div>
 
-    <!-- WA Button (Pulse Animation) -->
     <a href="https://wa.me/628123456789" target="_blank" class="wa-btn pulse-btn">
       <i class="ph-fill ph-whatsapp-logo"></i>
     </a>
