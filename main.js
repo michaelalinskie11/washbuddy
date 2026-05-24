@@ -1,5 +1,5 @@
 // =====================================================
-// WASHBUDDY LANDING PAGE JS v9 — CHINGU CLONE + INTERACTIVE
+// WASHBUDDY LANDING PAGE JS v11 — CINEMATIC PARALLAX
 // =====================================================
 
 // --- 1. Navbar & Smooth Scroll ---
@@ -24,7 +24,28 @@ document.querySelectorAll('.nav-links a').forEach(link => {
   });
 });
 
-// --- 2. Scroll Animations (Fade In Up) ---
+// --- 2. Parallax Scroll Engine ---
+const parallaxLayers = document.querySelectorAll('.p-layer');
+const parallaxDrum = document.getElementById('parallax-drum');
+
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY;
+
+  // Move layers (clothes and bubbles)
+  parallaxLayers.forEach(layer => {
+    const speed = layer.getAttribute('data-speed') || 0.5;
+    const yPos = -(scrollY * speed);
+    layer.style.transform = `translateY(${yPos}px)`;
+  });
+
+  // Spin the washing machine drum
+  if (parallaxDrum) {
+    const rotation = scrollY * 0.1; // Rotate based on scroll
+    parallaxDrum.style.transform = `rotate(${rotation}deg)`;
+  }
+});
+
+// --- 3. Scroll Animations (Fade In Up) ---
 const observerOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
@@ -39,7 +60,7 @@ document.querySelectorAll('.animate-fade-in-up').forEach(el => {
   observer.observe(el);
 });
 
-// --- 3. Number Counter Animation ---
+// --- 4. Number Counter Animation ---
 const counterObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
@@ -67,7 +88,7 @@ document.querySelectorAll('.counter').forEach(el => {
   counterObserver.observe(el);
 });
 
-// --- 4. Mascot Eye Tracking & Messages ---
+// --- 5. Mascot Eye Tracking & Messages ---
 function initMascot() {
   const pupils = document.querySelectorAll('.pupil');
   if (pupils.length === 0) return;
@@ -109,7 +130,7 @@ window.triggerMascot = function() {
   showMascotMessage();
 };
 
-// --- 5. AI Scanner Demo ---
+// --- 6. AI Scanner Demo ---
 window.runAIScanner = function() {
   const laser = document.getElementById('scanner-laser');
   const result = document.getElementById('scanner-result');
