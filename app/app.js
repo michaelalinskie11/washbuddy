@@ -1,59 +1,82 @@
-// ===== WASHBUDDY ELITE CUSTOMER PORTAL ENGINE =====
-// Global State & Core Systems
-const API = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+// =====================================================
+// WASHBUDDY PORTAL — Refactored JS Engine v5.0
+// All bugs fixed, clean structure
+// =====================================================
+
+// --- Config & State ---
+const API = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
   ? 'http://localhost:3000/api'
   : '/api';
 
 const PRICING = {
   'Wash Regular': 8000,
-  'Wash Kilat': 15000,
+  'Wash Kilat':   15000,
   'Dry Cleaning': 25000,
-  'Premium Spa': 50000,
-  'Cuci Karpet': 30000,
-  'Cuci Sofa': 100000,
+  'Premium Spa':  50000,
+  'Cuci Karpet':  30000,
+  'Cuci Sofa':    100000,
 };
 
 const COURIERS = [
-  { name: 'Ahmad Fauzi', rating: '4.9', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop' },
-  { name: 'Budi Santoso', rating: '4.8', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop' },
-  { name: 'Chandra Wijaya', rating: '5.0', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&auto=format&fit=crop' },
-  { name: 'Dimas Pratama', rating: '4.7', avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=100&auto=format&fit=crop' },
-  { name: 'Eko Prasetyo', rating: '4.9', avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&auto=format&fit=crop' },
+  { name: 'Ahmad Fauzi',    rating: '4.9', avatar: 'https://ui-avatars.com/api/?name=Ahmad+Fauzi&background=4F7EFF&color=fff&bold=true' },
+  { name: 'Budi Santoso',   rating: '4.8', avatar: 'https://ui-avatars.com/api/?name=Budi+Santoso&background=22c55e&color=fff&bold=true' },
+  { name: 'Chandra Wijaya', rating: '5.0', avatar: 'https://ui-avatars.com/api/?name=Chandra&background=a855f7&color=fff&bold=true' },
+  { name: 'Dimas Pratama',  rating: '4.7', avatar: 'https://ui-avatars.com/api/?name=Dimas&background=f59e0b&color=fff&bold=true' },
+  { name: 'Eko Prasetyo',   rating: '4.9', avatar: 'https://ui-avatars.com/api/?name=Eko&background=14b8a6&color=fff&bold=true' },
 ];
 
 const SCAN_SCENARIOS = [
-  { fabric: 'Sutra Murni (Silk)', stain: 'Noda Kopi & Lipstik', rec: 'Premium Spa Delicate Mode', img: 'https://images.unsplash.com/photo-1520637102912-2df6bb2aec6d?w=600&auto=format&fit=crop' },
-  { fabric: 'Katun Oxford', stain: 'Tumpahan Kopi Susu', rec: 'Dry Cleaning + Oxi-Boost', img: 'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=600&auto=format&fit=crop' },
-  { fabric: 'Denim Premium', stain: 'Noda Oli Mesin Pekat', rec: 'Wash Regular + Heavy Duty', img: 'https://images.unsplash.com/photo-1542272604-787c3835535d?w=600&auto=format&fit=crop' },
-  { fabric: 'Wool Wol Wol', stain: 'Noda Cokelat Cair', rec: 'Premium Spa Anti-Shrink', img: 'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=600&auto=format&fit=crop' },
-  { fabric: 'Linen Halus', stain: 'Noda Saus Tomat / Chili', rec: 'Dry Cleaning + Spot Treatment', img: 'https://images.unsplash.com/photo-1596755094514-f87e32f85e2c?w=600&auto=format&fit=crop' },
-  { fabric: 'Polyester Active', stain: 'Keringat & Noda Lumpur', rec: 'Wash Kilat + Anti-Odor Treatment', img: 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=600&auto=format&fit=crop' }
+  { fabric: 'Sutra Murni', stain: 'Kopi & Lipstik', rec: 'Premium Spa — Delicate Mode. Formula enzim khusus sutra.', img: 'https://images.unsplash.com/photo-1520637102912-2df6bb2aec6d?w=600&auto=format&fit=crop' },
+  { fabric: 'Katun Oxford', stain: 'Kopi Susu', rec: 'Dry Cleaning + Oxi-Boost Treatment untuk noda organik membandel.', img: 'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=600&auto=format&fit=crop' },
+  { fabric: 'Denim Premium', stain: 'Noda Oli Mesin', rec: 'Wash Regular + Heavy-Duty Degreaser. Rendam 30 menit sebelum cuci.', img: 'https://images.unsplash.com/photo-1542272604-787c3835535d?w=600&auto=format&fit=crop' },
+  { fabric: 'Wol Merino', stain: 'Noda Cokelat', rec: 'Premium Spa Anti-Shrink. Suhu air maksimum 30°C.', img: 'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=600&auto=format&fit=crop' },
+  { fabric: 'Linen Halus', stain: 'Saus Tomat', rec: 'Dry Cleaning + Spot Treatment enzim asam sebelum proses utama.', img: 'https://images.unsplash.com/photo-1596755094514-f87e32f85e2c?w=600&auto=format&fit=crop' },
+  { fabric: 'Polyester Active', stain: 'Keringat & Lumpur', rec: 'Wash Kilat + Anti-Odor Sport Treatment. Efektif hilangkan bakteri.', img: 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=600&auto=format&fit=crop' },
 ];
 
-let currentService = 'Wash Regular';
-let currentPayment = 'QRIS';
+let currentService     = 'Wash Regular';
+let currentPayment     = 'QRIS';
 let discountMultiplier = 0;
-let countdownInterval = null;
-let globalTimeLeft = 120;
-let isTracking = false;
-let activeOrderId = null;
+let trackingInterval   = null;
+let countdownInterval  = null;
+let globalTimeLeft     = 120;
+let isTracking         = false;
 
-// ===== NAVIGATION =====
+// =====================================================
+// NAVIGATION
+// =====================================================
 const navLinks = document.querySelectorAll('#main-nav a');
-const views = document.querySelectorAll('.page-view');
+const pageViews = document.querySelectorAll('.page-view');
+
+const PAGE_TITLES = {
+  'view-dashboard': 'Dashboard',
+  'view-order':     'Pesan Laundry',
+  'view-pricing':   'Harga & Promo',
+  'view-scanner':   'AI Scanner',
+  'view-tracking':  'Lacak Pesanan',
+};
 
 function navigate(targetId) {
   navLinks.forEach(link => {
     link.classList.toggle('active', link.getAttribute('data-target') === targetId);
   });
-  views.forEach(view => {
+  pageViews.forEach(view => {
     const isTarget = view.id === targetId;
-    view.classList.toggle('hidden', !isTarget);
-    view.classList.toggle('active', isTarget);
-    if (isTarget && window.gsap) {
-      gsap.fromTo(view, { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.35, ease: 'power2.out' });
+    if (isTarget) {
+      view.classList.remove('hidden');
+      view.classList.add('active');
+    } else {
+      view.classList.add('hidden');
+      view.classList.remove('active');
     }
   });
+  const breadcrumb = document.getElementById('tb-breadcrumb');
+  if (breadcrumb) breadcrumb.textContent = PAGE_TITLES[targetId] || '';
+
+  // Close sidebar on mobile after navigation
+  if (window.innerWidth < 900) {
+    document.getElementById('sidebar')?.classList.remove('open');
+  }
 }
 
 navLinks.forEach(link => {
@@ -63,610 +86,639 @@ navLinks.forEach(link => {
   });
 });
 
-// ===== NOTIFICATIONS =====
-function toggleNotifications() {
-  document.getElementById('notif-dropdown').classList.toggle('hidden');
-  const dot = document.getElementById('notif-dot');
-  if (dot) dot.style.display = 'none';
+// =====================================================
+// SIDEBAR MOBILE TOGGLE
+// =====================================================
+function toggleSidebar() {
+  document.getElementById('sidebar')?.classList.toggle('open');
 }
 
+// Close sidebar clicking outside on mobile
 document.addEventListener('click', e => {
-  const dropdown = document.getElementById('notif-dropdown');
-  if (dropdown && !dropdown.classList.contains('hidden') && !dropdown.contains(e.target) && !e.target.closest('[onclick="toggleNotifications()"]')) {
-    dropdown.classList.add('hidden');
+  const sidebar = document.getElementById('sidebar');
+  const menuBtn = document.getElementById('menu-toggle');
+  if (sidebar && window.innerWidth < 900 &&
+      sidebar.classList.contains('open') &&
+      !sidebar.contains(e.target) &&
+      !menuBtn.contains(e.target)) {
+    sidebar.classList.remove('open');
+  }
+});
+
+// =====================================================
+// NOTIFICATIONS
+// =====================================================
+const notifBtn = document.getElementById('notif-btn');
+notifBtn?.addEventListener('click', e => {
+  e.stopPropagation();
+  const panel = document.getElementById('notif-dropdown');
+  panel?.classList.toggle('hidden');
+  const dot = document.getElementById('notif-dot');
+  if (dot) dot.style.display = 'none';
+});
+
+document.addEventListener('click', e => {
+  const panel = document.getElementById('notif-dropdown');
+  const btn   = document.getElementById('notif-btn');
+  if (panel && !panel.classList.contains('hidden') &&
+      !panel.contains(e.target) && !btn?.contains(e.target)) {
+    panel.classList.add('hidden');
   }
 });
 
 function clearNotifs() {
-  const list = document.getElementById('notif-list');
-  const dot = document.getElementById('notif-dot');
-  if (list) {
-    list.querySelectorAll('.notif-item.unread').forEach(el => el.classList.remove('unread'));
-  }
-  if (dot) dot.style.display = 'none';
+  document.querySelectorAll('.np-item.unread').forEach(el => el.classList.remove('unread'));
+  document.getElementById('notif-dot')?.remove();
   document.getElementById('notif-dropdown')?.classList.add('hidden');
 }
 
-// ===== 3D HOVER AND PHYSICAL EFFECTS SYSTEM =====
-// 1. Bento Loyalty Card Hologram and 3D Hover and Physical Effects System
-const loyaltyCard = document.querySelector('#loyalty-card-3d');
+// =====================================================
+// LOYALTY CARD 3D TILT
+// =====================================================
+const loyaltyCard = document.getElementById('loyalty-card-3d');
 if (loyaltyCard) {
+  const inner = loyaltyCard.querySelector('.lc-inner');
+  const glare = document.getElementById('lc-glare');
+
   loyaltyCard.addEventListener('mousemove', e => {
+    if (!inner) return;
     const r = loyaltyCard.getBoundingClientRect();
-    const x = e.clientX - r.left; // x coordinate within card
-    const y = e.clientY - r.top;  // y coordinate within card
-    
-    // Normalize coordinates around card center (-0.5 to 0.5)
-    const normalizedX = (x / r.width) - 0.5;
-    const normalizedY = (y / r.height) - 0.5;
-    
-    // Degrees of rotation: max 15 degrees tilt
-    const rotX = -normalizedY * 15;
-    const rotY = normalizedX * 15;
-    
-    const inner = loyaltyCard.querySelector('.lc-inner');
-    if (inner) inner.style.transform = `perspective(1000px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale3d(1.02, 1.02, 1.02)`;
-    
-    // Glow/Glare movement
-    const glare = loyaltyCard.querySelector('.lc-glare');
+    const x = e.clientX - r.left;
+    const y = e.clientY - r.top;
+    const nx = (x / r.width)  - 0.5;
+    const ny = (y / r.height) - 0.5;
+    inner.style.transform = `perspective(1000px) rotateX(${-ny * 14}deg) rotateY(${nx * 14}deg) scale3d(1.02, 1.02, 1.02)`;
     if (glare) {
       glare.style.opacity = '1';
-      glare.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(96, 165, 250, 0.12) 0%, rgba(255, 255, 255, 0) 65%)`;
+      glare.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(79,126,255,0.1) 0%, transparent 65%)`;
     }
   });
 
   loyaltyCard.addEventListener('mouseleave', () => {
-    const inner = loyaltyCard.querySelector('.lc-inner');
     if (inner) inner.style.transform = '';
-    const glare = loyaltyCard.querySelector('.lc-glare');
     if (glare) glare.style.opacity = '0';
   });
 }
 
-// 2. Premium floating micro-animations
-document.querySelectorAll('.hover-float').forEach(el => {
-  el.addEventListener('mouseenter', () => el.style.transform = 'translateY(-6px)');
-  el.addEventListener('mouseleave', () => el.style.transform = '');
-});
-
-// 3. Wizard Service Cards 3D Effect
-document.querySelectorAll('.srv-card').forEach(card => {
-  card.addEventListener('mousemove', e => {
-    const r = card.getBoundingClientRect();
-    const x = (e.clientX - r.left) / r.width - 0.5;
-    const y = (e.clientY - r.top) / r.height - 0.5;
-    card.style.transform = `perspective(600px) rotateY(${x * 10}deg) rotateX(${-y * 10}deg) scale(1.02)`;
-  });
-  card.addEventListener('mouseleave', () => { card.style.transform = ''; });
-});
-
-// ===== AI STAIN SCANNER (WASHBOT VISION AI) =====
+// =====================================================
+// AI STAIN SCANNER
+// =====================================================
 function startScan() {
-  document.getElementById('scan-area').classList.add('hidden');
-  document.getElementById('scan-result').classList.add('hidden');
-  const anim = document.getElementById('scan-animation');
-  anim.classList.remove('hidden');
+  const idleEl   = document.getElementById('scan-idle-state');
+  const activeEl = document.getElementById('scan-active-state');
+  const resultEl = document.getElementById('scan-result');
+  const statusEl = document.getElementById('scan-status-text');
+  const scanImg  = document.getElementById('scan-image');
 
-  const scanImg = document.getElementById('scan-image');
-  const scanStatusText = document.getElementById('scan-status-text');
-  
-  let idx = 0;
+  if (!idleEl || !activeEl) return;
+
+  idleEl.style.display   = 'none';
+  activeEl.classList.remove('hidden');
+  resultEl?.classList.add('hidden');
+
   const scenario = SCAN_SCENARIOS[Math.floor(Math.random() * SCAN_SCENARIOS.length)];
-  const imgs = SCAN_SCENARIOS.map(s => s.img);
+  const imgPool  = SCAN_SCENARIOS.map(s => s.img);
+  let imgIdx = 0;
 
-  // Dynamic neural AI processing log cycle
   const logs = [
-    "Memulai lensa WashBot Vision AI...",
-    "Memindai koordinat noda & spektrometri warna...",
-    "Menganalisis kerapatan kain & material rajut...",
-    "Mencocokkan solusi dengan 10.000+ basis data WashBot...",
-    "Menyusun rekomendasi penanganan noda khusus..."
+    'Memulai kamera WashBot Vision AI...',
+    'Memindai spektrum warna & pola noda...',
+    'Menganalisis kerapatan serat kain...',
+    'Mencocokkan dengan 10.000+ data WashBot...',
+    'Menyusun rekomendasi pencucian...',
   ];
-
   let logIdx = 0;
-  scanStatusText.textContent = logs[0];
-  const logInterval = setInterval(() => {
-    logIdx++;
-    if (logIdx < logs.length) {
-      scanStatusText.textContent = logs[logIdx];
-    }
-  }, 800);
+  if (statusEl) statusEl.textContent = logs[0];
 
-  // Image flash preview effect (simulating scan cycles)
-  const imgInterval = setInterval(() => {
-    scanImg.style.opacity = 0.3;
+  const logTimer = setInterval(() => {
+    logIdx++;
+    if (logIdx < logs.length && statusEl) statusEl.textContent = logs[logIdx];
+  }, 750);
+
+  const imgTimer = setInterval(() => {
+    if (!scanImg) return;
+    scanImg.style.opacity = '0.3';
     setTimeout(() => {
-      scanImg.src = imgs[idx % imgs.length];
-      scanImg.style.opacity = 1;
-      idx++;
+      scanImg.src = imgPool[imgIdx % imgPool.length];
+      scanImg.style.transition = 'opacity 0.15s';
+      scanImg.style.opacity = '1';
+      imgIdx++;
     }, 150);
-  }, 600);
+  }, 550);
 
   setTimeout(() => {
-    clearInterval(imgInterval);
-    clearInterval(logInterval);
-    anim.classList.add('hidden');
-    scanImg.src = scenario.img;
+    clearInterval(logTimer);
+    clearInterval(imgTimer);
 
-    document.getElementById('scan-fabric').textContent = scenario.fabric;
-    document.getElementById('scan-stain').textContent = scenario.stain;
-    
-    // Rich recommendations
-    document.getElementById('scan-rec').innerHTML = `
-      <strong>${scenario.rec}</strong><br>
-      <span style="font-size:0.85rem; color:var(--text-muted); display:inline-block; margin-top:5px; line-height:1.4;">
-        <i class="ph-bold ph-info"></i> Formula noda khusus akan disemprotkan sebelum proses cuci untuk mengangkat noda membandel tanpa merusak serat kain.
-      </span>
-    `;
+    activeEl.classList.add('hidden');
+    idleEl.style.display = '';
 
-    const result = document.getElementById('scan-result');
-    result.classList.remove('hidden');
-    if (window.gsap) gsap.fromTo(result, { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.4 });
-  }, 4000);
+    const fabEl  = document.getElementById('scan-fabric');
+    const stnEl  = document.getElementById('scan-stain');
+    const recEl  = document.getElementById('scan-rec');
+
+    if (fabEl) fabEl.textContent = scenario.fabric;
+    if (stnEl) stnEl.textContent = scenario.stain;
+    if (recEl) recEl.textContent = scenario.rec;
+
+    if (resultEl) {
+      resultEl.classList.remove('hidden');
+      resultEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }, 4200);
 }
 
-// ===== ORDER WIZARD SYSTEM =====
-function selectService(element, serviceName) {
-  document.querySelectorAll('.srv-card').forEach(c => c.classList.remove('selected'));
-  element.classList.add('selected');
-  currentService = serviceName;
-  updateSummary();
+function resetScan() {
+  const idleEl   = document.getElementById('scan-idle-state');
+  const activeEl = document.getElementById('scan-active-state');
+  const resultEl = document.getElementById('scan-result');
+  if (idleEl)   idleEl.style.display = '';
+  if (activeEl) activeEl.classList.add('hidden');
+  if (resultEl) resultEl.classList.add('hidden');
 }
 
-function selectPayment(element, method) {
-  document.querySelectorAll('.pay-option').forEach(c => c.classList.remove('selected'));
-  element.classList.add('selected');
+// =====================================================
+// ORDER WIZARD
+// =====================================================
+let currentWizardStep = 1;
+
+function selectService(el, name) {
+  document.querySelectorAll('.srv-item').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  currentService = name;
+  recalc();
+}
+
+function selectPayment(el, method) {
+  document.querySelectorAll('.pay-opt').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
   currentPayment = method;
 }
 
-function nextWizard(step) {
+function goStep(step) {
+  // Hide all steps
   document.querySelectorAll('.wizard-step').forEach(s => s.classList.add('hidden'));
+
+  // Show target
   const target = document.getElementById('w-step-' + step);
   if (!target) return;
   target.classList.remove('hidden');
-  if (window.gsap) gsap.fromTo(target, { opacity: 0, x: 25 }, { opacity: 1, x: 0, duration: 0.3, ease: 'power2.out' });
+  currentWizardStep = step;
+
+  // Update step indicator
+  [1, 2, 3].forEach(n => {
+    const el  = document.getElementById('si-' + n);
+    const ln  = document.getElementById('si-line-' + n);
+    if (!el) return;
+    el.classList.remove('active', 'done');
+    if (ln) ln.classList.remove('active');
+    if (n < step) {
+      el.classList.add('done');
+      if (ln) ln.classList.add('active');
+    } else if (n === step) {
+      el.classList.add('active');
+    }
+  });
+
+  // Sync detail view labels
+  if (step === 2 || step === 3) recalc();
+
+  target.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-function updateQty(change) {
+function updateQty(delta) {
   const input = document.getElementById('order-qty');
-  let val = (parseInt(input.value) || 1) + change;
-  if (val < 1) val = 1;
+  if (!input) return;
+  let val = (parseInt(input.value) || 1) + delta;
+  if (val < 1)  val = 1;
   if (val > 50) val = 50;
   input.value = val;
-  updateSummary();
+  recalc();
 }
 
-function updateSummary() {
-  const qty = parseInt(document.getElementById('order-qty')?.value) || 1;
-  const unitPrice = PRICING[currentService] || 8000;
-  const subtotal = qty * unitPrice;
-  const discount = subtotal * discountMultiplier;
-  const total = subtotal - discount;
+function recalc() {
+  const qty      = parseInt(document.getElementById('order-qty')?.value) || 1;
+  const unit     = PRICING[currentService] || 8000;
+  const subtotal = qty * unit;
+  const discount = Math.round(subtotal * discountMultiplier);
+  const total    = subtotal - discount;
+  const fmt      = n => 'Rp ' + n.toLocaleString('id-ID');
 
-  const fmt = n => 'Rp ' + n.toLocaleString('id-ID');
-  if (document.getElementById('summary-subtotal')) document.getElementById('summary-subtotal').textContent = fmt(subtotal);
-  if (document.getElementById('summary-discount')) document.getElementById('summary-discount').textContent = '- ' + fmt(discount);
-  if (document.getElementById('summary-total')) document.getElementById('summary-total').textContent = fmt(total);
-  if (document.getElementById('final-bill')) document.getElementById('final-bill').textContent = fmt(total);
+  const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+  set('inv-service',      currentService);
+  set('inv-qty',          qty + ' item');
+  set('summary-subtotal', fmt(subtotal));
+  set('summary-discount', '− ' + fmt(discount));
+  set('summary-total',    fmt(total));
+  set('final-bill',       fmt(total));
 }
 
 function applyPromo() {
-  const code = document.getElementById('promo-input').value.trim().toUpperCase();
-  const msg = document.getElementById('promo-message');
+  const input = document.getElementById('promo-input');
+  const msg   = document.getElementById('promo-message');
+  if (!input || !msg) return;
+
+  const code = input.value.trim().toUpperCase();
+  msg.classList.remove('hidden', 'ok', 'err');
+
   if (code === 'NEWUSER50') {
     discountMultiplier = 0.5;
-    msg.textContent = '✅ Promo NEWUSER50 berhasil! Diskon 50% diterapkan.';
-    msg.style.color = '#00E5A0';
-    msg.classList.remove('hidden');
+    msg.textContent = '✓ Kode NEWUSER50 berhasil! Diskon 50% diterapkan.';
+    msg.classList.add('ok');
   } else if (code === 'WEEKEND20') {
     discountMultiplier = 0.2;
-    msg.textContent = '✅ Promo WEEKEND20 berhasil! Diskon 20% diterapkan.';
-    msg.style.color = '#00E5A0';
-    msg.classList.remove('hidden');
+    msg.textContent = '✓ Kode WEEKEND20 berhasil! Diskon 20% diterapkan.';
+    msg.classList.add('ok');
   } else if (code !== '') {
     discountMultiplier = 0;
-    msg.textContent = '❌ Kode promo tidak valid atau sudah kadaluarsa.';
-    msg.style.color = '#FF4D4D';
-    msg.classList.remove('hidden');
+    msg.textContent = '✗ Kode promo tidak valid atau sudah kedaluwarsa.';
+    msg.classList.add('err');
   } else {
     discountMultiplier = 0;
     msg.classList.add('hidden');
   }
-  updateSummary();
+  recalc();
 }
 
-function copyPromo() {
-  navigator.clipboard.writeText('NEWUSER50').then(() => {
-    const btn = document.querySelector('[onclick="copyPromo()"]');
-    if (btn) { btn.textContent = '✅ Disalin!'; setTimeout(() => { btn.innerHTML = '<i class="ph-bold ph-copy"></i> Salin'; }, 2000); }
+function copyPromo(code, btn) {
+  navigator.clipboard.writeText(code).then(() => {
+    if (btn) {
+      const original = btn.innerHTML;
+      btn.innerHTML = '<i class="ph-bold ph-check"></i> Disalin!';
+      btn.style.color = 'var(--green)';
+      setTimeout(() => { btn.innerHTML = original; btn.style.color = ''; }, 2000);
+    }
+  }).catch(() => {
+    showToast('Salin manual: ' + code);
   });
 }
 
-// ===== PAYMENT ACTIONS =====
+// =====================================================
+// PAYMENT MODAL
+// =====================================================
 function showPaymentModal() {
-  const qty = parseInt(document.getElementById('order-qty').value) || 1;
-  const unitPrice = PRICING[currentService] || 8000;
-  const total = qty * unitPrice * (1 - discountMultiplier);
-  const fmt = 'Rp ' + total.toLocaleString('id-ID');
+  const qty    = parseInt(document.getElementById('order-qty')?.value) || 1;
+  const unit   = PRICING[currentService] || 8000;
+  const total  = Math.round(qty * unit * (1 - discountMultiplier));
+  const fmt    = 'Rp ' + total.toLocaleString('id-ID');
 
-  ['qris', 'va', 'cod'].forEach(id => document.getElementById('payment-content-' + id).classList.add('hidden'));
+  // Hide all content panels
+  ['qris', 'va', 'cod'].forEach(id => {
+    document.getElementById('payment-content-' + id)?.classList.add('hidden');
+  });
 
-  if (currentPayment === 'QRIS') {
-    document.getElementById('payment-content-qris').classList.remove('hidden');
-    document.getElementById('qris-amount').textContent = fmt;
-  } else if (currentPayment === 'E-Wallet') {
-    document.getElementById('payment-content-va').classList.remove('hidden');
-    document.getElementById('va-amount').textContent = fmt;
-  } else {
-    document.getElementById('payment-content-cod').classList.remove('hidden');
-    document.getElementById('cod-amount').textContent = fmt;
-  }
+  // Show relevant panel
+  const panelMap = { 'QRIS': 'qris', 'E-Wallet': 'va', 'Tunai': 'cod' };
+  const panelId  = panelMap[currentPayment] || 'qris';
+  const panel    = document.getElementById('payment-content-' + panelId);
+  panel?.classList.remove('hidden');
 
-  document.getElementById('payment-modal').classList.remove('hidden');
-  if (window.gsap) gsap.fromTo('.payment-box', { scale: 0.9, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.35, ease: 'back.out(1.4)' });
+  // Set amounts
+  const setAmt = (id) => { const el = document.getElementById(id); if (el) el.textContent = fmt; };
+  setAmt('qris-amount');
+  setAmt('va-amount');
+  setAmt('cod-amount');
+
+  // Show backdrop
+  const backdrop = document.getElementById('payment-modal-backdrop');
+  if (backdrop) backdrop.classList.remove('hidden');
 }
 
 function closePayment() {
-  document.getElementById('payment-modal').classList.add('hidden');
+  document.getElementById('payment-modal-backdrop')?.classList.add('hidden');
 }
 
-// ===== LOCALSTORAGE & SYNC CLIENT DATABASE FALLBACK =====
-async function confirmPayment() {
-  const qty = parseInt(document.getElementById('order-qty').value) || 1;
-  const unitPrice = PRICING[currentService] || 8000;
-  const total = qty * unitPrice * (1 - discountMultiplier);
-  const formattedTotal = 'Rp ' + total.toLocaleString('id-ID');
+function closePaymentOutside(e) {
+  if (e.target === document.getElementById('payment-modal-backdrop')) {
+    closePayment();
+  }
+}
 
-  const btn = document.querySelector('#payment-modal .btn-primary:not(.hidden)');
-  if (btn) { btn.textContent = 'Memproses...'; btn.disabled = true; }
+function confirmPayment() {
+  closePayment();
 
-  const randomNum = Math.floor(1000 + Math.random() * 9000);
-  const invoiceId = `WB-${randomNum}`;
+  // Save order to localStorage
+  const orderId = 'WB-' + Math.floor(1000 + Math.random() * 9000);
+  const qty     = parseInt(document.getElementById('order-qty')?.value) || 1;
+  const unit    = PRICING[currentService] || 8000;
+  const total   = Math.round(qty * unit * (1 - discountMultiplier));
 
-  // Local storage mapping closure
-  const localSave = (statusLabel) => {
-    const newBooking = {
-      id: invoiceId,
-      service: currentService,
-      qty: qty,
-      schedule: currentService.includes('Kilat') ? 'Express' : 'Regular',
-      total: formattedTotal,
-      pay: currentPayment,
-      date: new Date().toLocaleDateString('id-ID'),
-      slot: 'Pagi (08:00 - 12:00)',
-      rawService: currentService.toLowerCase().replace(/\s+/g, '_'),
-      status: statusLabel || 'Kurir Menjemput',
-      timestamp: new Date().getTime()
-    };
-
-    const existingBookings = JSON.parse(localStorage.getItem('wb_bookings') || '[]');
-    existingBookings.push(newBooking);
-    localStorage.setItem('wb_bookings', JSON.stringify(existingBookings));
+  const order = {
+    id:      orderId,
+    service: currentService,
+    qty,
+    total,
+    status:  'pickup',
+    date:    new Date().toISOString(),
+    payment: currentPayment,
   };
 
-  try {
-    const res = await fetch(`${API}/orders`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ customer: 'Sultan', service: currentService, items: qty, total }),
-    });
-    const data = await res.json();
-    activeOrderId = data.data.id;
+  // Store
+  const existing = JSON.parse(localStorage.getItem('wb_bookings') || '[]');
+  existing.unshift(order);
+  localStorage.setItem('wb_bookings', JSON.stringify(existing.slice(0, 20)));
+  localStorage.setItem('wb_active_order', JSON.stringify(order));
 
-    // Save to local storage for portal-landing sync
-    localSave('Kurir Menjemput');
-    
-    closePayment();
-    resetWizardAfterCheckout(activeOrderId);
-  } catch (err) {
-    console.warn("API Offline - Beralih ke Client-Side LocalStorage Fallback", err);
-    activeOrderId = invoiceId;
+  showToast('✓ Pesanan #' + orderId + ' berhasil dibuat!');
 
-    // Save to local storage for offline simulation search support
-    localSave('Kurir Menjemput');
-
-    closePayment();
-    resetWizardAfterCheckout(activeOrderId);
-
-    // Show stylized premium modal confirmation
-    alert(`[Offline Mode] Pesanan Sukses Dibuat!\n\nID Pesanan Anda: ${invoiceId}\nLayanan: ${currentService} (${qty} item)\nTotal: ${formattedTotal}\n\nInvoice Anda telah tersimpan di LocalStorage dan siap dilacak di Homepage!`);
-  }
-}
-
-function resetWizardAfterCheckout(orderId) {
-  document.getElementById('order-qty').value = 1;
+  // Reset wizard
   discountMultiplier = 0;
-  document.getElementById('promo-input').value = '';
-  document.getElementById('promo-message').classList.add('hidden');
-  document.getElementById('user-points').textContent = '1,350 Pts';
-  
-  updateSummary();
-  nextWizard(1);
-  document.getElementById('active-order-id').textContent = '#' + orderId;
+  setTimeout(() => {
+    goStep(1);
+    navigate('view-dashboard');
+    loadActiveOrder();
+    updateRecentOrders();
+  }, 1200);
+}
 
-  if (isTracking) {
-    clearInterval(countdownInterval);
-    isTracking = false;
+// =====================================================
+// LOAD ACTIVE ORDER (localStorage fallback)
+// =====================================================
+function loadActiveOrder() {
+  const raw = localStorage.getItem('wb_active_order');
+  const order = raw ? JSON.parse(raw) : null;
+
+  const idEl     = document.getElementById('active-order-id');
+  const detailEl = document.querySelectorAll('#active-order-detail');
+
+  if (!order) {
+    if (idEl) {
+      idEl.textContent = 'Tidak ada pesanan';
+      idEl.style.background = '';
+    }
+    detailEl.forEach(el => {
+      el.innerHTML = 'Belum ada pesanan aktif. <a href="#" onclick="navigate(\'view-order\'); return false;">Pesan sekarang →</a>';
+    });
+    // Reset all tracker steps
+    document.querySelectorAll('.step').forEach(s => s.classList.remove('completed', 'active'));
+    document.querySelectorAll('.step').forEach((s, i) => { if (i === 0) s.classList.add('active'); });
+    document.querySelectorAll('.ts-circle').forEach(c => c.classList.remove('completed', 'active'));
+    return;
   }
-  navigate('view-tracking');
-  startLiveTracking();
+
+  if (idEl) idEl.textContent = '#' + order.id;
+
+  const statusMap = {
+    pickup:   { step: 0, label: '📦 Kurir dalam perjalanan menjemput cucian kamu.' },
+    washing:  { step: 1, label: '🧺 Pakaian sedang dalam proses pencucian.' },
+    delivery: { step: 2, label: '🚴 Kurir sedang mengantar pesanan ke lokasimu.' },
+    done:     { step: 3, label: '✅ Pesanan telah selesai dan diterima. Terima kasih!' },
+  };
+
+  const info = statusMap[order.status] || statusMap['pickup'];
+
+  detailEl.forEach(el => { el.textContent = info.label; });
+
+  // Update tracker circles & lines
+  document.querySelectorAll('.step').forEach((stepEl, idx) => {
+    stepEl.classList.remove('completed', 'active');
+    if (idx < info.step)       stepEl.classList.add('completed');
+    else if (idx === info.step) stepEl.classList.add('active');
+  });
+
+  document.querySelectorAll('.line').forEach((lineEl, idx) => {
+    lineEl.classList.toggle('active', idx < info.step);
+  });
 }
 
-// ===== MATHEMATICAL BEZIER CURVE LIVE TRACKING SYSTEM =====
-// SVG path represents a Cubic Bezier Curve: M 10 85 C 40 85, 30 20, 90 20
-// Cubic Bezier Formula: B(t) = (1-t)^3 * P0 + 3(1-t)^2 * t * P1 + 3(1-t) * t^2 * P2 + t^3 * P3
-function getBezierPoint(t, p0, p1, p2, p3) {
-  const mt = 1 - t;
-  return (
-    Math.pow(mt, 3) * p0 +
-    3 * Math.pow(mt, 2) * t * p1 +
-    3 * mt * Math.pow(t, 2) * p2 +
-    Math.pow(t, 3) * p3
-  );
+function updateRecentOrders() {
+  const list = document.getElementById('recent-orders-list');
+  if (!list) return;
+  const orders = JSON.parse(localStorage.getItem('wb_bookings') || '[]');
+  if (!orders.length) return;
+
+  const iconMap = {
+    'Wash Regular': 'ph-washing-machine',
+    'Wash Kilat':   'ph-rocket',
+    'Dry Cleaning': 'ph-coat-hanger',
+    'Premium Spa':  'ph-sneaker',
+    'Cuci Karpet':  'ph-rug',
+    'Cuci Sofa':    'ph-armchair',
+  };
+
+  list.innerHTML = orders.slice(0, 4).map(o => `
+    <div class="ro-item">
+      <div class="ro-icon"><i class="ph-fill ${iconMap[o.service] || 'ph-package'}"></i></div>
+      <div class="ro-info">
+        <span class="ro-name">${o.service} — ${o.qty} item</span>
+        <span class="ro-date">${new Date(o.date).toLocaleDateString('id-ID', { day:'numeric', month:'long', year:'numeric' })}</span>
+      </div>
+      <span class="ro-badge done">Selesai</span>
+    </div>
+  `).join('');
 }
+
+// =====================================================
+// LIVE TRACKING
+// =====================================================
+// Bezier curve parametric: P = (1-t)³P0 + 3(1-t)²tP1 + 3(1-t)t²P2 + t³P3
+function bezier(t, p0, p1, p2, p3) {
+  const mt = 1 - t;
+  return mt*mt*mt*p0 + 3*mt*mt*t*p1 + 3*mt*t*t*p2 + t*t*t*p3;
+}
+
+// Bezier control points matching the SVG path: M 10 85 C 40 85, 30 20, 90 20
+const PATH = { x: [10, 40, 30, 90], y: [85, 85, 20, 20] };
 
 function startLiveTracking() {
   if (isTracking) {
+    clearInterval(trackingInterval);
     clearInterval(countdownInterval);
-    isTracking = false;
   }
-  isTracking = true;
-  globalTimeLeft = 120; // 2 minutes journey
 
+  const order   = JSON.parse(localStorage.getItem('wb_active_order') || 'null');
   const courier = COURIERS[Math.floor(Math.random() * COURIERS.length)];
-  const courierNameEl = document.getElementById('courier-name');
-  const courierImgEl = document.getElementById('courier-img');
-  const courierRatingEl = document.getElementById('courier-rating');
-  
-  if (courierNameEl) courierNameEl.textContent = courier.name;
-  if (courierRatingEl) courierRatingEl.textContent = '⭐ ' + courier.rating + ' (Mitra Elite)';
-  if (courierImgEl) courierImgEl.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(courier.name)}&background=00E5FF&color=0a0f1e&bold=true&size=100`;
 
-  const liveTimeEl = document.getElementById('live-time');
-  const liveDistEl = document.getElementById('live-distance');
-  const progressEl = document.getElementById('courier-progress');
-  const detailEl = document.getElementById('active-order-detail');
-  const statusSteps = document.querySelectorAll('.status-tracker .step');
-  const statusLines = document.querySelectorAll('.status-tracker .line');
+  // Update courier profile
+  const nameEl   = document.getElementById('courier-name');
+  const ratingEl = document.getElementById('courier-rating');
+  const imgEl    = document.getElementById('courier-img');
+  if (nameEl)   nameEl.textContent  = courier.name;
+  if (ratingEl) ratingEl.textContent = '⭐ ' + courier.rating + ' (Mitra Elite)';
+  if (imgEl)    imgEl.src            = courier.avatar;
+
+  // Countdown
+  globalTimeLeft = order ? 120 : 120;
+  isTracking = true;
+
+  let t = 0; // progress 0→1 along bezier
 
   countdownInterval = setInterval(() => {
-    globalTimeLeft--;
-    const progress = Math.min(1, 1 - globalTimeLeft / 120);
+    globalTimeLeft = Math.max(0, globalTimeLeft - 1);
+    const mm = String(Math.floor(globalTimeLeft / 60)).padStart(2, '0');
+    const ss = String(globalTimeLeft % 60).padStart(2, '0');
+    const timeEl = document.getElementById('live-time');
+    if (timeEl) timeEl.textContent = mm + ':' + ss;
 
-    // Timer UI
-    const m = Math.floor(globalTimeLeft / 60);
-    const s = globalTimeLeft % 60;
-    if (liveTimeEl) liveTimeEl.textContent = globalTimeLeft <= 0 ? 'Tiba!' : `0${m}:${s < 10 ? '0' + s : s}`;
-    if (liveDistEl) liveDistEl.textContent = globalTimeLeft <= 0 ? '0 km' : `${(5 * (1 - progress)).toFixed(1)} km`;
-    if (progressEl) progressEl.style.width = (progress * 100) + '%';
-
-    // Status Tracking Calculations
-    let status, detail, step;
-    if (globalTimeLeft <= 0) {
-      status = 'Selesai';
-      detail = '✅ Pakaian telah selesai diantar & diterima. Terima kasih!';
-      step = 3;
-    } else if (progress > 0.6) {
-      status = 'Sedang Diantar';
-      detail = '🏍️ Kurir sedang mengantar pakaian bersih Anda menuju rumah.';
-      step = 2;
-    } else if (progress > 0.25) {
-      status = 'Proses Cuci';
-      detail = '🫧 Pakaian Anda sedang dicuci higienis di Toko Pusat.';
-      step = 1;
-    } else {
-      status = 'Menunggu Penjemputan';
-      detail = '📦 Kurir WashBuddy sedang menuju lokasi untuk menjemput pakaian kotor.';
-      step = 0;
-    }
-
-    if (detailEl) detailEl.textContent = detail;
-
-    // Update Steps Progress Class UI
-    statusSteps.forEach((el, i) => {
-      el.classList.remove('active', 'completed');
-      if (i < step) el.classList.add('completed');
-      else if (i === step) el.classList.add('active');
-    });
-    statusLines.forEach((el, i) => {
-      el.classList.toggle('active', i < step);
-    });
-
-    if (document.getElementById('active-order-id') && activeOrderId) {
-      document.getElementById('active-order-id').textContent = '#' + activeOrderId;
-    }
-
-    // Precise Bezier Math curve mapping for courier motorcycle pin
-    const dot = document.getElementById('moving-courier');
-    if (dot) {
-      const x = getBezierPoint(progress, 10, 40, 30, 90);
-      const y = getBezierPoint(progress, 85, 85, 20, 20);
-      dot.style.left = x + '%';
-      dot.style.top = y + '%';
-    }
-
-    // Attempt to update backend status
-    if (activeOrderId) {
-      fetch(`${API}/orders/${activeOrderId}/status`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status })
-      }).catch(() => {});
-
-      // Keep LocalStorage state updated as well
-      try {
-        const bookings = JSON.parse(localStorage.getItem('wb_bookings') || '[]');
-        const targetBooking = bookings.find(b => b.id === activeOrderId);
-        if (targetBooking) {
-          // Map portal states to landing page tracker states
-          let landingStatus = 'Kurir Menjemput';
-          if (step === 1) landingStatus = 'Proses Cuci';
-          if (step === 2) landingStatus = 'Sedang Diantar';
-          if (step === 3) landingStatus = 'Selesai';
-          
-          targetBooking.status = landingStatus;
-          localStorage.setItem('wb_bookings', JSON.stringify(bookings));
-        }
-      } catch (e) {
-        console.error(e);
-      }
+    // Distance
+    const distEl = document.getElementById('live-distance');
+    if (distEl) {
+      const d = Math.max(0, (5 * (1 - t))).toFixed(1);
+      distEl.textContent = d + ' km';
     }
 
     if (globalTimeLeft <= 0) {
       clearInterval(countdownInterval);
+      if (timeEl) timeEl.textContent = 'Tiba!';
       isTracking = false;
     }
   }, 1000);
-}
 
-// ===== COURIER CHAT COMPONENT CONNECTOR =====
-const chatCourierBtn = document.getElementById('chat-courier-btn');
-if (chatCourierBtn) {
-  chatCourierBtn.addEventListener('click', () => {
-    const courierName = document.getElementById('courier-name')?.textContent || 'Kurir WashBuddy';
-    
-    toggleChatbox(true);
-    
-    // Clear chat badge
-    const badge = document.querySelector('.chat-badge');
-    if (badge) badge.style.display = 'none';
+  // Move courier along path
+  trackingInterval = setInterval(() => {
+    t = Math.min(1, t + 0.005);
+    const courier_el = document.getElementById('moving-courier');
+    if (courier_el) {
+      const px = bezier(t, ...PATH.x);
+      const py = bezier(t, ...PATH.y);
+      courier_el.style.left = px + '%';
+      courier_el.style.top  = py + '%';
+    }
 
-    // Inject live courier greeting
+    // Progress bar
+    const fill = document.getElementById('courier-progress');
+    if (fill) fill.style.width = (t * 100) + '%';
+
+    if (t >= 1) {
+      clearInterval(trackingInterval);
+    }
+  }, 500);
+
+  // Inject chat message from courier after 3s
+  setTimeout(() => {
     const messages = document.getElementById('chat-messages');
     if (messages) {
-      messages.innerHTML += `
-        <div class="cb-msg message bot" style="border-left: 3px solid #14b8a6; background: rgba(20, 184, 166, 0.05); padding: 10px; border-radius: 8px; margin-bottom: 10px;">
-          <div style="font-size:0.8rem; color:#2dd4bf; font-weight:800; margin-bottom:4px;"><i class="ph-fill ph-motorcycle"></i> Kurir (${courierName})</div>
-          Halo Sultan! Saya ${courierName}, kurir WashBuddy Anda. Saya saat ini sedang dalam perjalanan menuju lokasi Anda. Mohon siapkan cucian Anda ya! Jika ada titipan pesan khusus atau petunjuk alamat, kabari saya di sini. Terima kasih! 🙏
-        </div>
-      `;
+      const msgEl = document.createElement('div');
+      msgEl.className = 'msg bot';
+      msgEl.style.borderLeft = '2px solid var(--teal)';
+      msgEl.innerHTML = `<strong style="color:#2dd4bf; font-size:0.75rem">🏍 Kurir (${courier.name})</strong><br>Halo! Saya sudah dalam perjalanan ke lokasi kamu. Estimasi tiba sekitar 2 menit. Ada petunjuk khusus untuk alamat? 🙏`;
+      messages.appendChild(msgEl);
       messages.scrollTop = messages.scrollHeight;
     }
-  });
+  }, 3000);
 }
 
-function toggleChatbox(forceOpen = false) {
-  const chatbox = document.getElementById('ai-chatbox');
-  if (chatbox) {
-    if (forceOpen) {
-      chatbox.classList.add('active');
-    } else {
-      chatbox.classList.toggle('active');
-    }
-    const badge = document.querySelector('.chat-fab-badge');
-    if (badge && chatbox.classList.contains('active')) badge.style.display = 'none';
-  }
+function restartTracking() {
+  startLiveTracking();
 }
 
-// Override original toggleChat
-window.toggleChat = () => toggleChatbox();
+// =====================================================
+// CHATBOT
+// =====================================================
+function toggleChat() {
+  const box  = document.getElementById('ai-chatbox');
+  const dot  = document.getElementById('chat-dot');
+  if (!box) return;
+  box.classList.toggle('open');
+  if (box.classList.contains('open') && dot) dot.style.display = 'none';
+}
 
-// ===== AI CHATBOT INTEGRATION =====
-async function sendChatMessage() {
+function sendOption(text) {
   const input = document.getElementById('chat-input-field');
-  const text = (input.value || '').trim();
+  if (input) input.value = text;
+  sendChatMessage();
+}
+
+async function sendChatMessage() {
+  const input    = document.getElementById('chat-input-field');
+  const messages = document.getElementById('chat-messages');
+  if (!input || !messages) return;
+
+  const text = input.value.trim();
   if (!text) return;
 
-  const messages = document.getElementById('chat-messages');
-  messages.innerHTML += `<div class="cb-msg message user">${text}</div>`;
+  // User bubble
+  const userMsg = document.createElement('div');
+  userMsg.className = 'msg user';
+  userMsg.textContent = text;
+  messages.appendChild(userMsg);
   input.value = '';
   messages.scrollTop = messages.scrollHeight;
 
-  const loadingId = 'load-' + Date.now();
-  messages.innerHTML += `<div class="cb-msg message bot loading" id="${loadingId}"><span></span><span></span><span></span></div>`;
+  // Loading
+  const loadId = 'load-' + Date.now();
+  const loadEl = document.createElement('div');
+  loadEl.className = 'msg bot loading';
+  loadEl.id = loadId;
+  loadEl.innerHTML = '<span></span><span></span><span></span>';
+  messages.appendChild(loadEl);
   messages.scrollTop = messages.scrollHeight;
 
+  // Try API first, fallback to local AI
   try {
-    const res = await fetch(`${API}/chat`, {
+    const res = await fetch(API + '/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message: text })
+      body: JSON.stringify({ message: text }),
     });
+    if (!res.ok) throw new Error('offline');
     const data = await res.json();
-    document.getElementById(loadingId)?.remove();
-    messages.innerHTML += `<div class="cb-msg message bot">${data.reply.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')}</div>`;
-  } catch (e) {
-    // API is offline (e.g. Vercel deployment) - run a high-fidelity local AI rule-engine reply!
-    document.getElementById(loadingId)?.remove();
-    
-    let botReply = "Maaf Sultan, saya sedang offline. Ada yang bisa saya bantu dengan pesanan Anda?";
-    const query = text.toLowerCase();
-    
-    if (query.includes('harga') || query.includes('tarif')) {
-      botReply = `Berikut daftar tarif WashBuddy Elite:<br>
-      • <strong>Wash Regular:</strong> Rp 8.000 / kg (3 hari)<br>
-      • <strong>Wash Kilat:</strong> Rp 15.000 / kg (24 jam)<br>
-      • <strong>Dry Cleaning:</strong> Rp 25.000 / pcs<br>
-      • <strong>Shoe/Bag Spa:</strong> Rp 50.000 / item<br>
-      Pilih menu <strong>Pesan Laundry</strong> untuk melakukan pemesanan instan!`;
-    } else if (query.includes('promo') || query.includes('diskon') || query.includes('voucher')) {
-      botReply = `Wah, pas sekali! Hari ini Anda punya 2 kode promo aktif:<br>
-      1. <strong>NEWUSER50</strong>: Potongan 50% untuk pesanan pertama Anda.<br>
-      2. <strong>WEEKEND20</strong>: Diskon 20% khusus akhir pekan.<br>
-      Ketik kode ini di kolom promo saat checkout untuk menikmati diskonnya! 🎁`;
-    } else if (query.includes('lacak') || query.includes('posisi') || query.includes('kurir') || query.includes('order')) {
-      if (isTracking && activeOrderId) {
-        botReply = `Pesanan Anda <strong>#${activeOrderId}</strong> sedang aktif dilacak! Silakan buka halaman <strong>Live Tracker</strong> untuk melihat perjalanan motor kurir secara live di peta 3D kami. 🏍️`;
-      } else {
-        botReply = `Anda belum memiliki pesanan aktif saat ini. Buka halaman <strong>Pesan Laundry</strong> untuk memesan layanan WashBuddy pertama Anda!`;
-      }
-    } else if (query.includes('dry') || query.includes('lama')) {
-      botReply = `Layanan <strong>Dry Cleaning</strong> eksklusif kami membutuhkan waktu sekitar 2-3 hari pengerjaan. Pakaian Anda akan dirawat secara khusus menggunakan cairan ramah lingkungan premium agar serat kain tetap lembut dan wangi elegan. ✨`;
-    } else if (query.includes('karpet')) {
-      botReply = `Tentu saja bisa! Layanan <strong>Cuci Karpet</strong> kami menggunakan mesin ekstraktor khusus untuk membersihkan debu mikro dan tungau hingga tuntas. Harganya mulai Rp 30.000 / m².`;
-    } else if (query.includes('cod') || query.includes('tunai') || query.includes('bayar')) {
-      botReply = `WashBuddy mendukung 3 metode pembayaran:<br>
-      1. <strong>QRIS Otomatis</strong> (Gopay, OVO, ShopeePay, M-Banking)<br>
-      2. <strong>Transfer Virtual Account</strong> Bank BCA<br>
-      3. <strong>Cash on Delivery (COD)</strong> / Bayar Tunai ke Kurir.<br>
-      Sangat fleksibel dan aman!`;
-    } else if (query.includes('admin') || query.includes('halo') || query.includes('hai')) {
-      botReply = `Halo Sultan! Selamat datang di WashBuddy Elite Customer Portal. Saya WashBot AI, asisten virtual pribadi Anda. Saya bisa membantu Anda cek tarif, melacak kurir, memberi rekomendasi noda, atau menghubungkan Anda ke Admin Whatsapp. Ada yang bisa dibantu hari ini?`;
-    }
-
-    messages.innerHTML += `<div class="cb-msg message bot">${botReply}</div>`;
+    document.getElementById(loadId)?.remove();
+    appendBotMsg(messages, data.reply);
+  } catch {
+    document.getElementById(loadId)?.remove();
+    appendBotMsg(messages, getLocalReply(text));
   }
-  messages.scrollTop = messages.scrollHeight;
 }
 
-window.sendOption = (text) => {
-  document.getElementById('chat-input-field').value = text;
-  sendChatMessage();
-};
+function appendBotMsg(container, text) {
+  const el = document.createElement('div');
+  el.className = 'msg bot';
+  el.innerHTML = text.replace(/\n/g, '<br>');
+  container.appendChild(el);
+  container.scrollTop = container.scrollHeight;
+}
 
-document.getElementById('chat-input-field')?.addEventListener('keydown', e => {
-  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendChatMessage(); }
+function getLocalReply(text) {
+  const t = text.toLowerCase();
+  if (/harga|tarif|biaya/.test(t))       return 'Harga layanan kami mulai dari <strong>Rp 8.000/kg</strong> untuk Wash Regular hingga <strong>Rp 100.000/seat</strong> untuk Cuci Sofa. Lihat tabel lengkap di menu Harga & Promo!';
+  if (/promo|diskon|voucher/.test(t))    return 'Ada 2 promo aktif sekarang:\n<strong>NEWUSER50</strong> — diskon 50%\n<strong>WEEKEND20</strong> — diskon 20%\nMasukkan kode saat checkout!';
+  if (/dry clean/.test(t))              return 'Dry Cleaning cocok untuk jas, gaun, sutra, dan baju formal. Mulai <strong>Rp 25.000/pcs</strong>, selesai dalam 2–3 hari kerja.';
+  if (/karpet/.test(t))                 return 'Cuci karpet menggunakan mesin ekstraktor khusus yang efektif mengangkat debu, tungau, dan noda membandel. Mulai <strong>Rp 40.000</strong>.';
+  if (/sofa/.test(t))                   return 'Cuci sofa bisa on-site (kami datang ke rumah) atau antar ke toko. Harga <strong>Rp 100.000/seat</strong>.';
+  if (/kilat|express|cepat/.test(t))    return 'Wash Kilat selesai dalam <strong>24 jam</strong>! Termasuk cuci + setrika. Harga <strong>Rp 15.000/kg</strong>.';
+  if (/cod|tunai|cash/.test(t))         return 'Ya, kami menerima pembayaran tunai (COD) saat penjemputan atau pengiriman. Siapkan uang pas ya! 😊';
+  if (/lacak|track|pesanan/.test(t))    return 'Kamu bisa lacak pesanan aktif di menu <strong>Lacak Pesanan</strong>. Posisi kurir ditampilkan secara real-time!';
+  if (/waktu|lama|durasi/.test(t))      return 'Estimasi waktu:\n• Wash Regular: 1–2 hari\n• Wash Kilat: 24 jam\n• Dry Cleaning: 2–3 hari\n• Shoe Spa: 3–5 hari';
+  if (/scan|ai|noda/.test(t))           return 'WashBot Vision AI bisa mendeteksi jenis noda dan merekomendasikan layanan terbaik! Coba di menu <strong>AI Scanner</strong>.';
+  if (/sepatu|tas|shoe|bag/.test(t))    return 'Shoe & Bag Spa kami menangani sepatu, tas kulit, dan aksesori. Mulai <strong>Rp 50.000/item</strong>, selesai 3–5 hari.';
+  return 'Halo! Saya WashBot AI siap membantu. Coba tanya tentang harga, promo, durasi, atau fitur AI Scanner kami! 😊';
+}
+
+// =====================================================
+// TOAST NOTIFICATION
+// =====================================================
+function showToast(msg) {
+  const existing = document.querySelector('.toast');
+  if (existing) existing.remove();
+
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.innerHTML = '<i class="ph-fill ph-check-circle"></i> ' + msg;
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 3500);
+}
+
+// =====================================================
+// INIT
+// =====================================================
+document.addEventListener('DOMContentLoaded', () => {
+  loadActiveOrder();
+  updateRecentOrders();
+  recalc();
+
+  // Auto-start tracking when view-tracking is visited
+  navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      if (link.getAttribute('data-target') === 'view-tracking') {
+        setTimeout(startLiveTracking, 300);
+      }
+    });
+  });
+
+  // Show notif dot if there are unreads
+  const unread = document.querySelectorAll('.np-item.unread');
+  const dot    = document.getElementById('notif-dot');
+  if (unread.length > 0 && dot) dot.style.display = 'block';
+  else if (dot) dot.style.display = 'none';
 });
-
-// ===== DYNAMIC ACTIVE ORDER POLLING =====
-async function loadActiveOrder() {
-  try {
-    const res = await fetch(`${API}/orders`);
-    const data = await res.json();
-    if (data.data && data.data.length > 0) {
-      const order = data.data[data.data.length - 1];
-      if (!activeOrderId) {
-        activeOrderId = order.id;
-        const el = document.getElementById('active-order-id');
-        if (el) el.textContent = '#' + order.id;
-        startLiveTracking();
-      }
-    }
-  } catch (e) {
-    // offline load fallback
-    const bookings = JSON.parse(localStorage.getItem('wb_bookings') || '[]');
-    if (bookings.length > 0 && !activeOrderId) {
-      const latest = bookings[bookings.length - 1];
-      activeOrderId = latest.id;
-      const el = document.getElementById('active-order-id');
-      if (el) el.textContent = '#' + latest.id;
-      startLiveTracking();
-    }
-  }
-}
-
-// ===== INITIALIZATION =====
-console.log('%c🚀 WashBuddy Premium Customer Portal Script Initialized!', 'color:#00E5FF; font-size:18px; font-weight:bold;');
-updateSummary();
-loadActiveOrder();
-setInterval(loadActiveOrder, 15000);
