@@ -1,131 +1,276 @@
 <!DOCTYPE html>
-<html lang="id" data-theme="dark">
+<html lang="id">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="WashBuddy – Layanan laundry premium, interaktif, dengan teknologi AI dan gamifikasi menarik.">
+  <meta name="description" content="WashBuddy – Layanan laundry premium, antar jemput gratis, dan pelacakan pesanan real-time.">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-  <title>WashBuddy | Revolusi Laundry Premium</title>
+  <title>WashBuddy | Laundry Express Profesional</title>
   
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
   <link rel="stylesheet" href="./style.css">
 </head>
 <body>
   <!-- ==========================================
-       V7 IMMERSIVE BACKGROUND
+       HEADER / NAVBAR
        ========================================== -->
-  <div class="laundry-bg-wrap">
-    <div class="laundry-ambient"></div>
-    <div class="drum-ring drum-1"></div>
-    <div class="drum-ring drum-2"></div>
-    <div class="drum-ring drum-3"></div>
-    <div class="bubble-layer" id="px-bubbles"></div>
-    <div class="water-waves">
-      <svg viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C52.71,111.45,106.91,114.38,162.5,105,217.43,95.73,269.64,68.25,321.39,56.44Z" fill="var(--accent)"></path></svg>
-      <svg viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" fill="var(--teal)"></path></svg>
-    </div>
-  </div>
-
-  <!-- NAVBAR -->
-  <nav class="navbar" id="navbar">
+  <header class="navbar" id="navbar">
     <div class="nav-container">
       <a href="#" class="brand">
-        <div class="wm-logo-mini">
-          <div class="wm-drum-mini"><div class="wm-water-mini"></div></div>
-        </div>
+        <div class="brand-icon"><i class="ph-fill ph-drop"></i></div>
         WashBuddy
       </a>
-      <div class="nav-links">
-        <a href="#home" class="active">Beranda</a>
-        <a href="#services">Layanan</a>
-        <a href="#features">Interaktif</a>
-      </div>
+      
+      <nav class="nav-links">
+        <a href="#beranda" class="active">Beranda</a>
+        <a href="#layanan">Layanan</a>
+        <a href="#cara-kerja">Cara Kerja</a>
+        <a href="#lokasi">Lokasi Kami</a>
+      </nav>
+
       <div class="nav-actions">
-        <button class="theme-toggle" onclick="toggleTheme()" title="Ganti Tema">
-          <i class="ph-fill ph-moon" id="theme-icon"></i>
-        </button>
-        <a href="./app/index.html" class="btn-primary" style="box-shadow:var(--shadow-glow)">
-          Masuk Portal Utama <i class="ph-bold ph-arrow-right"></i>
-        </a>
+        <a href="./app/index.html" class="btn-outline">Lacak Pesanan</a>
+        <a href="./app/index.html" class="btn-primary">Pesan Sekarang</a>
       </div>
     </div>
-  </nav>
+  </header>
 
-  <!-- HERO SECTION -->
-  <section class="hero" id="home">
-    <div class="hero-content glass-card">
-      <div class="badge"><i class="ph-fill ph-sparkle"></i> Pengalaman Baru Laundry Digital</div>
-      <h1>Mencuci Jadi<br><span>Menyenangkan.</span></h1>
-      <p>Lupakan antrean dan UI yang membosankan. Dapatkan poin dari memecahkan gelembung harian, lacak pesananmu dengan avatar interaktif, dan biarkan kami mengurus noda membandel.</p>
-      <div class="hero-actions">
-        <a href="./app/index.html" class="btn-primary" style="padding: 1.2rem 2.5rem; font-size: 1.15rem;">
-          Mulai Pengalaman V7
-        </a>
-      </div>
-      <div class="hero-img-wrap">
-        <!-- Dashboard Mockup Image -->
-        <img src="https://images.unsplash.com/photo-1626806819282-2c1dc01a5e0c?w=1200&auto=format&fit=crop" alt="WashBuddy Interactive Dashboard" class="img-glow">
-        
-        <!-- Floating Mascot Badge -->
-        <div class="floating-mascot">
-          <div class="mascot-bubble">
-            <div class="mascot-eyes"><div class="eye"><div class="pupil"></div></div><div class="eye"><div class="pupil"></div></div></div>
-            <div class="mascot-smile"></div>
+  <!-- ==========================================
+       HERO SECTION
+       ========================================== -->
+  <section class="hero" id="beranda">
+    <div class="container hero-grid">
+      <div class="hero-text">
+        <div class="hero-badge">Pilihan No.1 di Indonesia 🌟</div>
+        <h1>Laundry Bersih,<br><span class="text-highlight">Cepat & Profesional.</span></h1>
+        <p>Nikmati kemudahan layanan laundry premium dengan fasilitas antar-jemput gratis. Pakaian Anda ditangani oleh para ahli dengan standar kebersihan tertinggi.</p>
+        <div class="hero-buttons">
+          <a href="./app/index.html" class="btn-primary btn-large">Jadwalkan Penjemputan</a>
+          <a href="#layanan" class="btn-text">Lihat Layanan Kami <i class="ph-bold ph-arrow-right"></i></a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-item">
+            <strong>15.000+</strong>
+            <span>Pelanggan Aktif</span>
           </div>
-          <div class="float-msg">Hai! Aku WashBot 🫧</div>
+          <div class="stat-item">
+            <strong>4.9/5</strong>
+            <span>Rating Layanan</span>
+          </div>
+          <div class="stat-item">
+            <strong>100%</strong>
+            <span>Garansi Bersih</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-image">
+        <img src="https://images.unsplash.com/photo-1545173168-9f1947eebb7f?auto=format&fit=crop&w=800" alt="Laundry Profesional WashBuddy">
+        <div class="floating-card top-right">
+          <i class="ph-fill ph-check-circle" style="color:var(--primary); font-size:1.5rem;"></i>
+          <div>
+            <strong>Selesai 24 Jam</strong>
+            <span style="font-size:0.8rem; color:var(--text-muted)">Layanan Kilat Tersedia</span>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- SERVICES SECTION -->
-  <section class="section" id="services">
-    <div class="section-head">
-      <h2>Layanan Premium Kaca</h2>
-      <p>Pilih perawatan terbaik untuk pakaian kesayangan Anda.</p>
-    </div>
-    <div class="svc-grid">
-      <div class="glass-card svc-card">
-        <div class="svc-icon blue"><i class="ph-fill ph-washing-machine"></i></div>
-        <h3>Wash & Fold Reguler</h3>
-        <p>Solusi harian untuk pakaian bersih, wangi, dan terlipat rapi.</p>
+  <!-- ==========================================
+       KEUNGGULAN (WHY US)
+       ========================================== -->
+  <section class="section bg-light">
+    <div class="container">
+      <div class="section-title">
+        <h2>Kenapa Memilih WashBuddy?</h2>
+        <p>Kami berkomitmen memberikan kualitas terbaik untuk setiap helai pakaian Anda.</p>
       </div>
-      <div class="glass-card svc-card">
-        <div class="svc-icon teal"><i class="ph-fill ph-coat-hanger"></i></div>
-        <h3>Dry Cleaning</h3>
-        <p>Perawatan ekstra untuk jas dan sutra menggunakan pelarut khusus tanpa air.</p>
-      </div>
-      <div class="glass-card svc-card">
-        <div class="svc-icon purple"><i class="ph-fill ph-sneaker"></i></div>
-        <h3>Shoe & Bag Spa</h3>
-        <p>Pembersihan mendalam untuk sepatu sneakers dan tas kulit.</p>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="f-icon"><i class="ph-fill ph-truck"></i></div>
+          <h3>Antar Jemput Gratis</h3>
+          <p>Cukup pesan dari rumah, kurir kami akan menjemput dan mengantar pakaian Anda kembali dengan aman.</p>
+        </div>
+        <div class="feature-card">
+          <div class="f-icon"><i class="ph-fill ph-drop"></i></div>
+          <h3>Detergen Premium</h3>
+          <p>Menggunakan detergen bio-enzim ramah lingkungan yang ampuh mengangkat noda tanpa merusak serat kain.</p>
+        </div>
+        <div class="feature-card">
+          <div class="f-icon"><i class="ph-fill ph-shield-check"></i></div>
+          <h3>Garansi Cuci Ulang</h3>
+          <p>Tidak puas dengan hasilnya? Kami berikan garansi cuci ulang gratis untuk memastikan Anda 100% puas.</p>
+        </div>
+        <div class="feature-card">
+          <div class="f-icon"><i class="ph-fill ph-clock-countdown"></i></div>
+          <h3>Tepat Waktu</h3>
+          <p>Sistem pelacakan real-time kami menjamin pesanan Anda selesai dan diantar tepat sesuai jadwal.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- FOOTER -->
+  <!-- ==========================================
+       LAYANAN KAMI
+       ========================================== -->
+  <section class="section" id="layanan">
+    <div class="container">
+      <div class="section-title">
+        <h2>Layanan Premium Kami</h2>
+        <p>Beragam solusi perawatan pakaian dan barang kesayangan Anda.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="s-img"><img src="https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?auto=format&fit=crop&w=600" alt="Kiloan"></div>
+          <div class="s-content">
+            <h3>Wash & Fold Reguler</h3>
+            <p>Pilihan hemat untuk cucian harian Anda. Bersih, wangi, rapi, dan langsung masuk lemari.</p>
+            <div class="s-price">Mulai Rp 8.000 / kg</div>
+          </div>
+        </div>
+        <div class="service-card">
+          <div class="s-img"><img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=600" alt="Dry Clean"></div>
+          <div class="s-content">
+            <h3>Dry Cleaning Satuan</h3>
+            <p>Perawatan khusus untuk jas, gaun, gaun pengantin, dan bahan sensitif lainnya.</p>
+            <div class="s-price">Mulai Rp 25.000 / pcs</div>
+          </div>
+        </div>
+        <div class="service-card">
+          <div class="s-img"><img src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&w=600" alt="Sepatu"></div>
+          <div class="s-content">
+            <h3>Premium Spa Sepatu</h3>
+            <p>Pembersihan mendalam (Deep Clean) untuk mengembalikan kilau sepatu kesayangan Anda.</p>
+            <div class="s-price">Mulai Rp 50.000 / psg</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       CARA KERJA (HOW IT WORKS)
+       ========================================== -->
+  <section class="section bg-light" id="cara-kerja">
+    <div class="container">
+      <div class="section-title">
+        <h2>Mudahnya Mencuci di WashBuddy</h2>
+        <p>Hanya dengan 4 langkah mudah, pakaian Anda kembali bersih sempurna.</p>
+      </div>
+      <div class="steps-wrapper">
+        <div class="step-item">
+          <div class="step-number">1</div>
+          <h3>Pesan Online</h3>
+          <p>Pilih layanan dan jadwalkan penjemputan via web kami.</p>
+        </div>
+        <div class="step-item">
+          <div class="step-number">2</div>
+          <h3>Kami Jemput</h3>
+          <p>Kurir kami akan mengambil cucian langsung ke depan pintu Anda.</p>
+        </div>
+        <div class="step-item">
+          <div class="step-number">3</div>
+          <h3>Proses Cuci</h3>
+          <p>Pakaian diproses dengan standar profesional dan detergen premium.</p>
+        </div>
+        <div class="step-item">
+          <div class="step-number">4</div>
+          <h3>Kami Antar</h3>
+          <p>Pakaian bersih, wangi, dan rapi diantar kembali ke lokasi Anda.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       LOKASI (GOOGLE MAPS)
+       ========================================== -->
+  <section class="section" id="lokasi">
+    <div class="container">
+      <div class="maps-grid">
+        <div class="maps-info">
+          <h2>Kunjungi Outlet Pusat Kami</h2>
+          <p>Ingin mengantar cucian secara langsung? Silakan datang ke outlet pusat kami dan nikmati ruang tunggu yang nyaman.</p>
+          <div class="contact-list">
+            <div class="c-item">
+              <i class="ph-bold ph-map-pin"></i>
+              <div>
+                <strong>WashBuddy Central Jakarta</strong><br>
+                Jl. Jend. Sudirman No.Kav 21, Jakarta Selatan, 12920
+              </div>
+            </div>
+            <div class="c-item">
+              <i class="ph-bold ph-clock"></i>
+              <div>
+                <strong>Jam Operasional</strong><br>
+                Senin - Minggu: 07:00 - 22:00 WIB
+              </div>
+            </div>
+            <div class="c-item">
+              <i class="ph-bold ph-whatsapp-logo"></i>
+              <div>
+                <strong>Layanan Pelanggan (WhatsApp)</strong><br>
+                +62 812-3456-7890
+              </div>
+            </div>
+          </div>
+          <a href="#" class="btn-primary" style="margin-top:2rem;"><i class="ph-bold ph-map-trifold"></i> Buka di Google Maps</a>
+        </div>
+        <div class="maps-iframe">
+          <!-- Google Maps Embed for Jl. Sudirman Jakarta area -->
+          <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.4253331575453!2d106.82024761476906!3d-6.207490095506721!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f41f71a067d5%3A0xc3cf3fb81ab81682!2sJl.%20Jend.%20Sudirman%2C%20Daerah%20Khusus%20Ibukota%20Jakarta!5e0!3m2!1sid!2sid!4v1680000000000!5m2!1sid!2sid" 
+            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       FOOTER
+       ========================================== -->
   <footer class="footer">
-    <div class="footer-grid">
-      <div class="footer-col">
-        <div class="brand" style="margin-bottom:1rem">
-          <div class="wm-logo-mini"><div class="wm-drum-mini"><div class="wm-water-mini"></div></div></div>
+    <div class="container footer-grid">
+      <div class="f-col-main">
+        <a href="#" class="brand" style="margin-bottom:1.5rem; color:#fff;">
+          <div class="brand-icon" style="background:#fff; color:var(--primary)"><i class="ph-fill ph-drop"></i></div>
           WashBuddy
-        </div>
-        <p>Merubah cara mencuci menjadi pengalaman yang interaktif dan menyenangkan.</p>
+        </a>
+        <p>Platform layanan laundry berbasis teknologi, menghadirkan standar baru dalam kebersihan, kecepatan, dan profesionalisme.</p>
         <div class="socials">
           <a href="#"><i class="ph-fill ph-instagram-logo"></i></a>
-          <a href="#"><i class="ph-fill ph-twitter-logo"></i></a>
+          <a href="#"><i class="ph-fill ph-facebook-logo"></i></a>
+          <a href="#"><i class="ph-fill ph-tiktok-logo"></i></a>
         </div>
       </div>
-      <div class="footer-col">
-        <h4>Akses Cepat</h4>
-        <a href="./app/index.html">Pesan Laundry</a>
-        <a href="./app/index.html">Lemari Cucian</a>
+      <div class="f-col">
+        <h4>Perusahaan</h4>
+        <a href="#">Tentang Kami</a>
+        <a href="#">Karir</a>
+        <a href="#">Mitra Bisnis</a>
+        <a href="#">Berita</a>
+      </div>
+      <div class="f-col">
+        <h4>Layanan</h4>
+        <a href="#">Wash & Fold</a>
+        <a href="#">Dry Cleaning</a>
+        <a href="#">Laundry Sepatu</a>
+        <a href="#">Laundry Karpet</a>
+      </div>
+      <div class="f-col">
+        <h4>Bantuan</h4>
+        <a href="#">Pusat Bantuan (FAQ)</a>
+        <a href="#">Syarat & Ketentuan</a>
+        <a href="#">Kebijakan Privasi</a>
+        <a href="#">Hubungi Kami</a>
       </div>
     </div>
     <div class="footer-bottom">
-      &copy; 2026 WashBuddy Indonesia (V7 Interactive Update). All rights reserved.
+      <div class="container">
+        &copy; 2026 WashBuddy Indonesia. Hak Cipta Dilindungi Undang-Undang.
+      </div>
     </div>
   </footer>
 
