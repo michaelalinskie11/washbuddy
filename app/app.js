@@ -1,5 +1,5 @@
 // =====================================================
-// WASHBUDDY PORTAL v8 — PROFESSIONAL CLEAN DASHBOARD JS
+// WASHBUDDY PORTAL v9 — PROFESSIONAL CLEAN + INTERACTIVE
 // =====================================================
 
 const PRICING = {
@@ -12,6 +12,7 @@ const PRICING = {
 let currentService     = 'Wash Regular';
 let currentPayment     = 'QRIS';
 let discountMultiplier = 0;
+let userPoints         = 1250;
 
 // =====================================================
 // INIT & UTILS
@@ -19,6 +20,12 @@ let discountMultiplier = 0;
 document.addEventListener('DOMContentLoaded', () => {
   setGreetingAndDate();
   recalc();
+  initMascot();
+  
+  // Show Daily Pop after 2 seconds
+  setTimeout(() => {
+    document.getElementById('daily-pop-modal')?.classList.add('active');
+  }, 2000);
 });
 
 function setGreetingAndDate() {
@@ -53,6 +60,83 @@ function showToast(msg, type = 'success') {
 }
 
 // =====================================================
+// GAMIFICATION: DAILY BUBBLE POP
+// =====================================================
+function popDailyBubble() {
+  const bubble = document.getElementById('giant-bubble-element');
+  const rewardBox = document.getElementById('dp-reward-content');
+  const pointsEl = document.getElementById('dp-points-won');
+  
+  if (!bubble || !rewardBox) return;
+
+  // Animate pop
+  bubble.style.transform = 'scale(1.5)';
+  bubble.style.opacity = '0';
+  
+  setTimeout(() => {
+    bubble.style.display = 'none';
+    const wonPoints = Math.floor(Math.random() * 50) + 10; // Random 10 - 60
+    pointsEl.textContent = wonPoints;
+    rewardBox.style.display = 'block';
+    
+    // Update global points
+    userPoints += wonPoints;
+    const dashPointEl = document.getElementById('dash-points');
+    if (dashPointEl) dashPointEl.textContent = userPoints.toLocaleString('id-ID');
+    
+    // Auto close
+    setTimeout(closeDailyPop, 3000);
+  }, 300);
+}
+
+function closeDailyPop() {
+  document.getElementById('daily-pop-modal')?.classList.remove('active');
+  showMascotMessage("Hebat! Jangan lupa pakai promo hari ini ya.");
+}
+
+
+// =====================================================
+// MASCOT EYE TRACKING
+// =====================================================
+function initMascot() {
+  const pupils = document.querySelectorAll('.pupil');
+  if (pupils.length === 0) return;
+
+  document.addEventListener('mousemove', (e) => {
+    pupils.forEach(pupil => {
+      const rect = pupil.getBoundingClientRect();
+      const eyeX = rect.left + rect.width / 2;
+      const eyeY = rect.top + rect.height / 2;
+      
+      const angle = Math.atan2(e.clientY - eyeY, e.clientX - eyeX);
+      const dist  = Math.min(4, Math.hypot(e.clientX - eyeX, e.clientY - eyeY) / 50);
+      
+      const px = Math.cos(angle) * dist;
+      const py = Math.sin(angle) * dist;
+      
+      pupil.style.transform = `translate(${px}px, ${py}px)`;
+    });
+  });
+}
+
+function showMascotMessage(msgOverride) {
+  const msgBox = document.getElementById('mascot-msg');
+  if (!msgBox) return;
+  const msgs = [
+    "Cucian numpuk? Pesan sekarang!",
+    "Ada promo MERDEKA20 lho hari ini!",
+    "Poinmu sudah " + userPoints + " nih, yuk tukarkan!"
+  ];
+  msgBox.textContent = msgOverride || msgs[Math.floor(Math.random() * msgs.length)];
+  msgBox.classList.add('show');
+  setTimeout(() => msgBox.classList.remove('show'), 4000);
+}
+
+window.triggerMascot = function() {
+  showMascotMessage();
+};
+
+// =====================================================
 // NAVIGATION & SIDEBAR
 // =====================================================
 const PAGE_TITLES = {
@@ -65,33 +149,23 @@ const PAGE_TITLES = {
 };
 
 function navigate(targetId) {
-  // Update Links
   document.querySelectorAll('.sb-nav a').forEach(link => {
     link.classList.toggle('active', link.getAttribute('data-target') === targetId);
   });
   
-  // Update Views
   document.querySelectorAll('.page-view').forEach(view => {
-    const isTarget = view.id === targetId;
-    if (isTarget) {
-      view.classList.add('active');
-    } else {
-      view.classList.remove('active');
-    }
+    view.classList.toggle('active', view.id === targetId);
   });
 
-  // Update Breadcrumb
   const crumb = document.getElementById('tb-breadcrumb');
   if (crumb) crumb.textContent = PAGE_TITLES[targetId] || 'Dashboard';
 
-  // Close sidebar on mobile
   if (window.innerWidth < 900) {
     document.getElementById('sidebar')?.classList.remove('open');
   }
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// Attach event listeners to sidebar
 document.querySelectorAll('.sb-nav a[data-target]').forEach(link => {
   link.addEventListener('click', e => {
     e.preventDefault();
@@ -99,31 +173,31 @@ document.querySelectorAll('.sb-nav a[data-target]').forEach(link => {
   });
 });
 
-function toggleSidebar() {
+window.toggleSidebar = function() {
   document.getElementById('sidebar')?.classList.toggle('open');
-}
+};
 
-function showNotif() {
+window.showNotif = function() {
   showToast('Tidak ada notifikasi baru hari ini.', 'success');
-}
+};
 
 // =====================================================
 // WIZARD ORDER (Service & Checkout)
 // =====================================================
-function selectService(el, name) {
+window.selectService = function(el, name) {
   document.querySelectorAll('.srv-item').forEach(c => c.classList.remove('selected'));
   el.classList.add('selected');
   currentService = name;
   recalc();
-}
+};
 
-function selectPayment(el, method) {
+window.selectPayment = function(el, method) {
   document.querySelectorAll('.pay-item').forEach(c => c.classList.remove('selected'));
   el.classList.add('selected');
   currentPayment = method;
-}
+};
 
-function goStep(step) {
+window.goStep = function(step) {
   document.querySelectorAll('.wizard-step').forEach(s => s.classList.add('hidden'));
   const target = document.getElementById('w-step-' + step);
   if (!target) return;
@@ -138,17 +212,17 @@ function goStep(step) {
   
   if (step >= 2) recalc();
   window.scrollTo({ top: 0, behavior: 'smooth' });
-}
+};
 
-function updateQty(delta) {
+window.updateQty = function(delta) {
   const input = document.getElementById('order-qty');
   if (!input) return;
   let val = Math.min(50, Math.max(1, (parseInt(input.value)||1) + delta));
   input.value = val;
   recalc();
-}
+};
 
-function applyPromo() {
+window.applyPromo = function() {
   const input = document.getElementById('promo-input');
   const msg   = document.getElementById('promo-message');
   if (!input || !msg) return;
@@ -164,7 +238,7 @@ function applyPromo() {
     msg.style.color = 'var(--danger)'; 
   }
   recalc();
-}
+};
 
 function recalc() {
   const qty      = parseInt(document.getElementById('order-qty')?.value) || 1;
@@ -184,18 +258,17 @@ function recalc() {
 }
 
 // Payment Modal
-function showPaymentModal() { document.getElementById('payment-modal-backdrop')?.classList.add('active'); }
-function closePayment() { document.getElementById('payment-modal-backdrop')?.classList.remove('active'); }
-function confirmPayment() {
+window.showPaymentModal = function() { document.getElementById('payment-modal-backdrop')?.classList.add('active'); };
+window.closePayment = function() { document.getElementById('payment-modal-backdrop')?.classList.remove('active'); };
+window.confirmPayment = function() {
   closePayment();
   const orderId = 'WB-' + Math.floor(1000 + Math.random()*9000);
   showToast('✓ Pesanan ' + orderId + ' berhasil dikonfirmasi!', 'success');
   
-  // Dummy logic for active order update
   const idEl = document.getElementById('active-order-id');
   if (idEl) idEl.textContent = orderId;
   const detailEl = document.getElementById('active-order-detail');
   if (detailEl) detailEl.textContent = 'Kurir segera menjemput pesanan Anda.';
   
   setTimeout(() => { goStep(1); navigate('view-dashboard'); }, 1000);
-}
+};

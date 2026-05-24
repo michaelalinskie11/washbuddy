@@ -1,19 +1,17 @@
 /* =====================================================
-   WASHBUDDY PORTAL v8 — PROFESSIONAL CLEAN DASHBOARD
+   WASHBUDDY PORTAL v9 — PROFESSIONAL CLEAN + INTERACTIVE
    ===================================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 :root {
-  /* WashBuddy Professional Brand Colors */
-  --primary:     #2563EB;   /* Deep Blue */
+  --primary:     #2563EB;   
   --primary-hov: #1D4ED8;
-  --secondary:   #0D9488;   /* Teal */
-  --accent:      #F59E0B;   /* Yellow/Orange */
-  --danger:      #EF4444;   /* Red */
-  --success:     #10B981;   /* Green */
+  --secondary:   #0D9488;   
+  --accent:      #F59E0B;   
+  --danger:      #EF4444;   
+  --success:     #10B981;   
 
-  /* Neutral Scale */
   --bg-main:     #F8FAFC;
   --bg-card:     #FFFFFF;
   --bg-hover:    #F1F5F9;
@@ -22,15 +20,12 @@
   --text-muted:  #64748B;
   --border-light:#E2E8F0;
 
-  /* Shadows */
   --shadow-sm:   0 1px 3px rgba(0,0,0,0.05);
   --shadow-md:   0 4px 6px -1px rgba(0,0,0,0.05);
   --shadow-lg:   0 10px 15px -3px rgba(0,0,0,0.05);
 
-  /* Layout */
   --sidebar-w:   260px;
   --topbar-h:    70px;
-  
   --radius-md:   8px;
   --radius-lg:   16px;
 }
@@ -53,10 +48,17 @@ a { text-decoration: none; color: inherit; }
 .text-primary { color: var(--primary); }
 .text-green { color: var(--success); }
 
-/* Scrollbar */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 999px; }
+
+/* Pulse Animation */
+@keyframes pulse-sm {
+  0% { box-shadow: 0 0 0 0 rgba(37,99,235, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(37,99,235, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(37,99,235, 0); }
+}
+.pulse-btn-sm { animation: pulse-sm 2s infinite; }
 
 /* ==========================================
    LAYOUT
@@ -163,7 +165,6 @@ a { text-decoration: none; color: inherit; }
 .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
 .card-header h3 { font-size: 1.1rem; font-weight: 700; }
 
-/* Active Order Box */
 .active-order-box { background: var(--bg-main); border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 1.5rem; }
 .ao-info { margin-bottom: 1.5rem; }
 .ao-id { font-size: 1.2rem; font-weight: 800; color: var(--primary); margin-bottom: 5px; }
@@ -196,7 +197,7 @@ a { text-decoration: none; color: inherit; }
 }
 .srv-item:hover { border-color: var(--primary); transform: translateY(-2px); box-shadow: var(--shadow-md); }
 .srv-item.selected { border-color: var(--primary); background: rgba(37,99,235,0.02); }
-.srv-icon { width: 48px; height: 48px; background: var(--bg-main); color: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin: 0 auto 1rem; }
+.srv-icon { width: 64px; height: 64px; background: var(--bg-main); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; }
 .srv-name { font-weight: 700; font-size: 1.1rem; margin-bottom: 0.2rem; }
 .srv-price { font-weight: 700; color: var(--primary); font-size: 0.9rem; margin-bottom: 0.8rem; }
 .srv-desc { font-size: 0.85rem; color: var(--text-muted); }
@@ -216,7 +217,6 @@ a { text-decoration: none; color: inherit; }
 .os-row { display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.95rem; }
 .os-divider { border: 0; border-top: 1px dashed var(--border-light); margin: 1rem 0; }
 .os-total { font-size: 1.2rem; font-weight: 800; color: var(--primary); }
-
 .wizard-actions { display: flex; justify-content: space-between; }
 
 .payment-grid { display: flex; justify-content: center; gap: 1rem; }
@@ -227,7 +227,7 @@ a { text-decoration: none; color: inherit; }
 .pay-item.selected i { color: var(--primary); }
 
 /* ==========================================
-   MODAL
+   MODALS (Payment & Gamification)
    ========================================== */
 .modal-backdrop {
   position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px);
@@ -241,11 +241,37 @@ a { text-decoration: none; color: inherit; }
 }
 .modal-backdrop.active .modal-content { transform: translateY(0); }
 
+/* Daily Pop Bubble Animation */
+.giant-bubble-wrap { display: flex; justify-content: center; margin: 2rem 0; cursor: pointer; }
+.giant-bubble {
+  width: 120px; height: 120px; border-radius: 50%;
+  background: radial-gradient(120% 120% at 30% 30%, var(--secondary), var(--primary));
+  box-shadow: inset -10px -10px 20px rgba(0,0,0,0.2), inset 10px 10px 20px rgba(255,255,255,0.6), 0 10px 30px rgba(37,99,235,0.4);
+  display: flex; align-items: center; justify-content: center; font-size: 3rem;
+  animation: giantFloat 3s ease-in-out infinite; transition: transform 0.2s;
+}
+.giant-bubble:hover { transform: scale(1.1); animation-play-state: paused; }
+@keyframes giantFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+
+/* ==========================================
+   FLOATING MASCOT
+   ========================================== */
+.fab-container { position: fixed; bottom: 30px; right: 30px; z-index: 999; }
+.floating-mascot { position: relative; cursor: pointer; animation: mascotFloat 4s ease-in-out infinite; }
+.mascot-bubble { width: 70px; height: 70px; border-radius: 50%; background: radial-gradient(120% 120% at 30% 30%, var(--secondary), var(--primary)); box-shadow: inset -5px -5px 15px rgba(0,0,0,0.2), inset 5px 5px 15px rgba(255,255,255,0.6), 0 10px 20px rgba(37,99,235,0.3); position: relative; }
+.mascot-eyes { position: absolute; top: 35%; left: 0; width: 100%; display: flex; justify-content: center; gap: 10px; }
+.eye { width: 12px; height: 16px; background: #fff; border-radius: 50%; position: relative; overflow: hidden; }
+.pupil { width: 6px; height: 6px; background: #000; border-radius: 50%; position: absolute; top: 5px; left: 3px; }
+.mascot-smile { position: absolute; top: 65%; left: 50%; transform: translateX(-50%); width: 14px; height: 8px; border-bottom: 2px solid #fff; border-radius: 0 0 14px 14px; }
+.float-msg { position: absolute; top: -40px; right: 80px; background: #fff; padding: 10px 15px; border-radius: 12px; font-weight: 700; font-size: 0.9rem; border: 1px solid var(--border-light); box-shadow: var(--shadow-sm); width: max-content; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+.float-msg.show { opacity: 1; }
+@keyframes mascotFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
 /* ==========================================
    PAGE VIEW LOGIC
    ========================================== */
 .page-view { display: none; opacity: 0; }
-.page-view.active { display: block; opacity: 1; animation: fadeIn 0.3s; }
+.page-view.active { display: block; opacity: 1; animation: fadeIn 0.3s forwards; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
 /* ==========================================

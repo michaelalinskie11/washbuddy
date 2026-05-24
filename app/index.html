@@ -81,7 +81,7 @@
             <h1 id="greeting-text">Selamat datang, Sultan!</h1>
             <p>Kelola pesanan laundry Anda dengan mudah.</p>
           </div>
-          <button class="btn-primary" onclick="navigate('view-order')"><i class="ph-bold ph-plus"></i> Pesan Laundry</button>
+          <button class="btn-primary pulse-btn-sm" onclick="navigate('view-order')"><i class="ph-bold ph-plus"></i> Pesan Laundry</button>
         </div>
 
         <div class="stats-row">
@@ -103,7 +103,7 @@
             <div class="stat-icon yellow"><i class="ph-fill ph-coins"></i></div>
             <div>
               <div class="stat-label">Poin Reward</div>
-              <div class="stat-value">1.250</div>
+              <div class="stat-value" id="dash-points">1.250</div>
             </div>
           </div>
         </div>
@@ -164,19 +164,19 @@
         <div class="wizard-step" id="w-step-1">
           <div class="service-grid">
             <div class="srv-item selected" onclick="selectService(this, 'Wash Regular')">
-              <div class="srv-icon"><i class="ph-fill ph-washing-machine"></i></div>
+              <div class="srv-icon"><img src="https://cdn-icons-png.flaticon.com/512/3003/3003984.png" width="30" alt=""></div>
               <div class="srv-name">Wash & Fold</div>
               <div class="srv-price">Rp 8.000 / kg</div>
               <div class="srv-desc">Cuci, kering, dan lipat rapi. Cocok untuk pakaian harian Anda.</div>
             </div>
             <div class="srv-item" onclick="selectService(this, 'Dry Cleaning')">
-              <div class="srv-icon"><i class="ph-fill ph-coat-hanger"></i></div>
+              <div class="srv-icon"><img src="https://cdn-icons-png.flaticon.com/512/2916/2916315.png" width="30" alt=""></div>
               <div class="srv-name">Dry Cleaning</div>
               <div class="srv-price">Rp 25.000 / pcs</div>
               <div class="srv-desc">Pembersihan presisi tanpa air untuk jas, gaun, dan sutra.</div>
             </div>
             <div class="srv-item" onclick="selectService(this, 'Cuci Sepatu')">
-              <div class="srv-icon"><i class="ph-fill ph-sneaker"></i></div>
+              <div class="srv-icon"><img src="https://cdn-icons-png.flaticon.com/512/3345/3345384.png" width="30" alt=""></div>
               <div class="srv-name">Cuci Sepatu</div>
               <div class="srv-price">Rp 50.000 / psg</div>
               <div class="srv-desc">Deep cleaning untuk mengembalikan warna asli sepatu Anda.</div>
@@ -237,7 +237,7 @@
               </div>
             </div>
             
-            <button class="btn-primary" style="width:100%; padding:1rem; font-size:1.1rem; margin-top:2rem;" onclick="showPaymentModal()">Konfirmasi Pesanan</button>
+            <button class="btn-primary pulse-btn-sm" style="width:100%; padding:1rem; font-size:1.1rem; margin-top:2rem;" onclick="showPaymentModal()">Konfirmasi Pesanan</button>
             <button class="btn-text" style="margin-top:1rem;" onclick="goStep(2)">Kembali ke Detail</button>
           </div>
         </div>
@@ -246,7 +246,10 @@
     </div>
   </main>
 
-  <!-- PAYMENT MODAL -->
+  <!-- ==========================================
+       MODALS & FAB (MASCOT + DAILY POP)
+       ========================================== -->
+  <!-- Payment Modal -->
   <div class="modal-backdrop" id="payment-modal-backdrop">
     <div class="modal-content">
       <h3 style="margin-bottom:1rem; text-align:center;">Selesaikan Pembayaran</h3>
@@ -256,6 +259,41 @@
       </div>
       <button class="btn-primary" style="width:100%; margin-bottom:10px;" onclick="confirmPayment()">Saya Sudah Bayar</button>
       <button class="btn-outline" style="width:100%;" onclick="closePayment()">Batal</button>
+    </div>
+  </div>
+
+  <!-- Daily Pop Gamification Modal -->
+  <div class="modal-backdrop" id="daily-pop-modal">
+    <div class="modal-content" style="text-align:center;">
+      <h2 style="color:var(--primary); margin-bottom:0.5rem;">Daily Bubble Pop!</h2>
+      <p class="text-muted" style="margin-bottom:2rem;">Pecahkan gelembung hari ini untuk mendapatkan poin kejutan.</p>
+      
+      <div class="giant-bubble-wrap" onclick="popDailyBubble()">
+        <div class="giant-bubble" id="giant-bubble-element">
+          <i class="ph-fill ph-sparkle text-white"></i>
+        </div>
+      </div>
+      
+      <div id="dp-reward-content" style="display:none; margin-top:1.5rem;">
+        <h3 style="color:var(--success);">Selamat! 🎉</h3>
+        <p>Anda mendapatkan <strong id="dp-points-won">0</strong> Poin WashBuddy.</p>
+      </div>
+      
+      <button class="btn-outline" style="width:100%; margin-top:2rem;" onclick="closeDailyPop()">Nanti Saja</button>
+    </div>
+  </div>
+
+  <!-- Floating WashBot Mascot -->
+  <div class="fab-container">
+    <div class="floating-mascot" id="mascot-obj" onclick="triggerMascot()">
+      <div class="mascot-bubble">
+        <div class="mascot-eyes">
+          <div class="eye"><div class="pupil"></div></div>
+          <div class="eye"><div class="pupil"></div></div>
+        </div>
+        <div class="mascot-smile"></div>
+      </div>
+      <div class="float-msg" id="mascot-msg">Pecahkan gelembung harianmu! 👆</div>
     </div>
   </div>
 
