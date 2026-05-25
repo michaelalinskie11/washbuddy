@@ -153,15 +153,35 @@ document.addEventListener('DOMContentLoaded', () => {
   initMascot();
 });
 
-// Horai scroll animation
-window.addEventListener('scroll', () => {
-  const scrollPos = window.scrollY;
-  const bgVideo = document.querySelector('#horai-bg .hero-video');
-  const bgOverlay = document.querySelector('#horai-overlay');
-  if(bgVideo) {
-    bgVideo.style.transform = `scale(${1.05 + (scrollPos * 0.0005)})`;
-  }
-  if(bgOverlay) {
-    bgOverlay.style.background = `rgba(15,23,42,${Math.min(0.9, 0.6 + (scrollPos * 0.001))})`;
+// --- GSAP ScrollTrigger Horai Animation ---
+document.addEventListener('DOMContentLoaded', () => {
+  if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+    gsap.registerPlugin(ScrollTrigger);
+
+    // 1. Hero to Stats (Dim and scale down)
+    gsap.to("#horai-bg .hero-video", {
+      scrollTrigger: { trigger: ".stats-section", start: "top bottom", end: "bottom top", scrub: true },
+      scale: 1,
+      filter: "brightness(0.7) blur(0px)"
+    });
+
+    // 2. Stats to Layanan (Blur heavily)
+    gsap.to("#horai-bg .hero-video", {
+      scrollTrigger: { trigger: "#layanan", start: "top center", end: "bottom center", scrub: true },
+      filter: "brightness(0.4) blur(10px)"
+    });
+
+    // 3. Layanan to Cara Kerja (Darken overlay)
+    gsap.to("#horai-overlay", {
+      scrollTrigger: { trigger: "#cara-kerja", start: "top center", end: "bottom center", scrub: true },
+      backgroundColor: "rgba(15, 23, 42, 0.85)"
+    });
+
+    // 4. Cara Kerja to AI Scanner (Pulse/Scale up slightly)
+    gsap.to("#horai-bg .hero-video", {
+      scrollTrigger: { trigger: "#ai-scanner", start: "top center", end: "bottom center", scrub: true },
+      scale: 1.1,
+      filter: "brightness(0.5) blur(4px) contrast(1.2)"
+    });
   }
 });
